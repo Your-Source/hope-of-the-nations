@@ -29,11 +29,11 @@ class hotnConnector {
       catch (Exception $e) {};
 
       // Return array with the JSON data from url request..
-      return json_decode($data);
+      return json_decode($data, TRUE);
     }
 
     // Return array with the JSON data from session.
-    return json_decode($_SESSION[$hotnsessionkey]);
+    return json_decode($_SESSION[$hotnsessionkey], TRUE);
   }
 
   /**
