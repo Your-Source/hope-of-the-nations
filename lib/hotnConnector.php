@@ -48,6 +48,12 @@ class hotnConnector {
     $url = hotnConfig::$url . '/' . $url_data['uri'];
 
     // Set API key to query and build query.
+    foreach ($data as $key => $value) {
+      // Unset the key if the value is empty.
+      if (empty($value)) {
+        unset($data[$key]);
+      }
+    }
     $data['apikey'] = hotnConfig::$apikey;
     $query = http_build_query($data);
 
