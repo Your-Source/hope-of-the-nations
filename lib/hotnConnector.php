@@ -18,7 +18,7 @@ class hotnConnector {
     if (hotnConfig::$debug || empty($_SESSION[$hotnsessionkey])) {
       // Get the data from the request.
       try {
-        $data = self::request($type, $data);
+        $data = self::type_data_request($type, $data);
       }
       catch (Exception $e) {};
 
@@ -42,7 +42,7 @@ class hotnConnector {
    * @param  array  $data extra query data
    * @return string string with data of page.
    */
-  private static function request($type = 'child', $data = array()) {
+  private static function type_data_request($type = 'child', $data = array()) {
     $url_data = hotnConfig::${$type . 'UrlData'};
 
     $url = hotnConfig::$url . '/' . $url_data['uri'];
