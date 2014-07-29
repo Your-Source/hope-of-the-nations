@@ -13,7 +13,7 @@ include_once __dir__ . '/lib/hotn.php';
   </head>
   <body>
     <?php
-      hotn::get_overview();
+      echo hotn::get_overview();
 
     ?>
 
