@@ -17,10 +17,14 @@ class hotnConnector {
     // If debug is true or session key is empty.
     if (hotnConfig::$debug || empty($_SESSION[$hotnsessionkey])) {
       // Get the data from the request.
-      $data = self::request($type, $data);
+      try {
+        $data = self::request($type, $data);
+      }
 
       // Set the data to the session.
-      $_SESSION[$sessionkey] = $data;
+      try {
+        $_SESSION[$hotnsessionkey] = $data;
+      }
 
       // Return array with the JSON data from url request..
       return json_decode($data);
