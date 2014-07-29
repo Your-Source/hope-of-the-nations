@@ -63,7 +63,10 @@ class hotnConnector {
     );
     $context  = stream_context_create($options);
     // Get result with file get contents.
-    $result = file_get_contents($url, FALSE, $context);
+    try {
+      $result = file_get_contents($url, FALSE, $context);
+    }
+    catch (Exception $e) {};
 
     return $result;
   }
