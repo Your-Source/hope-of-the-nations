@@ -49,10 +49,17 @@ class hotnConnector {
 
     // Set API key to query and build query.
     foreach ($data as $key => $value) {
-      // Unset the key if the value is empty.
-      if (empty($value)) {
+      // Unset the key if the value is empty of not contains hotn-.
+      if (empty($value) || strpos($key, 'hotn-')) {
         unset($data[$key]);
       }
+      else {
+        // Replace hotn- to nothing, set new parameter to array and delete old key.
+        $new_key = str_replace('hotn-', '', $key);
+        $data[$new_key] = $data[$key];
+        unset($data[$key]);
+      }
+
     }
     $data['apikey'] = hotnConfig::$apikey;
     $query = http_build_query($data);
