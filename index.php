@@ -2,6 +2,7 @@
 /**
  * @file index file for Hope of the Nations
  */
+session_start();
 include_once __dir__ . '/hotnConfig.php';
 include_once __dir__ . '/lib/hotn.php';
 ?>
@@ -11,7 +12,10 @@ include_once __dir__ . '/lib/hotn.php';
     <title>Hope of the Nations</title>
   </head>
   <body>
-    Hope of the Nations
+    <?php
+    hotn::get_overview();
+
+    ?>
 
   </body>
 </html>

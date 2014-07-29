@@ -9,4 +9,7 @@ include_once __dir__ . '/hotnSponsorChild.php';
 
 class hotn {
 
+  public static function get_overview() {
+    hotnConnector::get_feed();
+  }
 }
