@@ -9,7 +9,7 @@ class hotnConnector {
    * Get the feed width the data.
    * @param  string $type type of url
    * @param  array  $data extra query data
-   * @return array        array width the data of the request.
+   * @return array array width the data of the request.
    */
   public static function get_feed($type = 'child', $data = array()) {
     $sessionkey = 'hotn_' . $type;
@@ -34,11 +34,12 @@ class hotnConnector {
    * Request function for build the url en send request.
    * @param  string $type type of url
    * @param  array  $data extra query data
-   * @return string       string with data of page.
+   * @return string string with data of page.
    */
   private static function request($type = 'child', $data = array()) {
-    // Build url with type.
-    $url = hotnConfig::$url . '/' . hotnConfig::${$type . 'Uri'};
+    $url_data = hotnConfig::${$type . 'UrlData'};
+
+    $url = hotnConfig::$url . '/' . $url_data['uri'];
 
     // Set api key to query and build query.
     $data['apikey'] = hotnConfig::$apikey;
@@ -47,14 +48,11 @@ class hotnConnector {
     // Create url with query.
     $url = $url . '?' . $query;
 
-    // Get method by type.
-    $method = hotnConfig::${$type . 'UrlMethod'};
-
     // Set the http options.
     $options = array(
       'http' => array(
         'header'  => "Content-type: application/json\r\n",
-        'method'  => $method,
+        'method'  => $url_data['method'],
       ),
     );
     $context  = stream_context_create($options);
