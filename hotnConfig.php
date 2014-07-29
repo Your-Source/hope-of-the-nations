@@ -15,4 +15,5 @@ class hotnConfig {
     'uri' => 'api/sponsors',
     'method' => 'POST',
   );
+  public static $translator_func = NULL;
 }
