@@ -12,10 +12,10 @@ class hotnConnector {
    * @return array array width the data of the request.
    */
   public static function get_feed($type = 'child', $data = array()) {
-    $sessionkey = 'hotn_' . $type;
+    $hotnsessionkey = 'hotn_' . $type;
 
     // If debug is true or session key is empty.
-    if (hotnConfig::$debug || empty($_SESSION[$sessionkey])) {
+    if (hotnConfig::$debug || empty($_SESSION[$hotnsessionkey])) {
       // Get the data from the request.
       $data = self::request($type, $data);
 
@@ -27,7 +27,7 @@ class hotnConnector {
     }
 
     // Return array with the JSON data from session.
-    return json_decode($_SESSION[$sessionkey]);
+    return json_decode($_SESSION[$hotnsessionkey]);
   }
 
   /**
