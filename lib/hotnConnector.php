@@ -38,7 +38,7 @@ class hotnConnector {
    */
   private static function request($type = 'child', $data = array()) {
     // Build url with type.
-    $url = hotnConfig::$url . '/' . hotnConfig::${$type . 'Url'};
+    $url = hotnConfig::$url . '/' . hotnConfig::${$type . 'Uri'};
 
     // Set api key to query and build query.
     $data['apikey'] = hotnConfig::$apikey;
