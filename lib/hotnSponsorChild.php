@@ -22,6 +22,13 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
   }
 
   /**
+   * Returns string with child name.
+   */
+  public function getChildName() {
+    return $this->child['Name'];
+  }
+
+  /**
    * Returns string with child story.
    */
   public function getChildStory() {

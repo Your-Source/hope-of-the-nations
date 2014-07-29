@@ -17,6 +17,11 @@ interface hotnSponsorChildInterface {
   public function getChildId();
 
   /**
+   * Returns string with child name.
+   */
+  public function getChildName();
+
+  /**
    * Returns string with child story.
    */
   public function getChildStory();
