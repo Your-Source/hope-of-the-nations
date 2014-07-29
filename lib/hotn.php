@@ -25,14 +25,36 @@ class hotn {
     return self::theme_overview($child_output);
   }
 
+  /**
+   * Translate function for text.
+   */
   public function t($string) {
+    // Get the translate function name of config.
     $translator_func = hotnConfig::$translator_func;
 
+    // If function exists return with translated string.
     if (function_exists($translator_func)) {
       return call_user_func($translator_func, array($string));
     }
 
     return $string;
+  }
+
+  private function get_child_filter($child_key) {
+    // Get all childs
+    $childs = hotnConnector::get_feed('child');
+
+    $countries = array();
+    foreach ($childs as $child) {
+      $country = $child[$child_key];
+
+      if(!in_array($country, $countries)){
+        $countries[$country] = $country;
+      }
+    }
+    asort($countries);
+
+    return $countries;
   }
 
   /**
@@ -69,18 +91,15 @@ class hotn {
     $output = '<div>';
 
     $output .= '<form method="get"> ';
-    $output .= '<select name="hotn-gender"> ';
-    $output .= '  <option value="">Selecteer</option> ';
-    $output .= '  <option value="Jongen">Jongen</option> ';
-    $output .= '  <option value="Meisje">Meisje</option> ';
-    $output .= '</select>';
     $output .= '<select name="hotn-agegroup"> ';
-    $output .= '  <option value="">Selecteer</option> ';
-    $output .= '  <option value="0">below 3</option> ';
-    $output .= '  <option value="1">3 - 6</option> ';
-    $output .= '  <option value="2">7 - 9</option> ';
-    $output .= '  <option value="3">10 or above</option> ';
+    $output .= '  <option value="">' . self::t('Select') . '</option>';
+    $output .= '  <option value="0">' . self::t('below 3') . '</option> ';
+    $output .= '  <option value="1">' . self::t('3 - 6') . '</option> ';
+    $output .= '  <option value="2">' . self::t('7 - 9') . '</option> ';
+    $output .= '  <option value="3">' . self::t('10 or above') . '</option> ';
     $output .= '</select>';
+    $output .= self::theme_select('hotn-country', self::get_child_filter('Country'));
+    $output .= self::theme_select('hotn-gender', self::get_child_filter('Gender'));
     $output .= '<input type="submit" value="Submit">';
     $output .= '</form>';
 
@@ -93,6 +112,24 @@ class hotn {
     $output .= '</div>';
 
     $output .= '</div>';
+
+    return $output;
+  }
+
+  /**
+   * Theme function for select box.
+   */
+  private function theme_select($name, $items) {
+    $output = '';
+
+    $output .= '<select name="' . $name . '"> ';
+    $output .= '<option value="">' . self::t('Select') . '</option> ';
+
+    foreach ($items as $key => $value) {
+      $output .= '<option value="' . $key . '">' . $value . '</option> ';
+    }
+
+    $output .= '</select>';
 
     return $output;
   }
