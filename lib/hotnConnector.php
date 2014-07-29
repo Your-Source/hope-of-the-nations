@@ -37,9 +37,9 @@ class hotnConnector {
   }
 
   /**
-   * Request function for build the url en send request.
-   * @param  string $type type of url
-   * @param  array  $data extra query data
+   * Request function for building the URL and sending requests.
+   * @param  string $type type of URL.
+   * @param  array  $data extra query data.
    * @return string string with data of page.
    */
   private static function type_data_request($type = 'child', $data = array()) {
@@ -47,7 +47,7 @@ class hotnConnector {
 
     $url = hotnConfig::$url . '/' . $url_data['uri'];
 
-    // Set api key to query and build query.
+    // Set API key to query and build query.
     $data['apikey'] = hotnConfig::$apikey;
     $query = http_build_query($data);
 
