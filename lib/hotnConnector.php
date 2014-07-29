@@ -20,11 +20,13 @@ class hotnConnector {
       try {
         $data = self::request($type, $data);
       }
+      catch (Exception $e) {};
 
       // Set the data to the session.
       try {
         $_SESSION[$hotnsessionkey] = $data;
       }
+      catch (Exception $e) {};
 
       // Return array with the JSON data from url request..
       return json_decode($data);
