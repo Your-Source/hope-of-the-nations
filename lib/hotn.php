@@ -157,7 +157,7 @@ class hotn {
   }
 
    /**
-   * Count all childeren after filter and return this.
+   * Count all childeren bevore filter and return this.
    */
   private function get_child_count_total() {
     return self::$childs_count_total;
@@ -176,8 +176,7 @@ class hotn {
       $function_name = 'getChild' . $child_key;
       $value = call_user_func(array($child, $function_name));
 
-      //$value = $child[$child_key];
-
+      // If value is not in array output add it to the array.
       if(!in_array($value, $output)){
         $output[$value] = $value;
       }
