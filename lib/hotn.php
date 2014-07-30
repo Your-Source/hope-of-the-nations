@@ -116,12 +116,14 @@ class hotn {
    * Theme function for child items on overview page.
    */
   private function theme_overview_child(hotnSponsorChild $child) {
+    $detail_url = $_SERVER['REQUEST_URI'] . '?hotnChildID=' . $child->getChildId();
+
     $output = '';
 
     $output .= '<div class="item child-overview">';
 
     $output .= '<div class="image">';
-    $output .= '<img src="' . $child->getChildSmallImage() . '" alt="">';
+    $output .= '<img src="' . $child->getChildSmallImage() . '" title="' . $child->getChildName() . '">';
     $output .= '</div>';
 
     $output .= '<div class="info">';
@@ -131,7 +133,7 @@ class hotn {
     $output .= '<br />';
     $output .= '<span class="birthdate">' . $child->getChildBirthdate() . '</span>';
     $output .= '<br />';
-    $output .= '<span class="more-info"><a href="#">More info</a></span>';
+    $output .= '<span class="more-info"><a href="' . $detail_url . '">More info</a></span>';
     $output .= '<br />';
 
     $output .= '</div>';
