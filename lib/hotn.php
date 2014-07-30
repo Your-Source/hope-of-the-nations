@@ -179,7 +179,7 @@ class hotn {
 
     if (!empty($count)) {
       $output .= '<div class="child-count">';
-      $output .= $count . ' ' . self::t('found children');
+      $output .= $count . ' ' . self::t('children found');
       $output .= '</div>';
     }
 
