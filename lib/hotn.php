@@ -8,6 +8,8 @@ include_once __dir__ . '/hotnSponsorChildInterface.php';
 include_once __dir__ . '/hotnSponsorChild.php';
 
 class hotn {
+  private static $childs_count;
+  private static $childs_count_total;
 
   public function get_overview() {
     $childs = self::get_child_list($_GET);
@@ -52,6 +54,9 @@ class hotn {
     foreach ($childs as $child) {
       $child_output[] = new hotnSponsorChild($child);
     }
+
+    // Set total count of childeren.
+    self::$childs_count_total = count($child_output);
 
     // Filter the value by parameters.
     foreach ($parameter as $key => $input_value) {
@@ -116,6 +121,9 @@ class hotn {
       }
     }
 
+    // Set count of childeren after filter.
+    self::$childs_count = count($child_output);
+
     // If not empty sort sort the array.
     if (!empty($parameter['hotnsort']) && $sort = $parameter['hotnsort']) {
       usort($child_output, function ($a, $b) use ($sort) {
@@ -142,16 +150,18 @@ class hotn {
   }
 
   /**
-   * Count all childeren by parameter and return this.
+   * Count all childeren after filter and return this.
    */
-  private function get_child_count($parameter = array()) {
-    $list = hotnConnector::get_feed('child', $parameter);
-
-    $count = count($list);
-
-    return $count;
+  private function get_child_count() {
+    return self::$childs_count;
   }
 
+   /**
+   * Count all childeren after filter and return this.
+   */
+  private function get_child_count_total() {
+    return self::$childs_count_total;
+  }
 
   /**
    * Function to create array with filter criteria from children list.
