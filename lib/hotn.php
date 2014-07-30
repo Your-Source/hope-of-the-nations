@@ -208,8 +208,7 @@ class hotn {
     $output .= '<span class="birthdate">' . $child->getChildBirthdate() . '</span>';
     $output .= '<br />';
     $output .= '<span class="more-info"><a href="' . $detail_url . '">More info</a></span>';
-    $output .= '<br />';
-    $output .= '<span class="birthdate">' . $child->getChildGender() . '</span>';
+    $output .= '</div>';
 
     $output .= '</div>';
 
@@ -220,10 +219,12 @@ class hotn {
    * Theme function for child items on overview page.
    */
   private function theme_overview(array $childs, $count, $message = NULL) {
-    $output = '<div>';
+    $output = '<div id="hotn-overview">';
+    $output .= '<h1 class="hotn-title">' . self::t('Child sponsorship') . '</h1>';
 
     $output .= '<div> ';
     $output .= '<form method="get" id="hotn-filter-form"> ';
+    $output .= '<div class="field">';
     $output .= '<label>' . self::t('Age:') . '</label>';
     $output .= '<select name="hotn-agegroup"> ';
     $output .= '  <option value="">' . self::t('Select') . '</option>';
@@ -232,10 +233,16 @@ class hotn {
     $output .= '  <option value="2">' . self::t('7 - 9') . '</option> ';
     $output .= '  <option value="3">' . self::t('10 or above') . '</option> ';
     $output .= '</select>';
+    $output .= '</div>';
+    $output .= '<div class="field">';
     $output .= '<label>' . self::t('Country:') . '</label>';
     $output .= self::theme_select('hotn-country', self::get_child_filter('Country'));
+    $output .= '</div>';
+    $output .= '<div class="field">';
     $output .= '<label>' . self::t('Gender:') . '</label>';
     $output .= self::theme_select('hotn-gender', self::get_child_filter('Gender'));
+    $output .= '</div>';
+    $output .= '<div class="field field-sort">';
     $output .= '<label>' . self::t('Sort:') . '</label>';
     $output .= '<select name="hotnsort"> ';
     $output .= '  <option value="">' . self::t('Sort') . '</option>';
@@ -244,7 +251,10 @@ class hotn {
     $output .= '  <option value="Country">' . self::t('Country') . '</option> ';
     $output .= '  <option value="Gender">' . self::t('Gender') . '</option> ';
     $output .= '</select>';
+    $output .= '</div>';
+    $output .= '<div class="links">';
     $output .= '<span class="link hotn-filter-form-reset">' . self::t('Reset') . '</span>';
+    $output .= '</div>';
     $output .= '</form>';
     $output .= '</div>';
 
@@ -262,9 +272,11 @@ class hotn {
       $output .= '</div>';
     }
 
+    $output .= '<div class="items">';
     foreach ($childs as $child) {
       $output .= $child;
     }
+    $output .= '</div>';
 
     $output .= '</div>';
 
