@@ -5,7 +5,7 @@ $( document ).ready(function() {
     $('#hotn-child-list').html('<div class="throbber">....</div>');
     $.ajax({
       type: 'GET',
-      url: 'index.php',
+      url: document.URL,
       data: data,
       success: function (data) {
         // Get the content.
