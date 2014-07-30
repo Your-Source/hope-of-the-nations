@@ -253,7 +253,7 @@ class hotn {
     $output .= '</select>';
     $output .= '</div>';
     $output .= '<div class="links">';
-    $output .= '<span class="link hotn-filter-form-reset">' . self::t('Reset') . '</span>';
+    $output .= '<a href="#" class="link hotn-filter-form-reset">' . self::t('Reset') . '</a>';
     $output .= '</div>';
     $output .= '</form>';
     $output .= '</div>';
