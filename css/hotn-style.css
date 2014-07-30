@@ -30,6 +30,7 @@
   height: 24px;
   overflow: hidden;
   text-indent: 100px;
+  margin: 50px auto;
 }
 #hotn-child-list .items {
   width: 100%;
