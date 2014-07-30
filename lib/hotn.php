@@ -219,6 +219,20 @@ class hotn {
    * Theme function for child items on overview page.
    */
   private function theme_overview(array $childs, $count, $message = NULL) {
+    // Set items for select input.
+    $agegroup = array(
+      0 => self::t('below 3'),
+      1 => self::t('3 - 6'),
+      2 => self::t('7 - 9'),
+      3 => self::t('10 or above'),
+    );
+    $sort = array(
+      'Name' => self::t('Name'),
+      'Birthdate' => self::t('Age'),
+      'Country' => self::t('Country'),
+      'Gender' => self::t('Gender'),
+    );
+
     $output = '<div id="hotn-overview">';
     $output .= '<h1 class="hotn-title">' . self::t('Child sponsorship') . '</h1>';
 
@@ -226,13 +240,7 @@ class hotn {
     $output .= '<form method="get" id="hotn-filter-form"> ';
     $output .= '<div class="field">';
     $output .= '<label>' . self::t('Age:') . '</label>';
-    $output .= '<select name="hotn-agegroup"> ';
-    $output .= '  <option value="">' . self::t('Select') . '</option>';
-    $output .= '  <option value="0">' . self::t('below 3') . '</option> ';
-    $output .= '  <option value="1">' . self::t('3 - 6') . '</option> ';
-    $output .= '  <option value="2">' . self::t('7 - 9') . '</option> ';
-    $output .= '  <option value="3">' . self::t('10 or above') . '</option> ';
-    $output .= '</select>';
+    $output .= self::theme_select('hotn-agegroup', $agegroup);
     $output .= '</div>';
     $output .= '<div class="field">';
     $output .= '<label>' . self::t('Country:') . '</label>';
@@ -244,13 +252,7 @@ class hotn {
     $output .= '</div>';
     $output .= '<div class="field field-sort">';
     $output .= '<label>' . self::t('Sort:') . '</label>';
-    $output .= '<select name="hotnsort"> ';
-    $output .= '  <option value="">' . self::t('Sort') . '</option>';
-    $output .= '  <option value="Name">' . self::t('Name') . '</option> ';
-    $output .= '  <option value="Birthdate">' . self::t('Age') . '</option> ';
-    $output .= '  <option value="Country">' . self::t('Country') . '</option> ';
-    $output .= '  <option value="Gender">' . self::t('Gender') . '</option> ';
-    $output .= '</select>';
+    $output .= self::theme_select('hotnsort', $sort, self::t('Sort'));
     $output .= '</div>';
     $output .= '<div class="links">';
     $output .= '<a href="#" class="link hotn-filter-form-reset">' . self::t('Reset') . '</a>';
@@ -288,11 +290,13 @@ class hotn {
   /**
    * Theme function for select box.
    */
-  private function theme_select($name, $items) {
+  private function theme_select($name, $items, $title = NULL) {
+    $title = !empty($title) ? $title : self::t('Select');
+
     $output = '';
 
     $output .= '<select name="' . $name . '"> ';
-    $output .= '<option value="">' . self::t('Select') . '</option> ';
+    $output .= '<option value="">' . $title . '</option> ';
 
     foreach ($items as $key => $value) {
       $output .= '<option value="' . $key . '">' . $value . '</option> ';
