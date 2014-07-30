@@ -263,8 +263,10 @@ class hotn {
     $output .= '<div id="hotn-child-list">';
 
     if (!empty($count)) {
+      $string = self::format_plural($count, self::t('child found'), self::t('children found'));
+
       $output .= '<div class="child-count">';
-      $output .= $count . ' ' . self::t('children found');
+      $output .= $count . ' ' . $string;
       $output .= '</div>';
     }
 
@@ -305,5 +307,17 @@ class hotn {
     $output .= '</select>';
 
     return $output;
+  }
+
+  /**
+   * Return string by 1 item or lower else higher.
+   */
+  private function format_plural($count, $string1, $string2) {
+    if ($count <= 1) {
+      return $string1;
+    }
+    else {
+      return $string2;
+    }
   }
 }
