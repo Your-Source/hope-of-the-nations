@@ -108,7 +108,6 @@ class hotn {
     $output .= '  <option value="country">' . self::t('Country') . '</option> ';
     $output .= '  <option value="gender">' . self::t('Gender') . '</option> ';
     $output .= '</select>';
-    $output .= '<input type="submit" value="Submit">';
     $output .= '</form>';
     $output .= '</div>';
 
