@@ -90,7 +90,8 @@ class hotn {
   private function theme_overview(array $childs) {
     $output = '<div>';
 
-    $output .= '<form method="get"> ';
+    $output .= '<div> ';
+    $output .= '<form method="get" id="hotn-filter-form"> ';
     $output .= '<select name="hotn-agegroup"> ';
     $output .= '  <option value="">' . self::t('Select') . '</option>';
     $output .= '  <option value="0">' . self::t('below 3') . '</option> ';
@@ -100,10 +101,18 @@ class hotn {
     $output .= '</select>';
     $output .= self::theme_select('hotn-country', self::get_child_filter('Country'));
     $output .= self::theme_select('hotn-gender', self::get_child_filter('Gender'));
+    $output .= '<select name="hotnsort"> ';
+    $output .= '  <option value="">' . self::t('Sort') . '</option>';
+    $output .= '  <option value="name">' . self::t('Name') . '</option> ';
+    $output .= '  <option value="age">' . self::t('Age') . '</option> ';
+    $output .= '  <option value="country">' . self::t('Country') . '</option> ';
+    $output .= '  <option value="gender">' . self::t('Gender') . '</option> ';
+    $output .= '</select>';
     $output .= '<input type="submit" value="Submit">';
     $output .= '</form>';
+    $output .= '</div>';
 
-    $output .= '<div class="child-list">';
+    $output .= '<div id="hotn-child-list">';
 
     foreach ($childs as $child) {
       $output .= $child;
