@@ -46,11 +46,74 @@ class hotn {
    * Function to get the child list and sort if parameter is set.
    */
   private function get_child_list($parameter = array()) {
-    $childs = hotnConnector::get_feed('child', $parameter);
+    $childs = hotnConnector::get_feed('child');
 
     $child_output = array();
     foreach ($childs as $child) {
       $child_output[] = new hotnSponsorChild($child);
+    }
+
+    // Filter the value by parameters.
+    foreach ($parameter as $key => $input_value) {
+      // Unset the key if the value is empty of not contains hotn-.
+      if (!empty($input_value) && strpos($key, 'hotn-') !== FALSE) {
+        // Replace hotn- to nothing, set new parameter to array and delete old key.
+        $new_key = str_replace('hotn-', '', $key);
+
+        // Set filter on operator to false.
+        $filter_on_operator = FALSE;
+
+        // Create switch with the new key for get the function name.
+        switch ($new_key) {
+          case 'gender':
+            $function_name = 'getChildGender';
+            break;
+
+          case 'country':
+            $function_name = 'getChildCountry';
+            break;
+
+          case 'agegroup':
+            $filter_on_operator = TRUE;
+            break;
+        }
+
+        // Foreach on all childs to filter if a child does not comply.
+        foreach ($child_output as $child_key => $child) {
+
+          // If filter on operator is true filter on a operator in form the switch.
+          if ($filter_on_operator) {
+            $age = $child->getChildAge();
+
+            switch ($input_value) {
+              case '0':
+                $operator = ($age < 3);
+                break;
+              case '1':
+                $operator = in_array($age, range(3, 6));
+                break;
+              case '2':
+                $operator = in_array($age, range(7, 9));
+                break;
+              case '3':
+                $operator = ($age >= 10);
+                break;
+            }
+
+            // Unset the child.
+            if (!$operator) {
+              unset($child_output[$child_key]);
+            }
+          }
+          else {
+            $value_to_filter = call_user_func(array($child, $function_name));
+            // If the input value not is filter value unset the child.
+            if ($input_value != $value_to_filter) {
+              unset($child_output[$child_key]);
+            }
+          }
+        }
+      }
     }
 
     // If not empty sort sort the array.
@@ -137,6 +200,7 @@ class hotn {
     $output .= '<br />';
     $output .= '<span class="more-info"><a href="' . $detail_url . '">More info</a></span>';
     $output .= '<br />';
+    $output .= '<span class="birthdate">' . $child->getChildGender() . '</span>';
 
     $output .= '</div>';
 

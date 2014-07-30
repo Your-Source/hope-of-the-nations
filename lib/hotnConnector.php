@@ -14,6 +14,21 @@ class hotnConnector {
   public static function get_feed($type = 'child', $data = array()) {
     $hotnsessionkey = 'hotn_' . $type;
 
+    // If in the future get more children filter by request.
+    // // Set API key to query and build query.
+    // foreach ($data as $key => $value) {
+    //   // Unset the key if the value is empty of not contains hotn-.
+    //   if (empty($value) || strpos($key, 'hotn-')) {
+    //     unset($data[$key]);
+    //   }
+    //   else {
+    //     // Replace hotn- to nothing, set new parameter to array and delete old key.
+    //     $new_key = str_replace('hotn-', '', $key);
+    //     $data[$new_key] = $data[$key];
+    //     unset($data[$key]);
+    //   }
+    // }
+
     // If debug is true or session key is empty.
     if (hotnConfig::$debug || empty($_SESSION[$hotnsessionkey])) {
       // Get the data from the request.
@@ -47,20 +62,6 @@ class hotnConnector {
 
     $url = hotnConfig::$url . '/' . $url_data['uri'];
 
-    // Set API key to query and build query.
-    foreach ($data as $key => $value) {
-      // Unset the key if the value is empty of not contains hotn-.
-      if (empty($value) || strpos($key, 'hotn-')) {
-        unset($data[$key]);
-      }
-      else {
-        // Replace hotn- to nothing, set new parameter to array and delete old key.
-        $new_key = str_replace('hotn-', '', $key);
-        $data[$new_key] = $data[$key];
-        unset($data[$key]);
-      }
-
-    }
     $data['apikey'] = hotnConfig::$apikey;
     $query = http_build_query($data);
 
