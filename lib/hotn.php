@@ -14,7 +14,9 @@ class hotn {
     $count = self::get_child_count($_GET);
 
     if (empty($childs)) {
-      return self::t('There are no children available.');
+      $message = self::t('There are no children available.');
+
+      return self::theme_overview(array(), '', $message);
     }
     $child_output = array();
     foreach ($childs as $child) {
@@ -144,7 +146,7 @@ class hotn {
   /**
    * Theme function for child items on overview page.
    */
-  private function theme_overview(array $childs, $count) {
+  private function theme_overview(array $childs, $count, $message = NULL) {
     $output = '<div>';
 
     $output .= '<div> ';
@@ -175,9 +177,17 @@ class hotn {
 
     $output .= '<div id="hotn-child-list">';
 
-    $output .= '<div class="child-count">';
-    $output .= $count . ' ' . self::t('found children');
-    $output .= '</div>';
+    if (!empty($count)) {
+      $output .= '<div class="child-count">';
+      $output .= $count . ' ' . self::t('found children');
+      $output .= '</div>';
+    }
+
+    if (!empty($message)) {
+      $output .= '<div class="child-message">';
+      $output .= $message;
+      $output .= '</div>';
+    }
 
     foreach ($childs as $child) {
       $output .= $child;
