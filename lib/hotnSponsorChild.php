@@ -83,7 +83,11 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
    * Returns string with url to small child image.
    */
   public function getChildSmallImage() {
-    return $this->child['SmallImage'];
+    if (!empty($this->child['SmallImage'])) {
+      return $this->child['SmallImage'];
+    }
+
+    return 'images/child-fallback.png';
   }
 
   /**

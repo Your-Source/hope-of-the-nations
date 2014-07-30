@@ -121,7 +121,7 @@ class hotn {
     $output .= '<div class="item child-overview">';
 
     $output .= '<div class="image">';
-    $output .= ' ';
+    $output .= '<img src="' . $child->getChildSmallImage() . '" alt="">';
     $output .= '</div>';
 
     $output .= '<div class="info">';
