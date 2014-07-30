@@ -18,9 +18,8 @@ class hotn {
     }
     $child_output = array();
     foreach ($childs as $child) {
-      $c = new hotnSponsorChild($child);
 
-      $child_output[] = self::theme_overview_child($c);
+      $child_output[] = self::theme_overview_child($child);
     }
 
     return self::theme_overview($child_output, $count);
@@ -45,19 +44,36 @@ class hotn {
    * Function to get the child list and sort if parameter is set.
    */
   private function get_child_list($parameter = array()) {
-    $list = hotnConnector::get_feed('child', $parameter);
+    $childs = hotnConnector::get_feed('child', $parameter);
+
+    $child_output = array();
+    foreach ($childs as $child) {
+      $child_output[] = new hotnSponsorChild($child);
+    }
 
     // If not empty sort sort the array.
     if (!empty($parameter['hotnsort']) && $sort = $parameter['hotnsort']) {
-      usort($list, function ($a, $b) use ($sort) {
+      usort($child_output, function ($a, $b) use ($sort) {
         if ($a == $b) {
-          return 0;
+          return FALSE;
         }
-        return ($a[$sort] < $b[$sort]) ? -1 : 1;
+
+        // Create function name of method by sort key and call this function.
+        $function_name = 'getChild' . $sort;
+        $a_val = call_user_func(array($a, $function_name));
+        $b_val = call_user_func(array($b, $function_name));
+
+        // If sort is birthday set string to timestamp.
+        if ($sort == 'Birthdate') {
+          $a_val = strtotime($a_val);
+          $b_val = strtotime($b_val);
+        }
+
+        return ($a_val < $b_val) ? -1 : 1;
       });
     }
 
-    return $list;
+    return $child_output;
   }
 
   /**
@@ -81,7 +97,11 @@ class hotn {
 
     $output = array();
     foreach ($childs as $child) {
-      $value = $child[$child_key];
+      // Create function name of method by sort key and call this function.
+      $function_name = 'getChild' . $child_key;
+      $value = call_user_func(array($child, $function_name));
+
+      //$value = $child[$child_key];
 
       if(!in_array($value, $output)){
         $output[$value] = $value;
@@ -113,7 +133,6 @@ class hotn {
     $output .= '<br />';
     $output .= '<span class="more-info"><a href="#">More info</a></span>';
     $output .= '<br />';
-    $output .= '<span class="birthdate">' . $child->getChildGender() . '</span>';
 
     $output .= '</div>';
 
@@ -144,7 +163,7 @@ class hotn {
     $output .= '<select name="hotnsort"> ';
     $output .= '  <option value="">' . self::t('Sort') . '</option>';
     $output .= '  <option value="Name">' . self::t('Name') . '</option> ';
-    $output .= '  <option value="age">' . self::t('Age') . '</option> ';
+    $output .= '  <option value="Birthdate">' . self::t('Age') . '</option> ';
     $output .= '  <option value="Country">' . self::t('Country') . '</option> ';
     $output .= '  <option value="Gender">' . self::t('Gender') . '</option> ';
     $output .= '</select>';
