@@ -10,7 +10,7 @@ include_once __dir__ . '/hotnSponsorChild.php';
 class hotn {
 
   public function get_overview() {
-    $childs = hotnConnector::get_feed('child', $_GET);
+    $childs = self::get_child_list($_GET);
 
     if (empty($childs)) {
       return self::t('There are no children available.');
@@ -40,21 +40,43 @@ class hotn {
     return $string;
   }
 
+  /**
+   * Function to get the child list and sort if parameter is set.
+   */
+  private function get_child_list($parameter = array()) {
+    $list = hotnConnector::get_feed('child', $parameter);
+
+    // If not empty sort sort the array.
+    if (!empty($parameter['hotnsort']) && $sort = $parameter['hotnsort']) {
+      usort($list, function ($a, $b) use ($sort) {
+        if ($a == $b) {
+          return 0;
+        }
+        return ($a[$sort] < $b[$sort]) ? -1 : 1;
+      });
+    }
+
+    return $list;
+  }
+
+  /**
+   * Function to create array with filter criteria from children list.
+   */
   private function get_child_filter($child_key) {
-    // Get all childs
-    $childs = hotnConnector::get_feed('child');
+    // Get all childs.
+    $childs = self::get_child_list();
 
-    $countries = array();
+    $output = array();
     foreach ($childs as $child) {
-      $country = $child[$child_key];
+      $value = $child[$child_key];
 
-      if(!in_array($country, $countries)){
-        $countries[$country] = $country;
+      if(!in_array($value, $output)){
+        $output[$value] = $value;
       }
     }
-    asort($countries);
+    asort($output);
 
-    return $countries;
+    return $output;
   }
 
   /**
@@ -78,6 +100,7 @@ class hotn {
     $output .= '<br />';
     $output .= '<span class="more-info"><a href="#">More info</a></span>';
     $output .= '<br />';
+    $output .= '<span class="birthdate">' . $child->getChildGender() . '</span>';
 
     $output .= '</div>';
 
@@ -92,6 +115,7 @@ class hotn {
 
     $output .= '<div> ';
     $output .= '<form method="get" id="hotn-filter-form"> ';
+    $output .= '<label>' . self::t('Age:') . '</label>';
     $output .= '<select name="hotn-agegroup"> ';
     $output .= '  <option value="">' . self::t('Select') . '</option>';
     $output .= '  <option value="0">' . self::t('below 3') . '</option> ';
@@ -99,14 +123,17 @@ class hotn {
     $output .= '  <option value="2">' . self::t('7 - 9') . '</option> ';
     $output .= '  <option value="3">' . self::t('10 or above') . '</option> ';
     $output .= '</select>';
+    $output .= '<label>' . self::t('Country:') . '</label>';
     $output .= self::theme_select('hotn-country', self::get_child_filter('Country'));
+    $output .= '<label>' . self::t('Gender:') . '</label>';
     $output .= self::theme_select('hotn-gender', self::get_child_filter('Gender'));
+    $output .= '<label>' . self::t('Sort:') . '</label>';
     $output .= '<select name="hotnsort"> ';
     $output .= '  <option value="">' . self::t('Sort') . '</option>';
-    $output .= '  <option value="name">' . self::t('Name') . '</option> ';
+    $output .= '  <option value="Name">' . self::t('Name') . '</option> ';
     $output .= '  <option value="age">' . self::t('Age') . '</option> ';
-    $output .= '  <option value="country">' . self::t('Country') . '</option> ';
-    $output .= '  <option value="gender">' . self::t('Gender') . '</option> ';
+    $output .= '  <option value="Country">' . self::t('Country') . '</option> ';
+    $output .= '  <option value="Gender">' . self::t('Gender') . '</option> ';
     $output .= '</select>';
     $output .= '</form>';
     $output .= '</div>';
