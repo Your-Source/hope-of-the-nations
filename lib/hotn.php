@@ -11,6 +11,7 @@ class hotn {
 
   public function get_overview() {
     $childs = self::get_child_list($_GET);
+    $count = self::get_child_count($_GET);
 
     if (empty($childs)) {
       return self::t('There are no children available.');
@@ -22,7 +23,7 @@ class hotn {
       $child_output[] = self::theme_overview_child($c);
     }
 
-    return self::theme_overview($child_output);
+    return self::theme_overview($child_output, $count);
   }
 
   /**
@@ -58,6 +59,18 @@ class hotn {
 
     return $list;
   }
+
+  /**
+   * Count all childeren by parameter and return this.
+   */
+  private function get_child_count($parameter = array()) {
+    $list = hotnConnector::get_feed('child', $parameter);
+
+    $count = count($list);
+
+    return $count;
+  }
+
 
   /**
    * Function to create array with filter criteria from children list.
@@ -110,7 +123,7 @@ class hotn {
   /**
    * Theme function for child items on overview page.
    */
-  private function theme_overview(array $childs) {
+  private function theme_overview(array $childs, $count) {
     $output = '<div>';
 
     $output .= '<div> ';
@@ -139,6 +152,10 @@ class hotn {
     $output .= '</div>';
 
     $output .= '<div id="hotn-child-list">';
+
+    $output .= '<div class="child-count">';
+    $output .= $count . ' ' . self::t('found children');
+    $output .= '</div>';
 
     foreach ($childs as $child) {
       $output .= $child;
