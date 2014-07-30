@@ -148,6 +148,7 @@ class hotn {
     $output .= '  <option value="Country">' . self::t('Country') . '</option> ';
     $output .= '  <option value="Gender">' . self::t('Gender') . '</option> ';
     $output .= '</select>';
+    $output .= '<span class="link hotn-filter-form-reset">' . self::t('Reset') . '</span>';
     $output .= '</form>';
     $output .= '</div>';
 
