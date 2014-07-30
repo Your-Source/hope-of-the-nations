@@ -26,7 +26,7 @@ $(document).ready(function() {
 
     data = {};
     // Get all value and name of select in form and set the value to array.
-    $('select', $form).each(function(){
+    $('select', $form).each(function() {
         var $select = $(this);
         var val = $select.val();
         var name = $select.attr('name');

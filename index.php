@@ -13,13 +13,11 @@ include_once __dir__ . '/lib/hotn.php';
 
     <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="js/hotn.js"></script>
-
     <link rel="stylesheet" type="text/css" href="css/hotn-style.css">
   </head>
   <body>
     <?php
       echo hotn::get_overview();
-
     ?>
 
   </body>
