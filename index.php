@@ -17,7 +17,6 @@ include_once __dir__ . '/lib/hotn.php';
   <body>
     <?php
       echo hotn::get_overview();
-      var_dump($_GET);
 
     ?>
 
