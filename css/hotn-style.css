@@ -1,3 +1,12 @@
 #hotn-child-list .item .name {
   font-weight: bold;
 }
+
+#hotn-child-list .throbber {
+  background-image: url('../images/throbber.gif');
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  text-indent: 100px;
+}
