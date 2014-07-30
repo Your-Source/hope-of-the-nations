@@ -36,7 +36,7 @@ class hotn {
     // Get the translate function name of config.
     $translator_func = hotnConfig::$translator_func;
 
-    // If function exists return with translated string.
+    // If function exists return the translated string.
     if (function_exists($translator_func)) {
       return call_user_func($translator_func, array($string));
     }

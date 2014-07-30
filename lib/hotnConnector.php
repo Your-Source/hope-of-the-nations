@@ -75,7 +75,7 @@ class hotnConnector {
         'method'  => $url_data['method'],
       ),
     );
-    $context  = stream_context_create($options);
+    $context = stream_context_create($options);
     // Get result with file get contents.
     try {
       $result = file_get_contents($url, FALSE, $context);
