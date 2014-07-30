@@ -1,4 +1,4 @@
-$( document ).ready(function() {
+$(document).ready(function() {
 
   function hotn_ajax_request(data) {
     // Set ajax callback to refresh the data and set trobber to load.
