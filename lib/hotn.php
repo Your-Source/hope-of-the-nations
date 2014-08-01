@@ -48,8 +48,17 @@ class hotn {
     return self::hotn_theme_overview($child_output, $count);
   }
 
+  /**
+   * Function to create child detail page.
+   * @param  int $childid The id of the child.
+   * @return string Returns the markup of child detail page.
+   */
   public function get_child($childid) {
     $childs = self::get_child_list(array('hotn-Id' => $childid));
+
+    if (empty($childs)) {
+      return self::hotn_t('This child is not available.');
+    }
 
     return self::hotn_theme_detail_child($childs[0]);
   }
@@ -273,6 +282,11 @@ class hotn {
     return $output;
   }
 
+  /**
+   * Function to create the markup of child detail page.
+   * @param  hotnSponsorChild $child Instance of child.
+   * @return string Returns markup for child detail page.
+   */
   private function hotn_theme_detail_child(hotnSponsorChild $child) {
     $info_string = self::hotn_t('"@name" is born on "@birthdate" and lives in "@country"');
     $info_placeholders = array(
@@ -307,7 +321,6 @@ class hotn {
     $output .= '<span class="linkedin"><a href="http://www.linkedin.com/shareArticle?mini=1&amp;url=' . $url_html . '" target="_blank" class="linkedin external" title="LinkedIn">LinkedIn</a></span>';
     $output .= '<span class="blogger"><a href="https://www.blogger.com/blog-this.g?u=' . $url_html . '&n=' . $title_html . '" target="_blank" class="blogger external" title="Blogger">Blogger</a></span>';
     $output .= '<span class="googleplus"><a href="https://plus.google.com/share?url=' . $url_html . '" target="_blank" class="google external" title="Google+">Google+</a></span>';
-
 
     $output .= '</div>';
 
