@@ -16,6 +16,7 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
 
   /**
    * Returns int with child id.
+   * @return int Returns int of childid.
    */
   public function getChildId() {
     return $this->child['ChildID'];
@@ -23,6 +24,7 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
 
   /**
    * Returns string with child name.
+   * @return string Returns name of the child.
    */
   public function getChildName() {
     return $this->child['Name'];
@@ -30,6 +32,7 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
 
   /**
    * Returns string with child story.
+   * @return string Returns story of the child.
    */
   public function getChildStory() {
     return $this->child['Story'];
@@ -37,6 +40,7 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
 
   /**
    * Returns string with child hobbies.
+   * @return string Returns hobbies of the child.
    */
   public function getChildHobbies() {
     return $this->child['Hobbies'];
@@ -44,6 +48,7 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
 
   /**
    * Returns string with child country.
+   * @return string Returns country of the child.
    */
   public function getChildCountry() {
     return $this->child['Country'];
@@ -51,13 +56,15 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
 
   /**
    * Returns string with child birthday.
+   * @return string Returns birthdate of the child.
    */
   public function getChildBirthdate() {
     return $this->child['Birthdate'];
   }
 
   /**
-   * Returns string with child age.
+   * Returns int with child age.
+   * @return int Returns age of the child.
    */
   public function getChildAge() {
     $birthdate = $this->child['Birthdate'];
@@ -74,6 +81,7 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
 
   /**
    * Returns string with child gender.
+   * @return string Returns gender of the child.
    */
   public function getChildGender() {
     return $this->child['Gender'];
@@ -81,6 +89,7 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
 
   /**
    * Returns string with url to small child image.
+   * @return string Returns base64 object of small Image from the child.
    */
   public function getChildSmallImage() {
     if (!empty($this->child['SmallImage'])) {
@@ -92,9 +101,14 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
 
   /**
    * Returns string with url to large child image.
+   * @return string Returns base64 object of small Image from the child.
    */
   public function getChildLargeImage() {
-    return $this->child['LargeImage'];
+    if (!empty($this->child['LargeImage'])) {
+      return 'data:image/png;base64,' . $this->child['LargeImage'];
+    }
+
+    return 'images/child-fallback.png';
   }
 
 }

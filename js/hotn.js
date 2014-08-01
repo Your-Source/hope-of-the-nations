@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+  /**
+   * Ajax request to server for get childeren.
+   * @param  array data All parameters for request to server.
+   */
   function hotn_ajax_request(data) {
     // Set ajax callback to refresh the data and set trobber to load.
     $('#hotn-child-list').html('<div class="throbber">....</div>');
@@ -55,7 +59,9 @@ $(document).ready(function() {
 
   // Load the function pager by load.
   ajax_pager();
-  // Function for pager.
+  /**
+   * Function for set the functionality of pager to the pager.
+   */
   function ajax_pager() {
     $('#hotn-pager').find('.pager').bind('click', function() {
       var pager_id = $(this).data('pager');

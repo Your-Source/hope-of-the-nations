@@ -14,9 +14,13 @@ class hotn {
   private static $children_count_total;
   private static $pagers_items;
 
+  /**
+   * Function to create children overview page.
+   * @return string complete page with children overview.
+   */
   public function get_overview() {
     $children = self::get_child_list($_GET, FALSE);
-    $count = self::get_child_count($_GET);
+    $count = self::children_count_filtered();
 
     if (empty($children)) {
       $message = self::hotn_t('There are no children available.');
@@ -34,6 +38,8 @@ class hotn {
 
   /**
    * Translate function for text.
+   * @param  string $string sting to translate by external translate function.
+   * @return string translated string.
    */
   public function hotn_t($string) {
     // Get the translate function name of config.
@@ -49,8 +55,11 @@ class hotn {
 
   /**
    * Function to get the child list and sort if parameter is set.
+   * @param  array   $parameters All parameters to filter and sort the children
+   * @param  boolean $all_items  Get all items and exclude the sort and filtering.
+   * @return array With all children in there own object.
    */
-  private function get_child_list($parameters = array(), $all_items) {
+  private function get_child_list($parameters = array(), $all_items = FALSE) {
     $children = hotnConnector::get_feed('child');
 
     $child_output = array();
@@ -172,15 +181,17 @@ class hotn {
 
   /**
    * Count all children after filter and return this.
+   * @return int With count of all children.
    */
-  private function get_child_count() {
+  private function children_count_filtered() {
     return self::$children_count_filtered;
   }
 
   /**
    * Count all children before filter and return this.
+   * @return int With count of all children.
    */
-  private function get_child_count_total() {
+  private function get_children_count_total() {
     return self::$children_count_total;
   }
 
@@ -212,6 +223,8 @@ class hotn {
 
   /**
    * Theme function for child items on overview page.
+   * @param  hotnSponsorChild $child Child object
+   * @return string Display child item on overview.
    */
   private function hotn_theme_overview_child(hotnSponsorChild $child) {
     $detail_url = $_SERVER['SCRIPT_NAME'] . '?hotnChildID=' . $child->getChildId();
@@ -239,6 +252,10 @@ class hotn {
 
   /**
    * Theme function for child items on overview page.
+   * @param  array  $children All child displays.
+   * @param  int $count Count of all children.
+   * @param  string $message Message for children
+   * @return string Display all childeren, form and pager.
    */
   private function hotn_theme_overview(array $children, $count, $message = NULL) {
     // Set items for select input.
@@ -317,6 +334,10 @@ class hotn {
 
   /**
    * Theme function for select box.
+   * @param  sting $name Name of the select tag.
+   * @param  array $items All items for in the select.
+   * @param  sting $title Title for first option. Default is select.
+   * @return string Returns select field.
    */
   private function hotn_theme_select($name, $items, $title = NULL) {
     $title = !empty($title) ? $title : self::hotn_t('Select');
@@ -335,6 +356,7 @@ class hotn {
 
   /**
    * Theme function for creating the pager.
+   * @return string Returns a pager.
    */
   private function hotn_theme_pager() {
     // Get the current pager id. If empty fallback 0.
@@ -378,6 +400,10 @@ class hotn {
 
   /**
    * Return string by 1 item or lower else higher.
+   * @param  int $count A count of all items.
+   * @param  string $string1 String for 1 or lower items.
+   * @param  string $string2 String for 2 or more items.
+   * @return String with the correct string by count of items.
    */
   private function hotn_format_plural($count, $string1, $string2) {
     if ($count <= 1) {
