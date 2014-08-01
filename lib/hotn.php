@@ -21,15 +21,15 @@ class hotn {
     if (empty($children)) {
       $message = self::hotn_t('There are no children available.');
 
-      return self::theme_overview(array(), '', $message);
+      return self::hotn_theme_overview(array(), '', $message);
     }
     $child_output = array();
     foreach ($children as $child) {
 
-      $child_output[] = self::theme_overview_child($child);
+      $child_output[] = self::hotn_theme_overview_child($child);
     }
 
-    return self::theme_overview($child_output, $count);
+    return self::hotn_theme_overview($child_output, $count);
   }
 
   /**
@@ -213,7 +213,7 @@ class hotn {
   /**
    * Theme function for child items on overview page.
    */
-  private function theme_overview_child(hotnSponsorChild $child) {
+  private function hotn_theme_overview_child(hotnSponsorChild $child) {
     $detail_url = $_SERVER['SCRIPT_NAME'] . '?hotnChildID=' . $child->getChildId();
 
     $output = '<div class="item child-overview">';
@@ -240,7 +240,7 @@ class hotn {
   /**
    * Theme function for child items on overview page.
    */
-  private function theme_overview(array $children, $count, $message = NULL) {
+  private function hotn_theme_overview(array $children, $count, $message = NULL) {
     // Set items for select input.
     $agegroup = array(
       0 => self::hotn_t('below 3'),
@@ -262,19 +262,19 @@ class hotn {
     $output .= '<form method="get" id="hotn-filter-form"> ';
     $output .= '<div class="field">';
     $output .= '<label>' . self::hotn_t('Age:') . '</label>';
-    $output .= self::theme_select('hotn-agegroup', $agegroup);
+    $output .= self::hotn_theme_select('hotn-agegroup', $agegroup);
     $output .= '</div>';
     $output .= '<div class="field">';
     $output .= '<label>' . self::hotn_t('Country:') . '</label>';
-    $output .= self::theme_select('hotn-country', self::get_child_filter('Country'));
+    $output .= self::hotn_theme_select('hotn-country', self::get_child_filter('Country'));
     $output .= '</div>';
     $output .= '<div class="field">';
     $output .= '<label>' . self::hotn_t('Gender:') . '</label>';
-    $output .= self::theme_select('hotn-gender', self::get_child_filter('Gender'));
+    $output .= self::hotn_theme_select('hotn-gender', self::get_child_filter('Gender'));
     $output .= '</div>';
     $output .= '<div class="field field-sort">';
     $output .= '<label>' . self::hotn_t('Sort:') . '</label>';
-    $output .= self::theme_select('hotnsort', $sort, self::hotn_t('Sort'));
+    $output .= self::hotn_theme_select('hotnsort', $sort, self::hotn_t('Sort'));
     $output .= '</div>';
     $output .= '<div class="links">';
     $output .= '<a href="#" class="link hotn-filter-form-reset">' . self::hotn_t('Reset') . '</a>';
@@ -285,7 +285,7 @@ class hotn {
     $output .= '<div id="hotn-child-list">';
 
     if (!empty($count)) {
-      $string = self::format_plural($count, self::hotn_t('child found'), self::hotn_t('children found'));
+      $string = self::hotn_format_plural($count, self::hotn_t('child found'), self::hotn_t('children found'));
 
       $output .= '<div class="child-count">';
       $output .= $count . ' ' . $string;
@@ -305,7 +305,7 @@ class hotn {
     $output .= '</div>';
 
     $output .= '<div id="hotn-pager">';
-    $output .= self::theme_pager();
+    $output .= self::hotn_theme_pager();
     $output .= '</div>';
 
     $output .= '</div>';
@@ -318,7 +318,7 @@ class hotn {
   /**
    * Theme function for select box.
    */
-  private function theme_select($name, $items, $title = NULL) {
+  private function hotn_theme_select($name, $items, $title = NULL) {
     $title = !empty($title) ? $title : self::hotn_t('Select');
 
     $output = '<select name="' . $name . '"> ';
@@ -336,7 +336,7 @@ class hotn {
   /**
    * Theme function for creating the pager.
    */
-  private function theme_pager() {
+  private function hotn_theme_pager() {
     // Get the current pager id. If empty fallback 0.
     $current_pager = !empty($_GET['hotnpager']) ? $_GET['hotnpager'] : 0;
     $pager_count = self::$pagers_items;
@@ -379,7 +379,7 @@ class hotn {
   /**
    * Return string by 1 item or lower else higher.
    */
-  private function format_plural($count, $string1, $string2) {
+  private function hotn_format_plural($count, $string1, $string2) {
     if ($count <= 1) {
       return $string1;
     }
