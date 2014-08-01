@@ -339,15 +339,24 @@ class hotn {
   private function theme_pager() {
     // Get the current pager id. If empty fallback 0.
     $current_pager = !empty($_GET['hotnpager']) ? $_GET['hotnpager'] : 0;
-    $pagers_items = self::$pagers_items;
+    $pager_count = self::$pagers_items;
+    $prev_pager = $current_pager - 1;
+    $next_pager = $current_pager + 1;
+    $last_pager = $pager_count - 1;
     $pager = '';
 
     // If 1 page return nothing.
-    if ($pagers_items <= 1) {
+    if ($pager_count <= 1) {
       return '';
     }
 
-    for ($i=0; $i < $pagers_items; $i++) {
+    // Set the prev and first pager if prev_pager higer or equal than 0.
+    if ($prev_pager >= 0) {
+      $pager .= '<a href="#" data-pager="0" class="pager">' . self::hotn_t('First') . '</a> ';
+      $pager .= '<a href="#" data-pager="' . $prev_pager . '" class="pager">' . self::hotn_t('Previous') . '</a> ';
+    }
+
+    for ($i=0; $i < $pager_count; $i++) {
       $page = $i + 1;
 
       if ($current_pager == $i) {
@@ -356,6 +365,12 @@ class hotn {
       else {
         $pager .= '<a href="#" data-pager="' . $i . '" class="pager">' . $page . '</a> ';
       }
+    }
+
+    // Set next and last pager if next_pager lower is than pager_count.
+    if ($next_pager < $pager_count) {
+      $pager .= '<a href="#" data-pager="' . $next_pager . '" class="pager">' . self::hotn_t('Next') . '</a> ';
+      $pager .= '<a href="#" data-pager="' . $last_pager . '" class="pager">' . self::hotn_t('Last') . '</a> ';
     }
 
     return $pager;
