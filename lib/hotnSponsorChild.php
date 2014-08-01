@@ -84,7 +84,7 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
    */
   public function getChildSmallImage() {
     if (!empty($this->child['SmallImage'])) {
-      return $this->child['SmallImage'];
+      return 'data:image/png;base64,' . $this->child['SmallImage'];
     }
 
     return 'images/child-fallback.png';
