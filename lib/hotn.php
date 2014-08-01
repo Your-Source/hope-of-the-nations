@@ -7,7 +7,7 @@ include_once __dir__ . '/hotnForm.php';
 include_once __dir__ . '/hotnSponsorChildInterface.php';
 include_once __dir__ . '/hotnSponsorChild.php';
 
-define('HOTN_MAX_ITEMS_PAGER', 2);
+define('HOTN_MAX_ITEMS_PAGER', 12);
 
 class hotn {
   private static $children_count_filtered;
@@ -152,14 +152,13 @@ class hotn {
     }
 
     // Select items for the pager.
-    $pager = !empty($parameter['hotnpager']) ? $parameter['hotnpager'] : 0;
+    $pager = !empty($parameters['hotnpager']) ? $parameters['hotnpager'] : 0;
     $start = HOTN_MAX_ITEMS_PAGER * $pager;
     $end = HOTN_MAX_ITEMS_PAGER * $pager + (HOTN_MAX_ITEMS_PAGER - 1);
     // Set this only if parameter is avaible.
     if (!$all_items) {
       self::$pagers_items = ceil(count($child_output) / HOTN_MAX_ITEMS_PAGER);
     }
-
 
     $child_output = array_values($child_output);
     foreach ($child_output as $key => $child) {
