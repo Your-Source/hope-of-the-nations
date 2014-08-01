@@ -72,9 +72,24 @@ class hotn {
     // Get the translate function name of config.
     $translator_func = hotnConfig::$translator_func;
 
-    // If function exists return the translated string.
-    if (function_exists($translator_func)) {
-      return call_user_func($translator_func, array($string));
+    // If tranlate function is empty create own.
+    if (!empty($translator_func)) {
+      // If function exists return the translated string.
+      if (function_exists($translator_func)) {
+        return call_user_func($translator_func, array($string));
+      }
+    }
+    else {
+      $custom_translate_lang = hotnConfig::$custom_translate_lang;
+      // If not english set the translations.
+      if ($custom_translate_lang != 'en') {
+        include __dir__ . '/translation/' . $custom_translate_lang . '.php';
+
+        // If string is in variable return the translated string.
+        if (array_key_exists($string, ${'hotn_translation_' . $custom_translate_lang})) {
+          return ${'hotn_translation_' . $custom_translate_lang}[$string];
+        }
+      }
     }
 
     return $string;
@@ -274,7 +289,7 @@ class hotn {
     $output .= '<br />';
     $output .= '<span class="birthdate">' . $child->getChildBirthdate() . '</span>';
     $output .= '<br />';
-    $output .= '<span class="more-info"><a href="' . $detail_url . '">More info</a></span>';
+    $output .= '<span class="more-info"><a href="' . $detail_url . '">' . self::hotn_t('More info') . '</a></span>';
     $output .= '</div>';
 
     $output .= '</div>';
@@ -357,19 +372,19 @@ class hotn {
     $output .= '<div> ';
     $output .= '<form method="get" id="hotn-filter-form"> ';
     $output .= '<div class="field">';
-    $output .= '<label>' . self::hotn_t('Age:') . '</label>';
+    $output .= '<label>' . self::hotn_t('Age') . ':' . '</label>';
     $output .= self::hotn_theme_select('hotn-agegroup', $agegroup);
     $output .= '</div>';
     $output .= '<div class="field">';
-    $output .= '<label>' . self::hotn_t('Country:') . '</label>';
+    $output .= '<label>' . self::hotn_t('Country') . ':' . '</label>';
     $output .= self::hotn_theme_select('hotn-country', self::get_child_filter('Country'));
     $output .= '</div>';
     $output .= '<div class="field">';
-    $output .= '<label>' . self::hotn_t('Gender:') . '</label>';
+    $output .= '<label>' . self::hotn_t('Gender') . ':' . '</label>';
     $output .= self::hotn_theme_select('hotn-gender', self::get_child_filter('Gender'));
     $output .= '</div>';
     $output .= '<div class="field field-sort">';
-    $output .= '<label>' . self::hotn_t('Sort:') . '</label>';
+    $output .= '<label>' . self::hotn_t('Sort') . ':' . '</label>';
     $output .= self::hotn_theme_select('hotnsort', $sort, self::hotn_t('Sort'));
     $output .= '</div>';
     $output .= '<div class="links">';
