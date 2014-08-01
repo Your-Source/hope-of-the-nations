@@ -20,7 +20,7 @@ class hotn {
    */
   public function show_children() {
     if (!empty($_GET['hotnChildID'])) {
-      return 'Child detail';
+      return self::get_child($_GET['hotnChildID']);
     }
 
     return self::get_overview();
@@ -46,6 +46,12 @@ class hotn {
     }
 
     return self::hotn_theme_overview($child_output, $count);
+  }
+
+  public function get_child($childid) {
+    $childs = self::get_child_list(array('hotn-Id' => $childid));
+
+    return self::hotn_theme_detail_child($childs[0]);
   }
 
   /**
@@ -106,6 +112,11 @@ class hotn {
           case 'agegroup':
             $filter_on_age = TRUE;
             break;
+          default:
+            // If new is not empty filter on all keys.
+            if (!empty($new_key)) {
+              $function_name = 'getChild' . $new_key;
+            }
         }
 
         // Foreach on all children to filter if a child does not comply.
@@ -255,6 +266,49 @@ class hotn {
     $output .= '<span class="birthdate">' . $child->getChildBirthdate() . '</span>';
     $output .= '<br />';
     $output .= '<span class="more-info"><a href="' . $detail_url . '">More info</a></span>';
+    $output .= '</div>';
+
+    $output .= '</div>';
+
+    return $output;
+  }
+
+  private function hotn_theme_detail_child(hotnSponsorChild $child) {
+    $info_string = self::hotn_t('"@name" is born on "@birthdate" and lives in "@country"');
+    $info_placeholders = array(
+      '@name' => $child->getChildName(),
+      '@birthdate' => $child->getChildBirthdate(),
+      '@country' => $child->getChildCountry(),
+    );
+
+    $request_uri = $_SERVER['REQUEST_URI'];
+    $request_uri = substr($request_uri, 1);
+    $url = $_SERVER['HTTP_REFERER'] . $request_uri;
+    $url_html = urlencode($url);
+
+    $title = self::hotn_t('Sponsor a child');
+    $title_html = urlencode($title);
+
+    $output = '<div id="hotn-child-detail">';
+    $output .= '<h1 class="hotn-title">' . $title . '</h1>';
+
+    $output .= '<div class="image">';
+    $output .= '<img src="' . $child->getChildLargeImage() . '" title="' . $child->getChildName() . '">';
+    $output .= '</div>';
+
+    $output .= '<div class="information">';
+    $output .= strtr($info_string, $info_placeholders);
+    $output .= '</div>';
+
+    $output .= '<div class="share">';
+
+    $output .= '<span class="facebook"><a href="http://www.facebook.com/sharer.php?u=' . $url_html . '" target="_blank" class="facebook external" title="Facebook">Facebook</a></span>';
+    $output .= '<span class="twitter"><a href="https://twitter.com/intent/tweet?text=' . $url_html . '" target="_blank" class="twitter external" title="Twitter">Twitter</a></span>';
+    $output .= '<span class="linkedin"><a href="http://www.linkedin.com/shareArticle?mini=1&amp;url=' . $url_html . '" target="_blank" class="linkedin external" title="LinkedIn">LinkedIn</a></span>';
+    $output .= '<span class="blogger"><a href="https://www.blogger.com/blog-this.g?u=' . $url_html . '&n=' . $title_html . '" target="_blank" class="blogger external" title="Blogger">Blogger</a></span>';
+    $output .= '<span class="googleplus"><a href="https://plus.google.com/share?url=' . $url_html . '" target="_blank" class="google external" title="Google+">Google+</a></span>';
+
+
     $output .= '</div>';
 
     $output .= '</div>';
