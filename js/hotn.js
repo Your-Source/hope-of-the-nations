@@ -14,6 +14,9 @@ $(document).ready(function() {
 
         // Replace the content.
         $('#hotn-child-list').html($content);
+
+        // Load the pager functionality after ajax request.
+        ajax_pager();
       }
     });
   };
@@ -50,23 +53,36 @@ $(document).ready(function() {
     hotn_ajax_request({})
   });
 
-  // Pager
-  $('#hotn-pager').find('.pager').bind('click', function() {
-    var pager_id = $(this).data('pager');
+  // Load the function pager by load.
+  ajax_pager();
+  // Function for pager.
+  function ajax_pager() {
+    $('#hotn-pager').find('.pager').bind('click', function() {
+      var pager_id = $(this).data('pager');
 
-    console.log(pager_id);
-    data = {};
+      data = {};
 
-    // Set the pager id to variable.
-    data['hotnpager'] = pager_id;
-    // // Set all select value to null.
-    // $('select', $form).each(function(){
-    //     var $select = $(this);
-    //     var val = $select.val('');
-    // });
+      // Set the pager id to variable.
+      data['hotnpager'] = pager_id;
 
-    // Refresh the childeren form and pager.
-    hotn_ajax_request(data);
-  });
+      // Get all value from select in the form.
+      $('#hotn-filter-form').each(function() {
+        var $form = $(this);
+
+        $('select', $form).each(function() {
+            var $select = $(this);
+            var val = $select.val();
+            var name = $select.attr('name');
+
+            // Set the value to array with as key field name.
+            data[name] = val;
+        });
+
+      });
+
+      // Call ajax request with all data.
+      hotn_ajax_request(data);
+    });
+  }
 
 });
