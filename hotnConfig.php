@@ -38,7 +38,7 @@ class hotnConfig {
     'uri' => 'api/sponsors',
     'method' => 'POST',
   );
-  public static $session_ttl = 0;
+  public static $session_ttl = 1800;
   public static $translator_func = NULL;
   public static $custom_translate_lang = 'nl';
 }
