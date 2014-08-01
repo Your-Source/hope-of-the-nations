@@ -331,11 +331,11 @@ class hotn {
 
     $output .= '<div class="share">';
 
-    $output .= '<span class="facebook"><a href="http://www.facebook.com/sharer.php?u=' . $url_html . '" target="_blank" class="facebook external" title="Facebook">Facebook</a></span>';
-    $output .= '<span class="twitter"><a href="https://twitter.com/intent/tweet?text=' . $url_html . '" target="_blank" class="twitter external" title="Twitter">Twitter</a></span>';
-    $output .= '<span class="linkedin"><a href="http://www.linkedin.com/shareArticle?mini=1&amp;url=' . $url_html . '" target="_blank" class="linkedin external" title="LinkedIn">LinkedIn</a></span>';
-    $output .= '<span class="blogger"><a href="https://www.blogger.com/blog-this.g?u=' . $url_html . '&n=' . $title_html . '" target="_blank" class="blogger external" title="Blogger">Blogger</a></span>';
-    $output .= '<span class="googleplus"><a href="https://plus.google.com/share?url=' . $url_html . '" target="_blank" class="google external" title="Google+">Google+</a></span>';
+    $output .= '<span class="facebook"><a href="http://www.facebook.com/sharer.php?u=' . $url_html . '" target="_blank" class="facebook external" title="Facebook">Facebook</a></span> ';
+    $output .= '<span class="twitter"><a href="https://twitter.com/intent/tweet?text=' . $url_html . '" target="_blank" class="twitter external" title="Twitter">Twitter</a></span> ';
+    $output .= '<span class="linkedin"><a href="http://www.linkedin.com/shareArticle?mini=1&amp;url=' . $url_html . '" target="_blank" class="linkedin external" title="LinkedIn">LinkedIn</a></span> ';
+    $output .= '<span class="blogger"><a href="https://www.blogger.com/blog-this.g?u=' . $url_html . '&n=' . $title_html . '" target="_blank" class="blogger external" title="Blogger">Blogger</a></span> ';
+    $output .= '<span class="googleplus"><a href="https://plus.google.com/share?url=' . $url_html . '" target="_blank" class="google external" title="Google+">Google+</a></span> ';
 
     $output .= '</div>';
 
