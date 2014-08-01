@@ -14,7 +14,8 @@ class hotnConnector {
   public static function get_feed($type = 'child', $data = array()) {
     $hotnsessionkey = 'hotn_' . $type;
 
-    // If in the future get more children filter by request.
+    // This code is commented because if it in the future there are a lot more
+    // children it is possible to filter by the request.
     // // Set API key to query and build query.
     // foreach ($data as $key => $value) {
     //   // Unset the key if the value is empty of not contains hotn-.
