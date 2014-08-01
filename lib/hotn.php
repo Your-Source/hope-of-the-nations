@@ -7,12 +7,15 @@ include_once __dir__ . '/hotnForm.php';
 include_once __dir__ . '/hotnSponsorChildInterface.php';
 include_once __dir__ . '/hotnSponsorChild.php';
 
+define('HOTN_MAX_ITEMS_PAGER', 2);
+
 class hotn {
   private static $childs_count;
   private static $childs_count_total;
+  private static $pagers_items;
 
   public function get_overview() {
-    $childs = self::get_child_list($_GET);
+    $childs = self::get_child_list($_GET, FALSE);
     $count = self::get_child_count($_GET);
 
     if (empty($childs)) {
@@ -47,7 +50,7 @@ class hotn {
   /**
    * Function to get the child list and sort if parameter is set.
    */
-  private function get_child_list($parameter = array()) {
+  private function get_child_list($parameter = array(), $all_items) {
     $childs = hotnConnector::get_feed('child');
 
     $child_output = array();
@@ -146,6 +149,23 @@ class hotn {
       });
     }
 
+    // Select items for the pager.
+    $pager = !empty($parameter['hotnpager']) ? $parameter['hotnpager'] : 0;
+    $start = HOTN_MAX_ITEMS_PAGER * $pager;
+    $end = HOTN_MAX_ITEMS_PAGER * $pager + (HOTN_MAX_ITEMS_PAGER - 1);
+    // Set this only if parameter is avaible.
+    if (!$all_items) {
+      self::$pagers_items = ceil(count($child_output) / HOTN_MAX_ITEMS_PAGER);
+    }
+
+
+    $child_output = array_values($child_output);
+    foreach ($child_output as $key => $child) {
+      if ($key < $start || $key > $end) {
+        unset($child_output[$key]);
+      }
+    }
+
     return $child_output;
   }
 
@@ -156,7 +176,7 @@ class hotn {
     return self::$childs_count;
   }
 
-   /**
+  /**
    * Count all childeren bevore filter and return this.
    */
   private function get_child_count_total() {
@@ -168,7 +188,7 @@ class hotn {
    */
   private function get_child_filter($child_key) {
     // Get all childs.
-    $childs = self::get_child_list();
+    $childs = self::get_child_list(array(), TRUE);
 
     $output = array();
     foreach ($childs as $child) {
@@ -282,6 +302,10 @@ class hotn {
     }
     $output .= '</div>';
 
+    $output .= '<div id="hotn-pager">';
+    $output .= self::theme_pager();
+    $output .= '</div>';
+
     $output .= '</div>';
 
     $output .= '</div>';
@@ -307,6 +331,34 @@ class hotn {
     $output .= '</select>';
 
     return $output;
+  }
+
+  /**
+   * Theme function for creating the pager.
+   */
+  private function theme_pager() {
+    // Get the current pager id. If empty fallback 0.
+    $current_pager = !empty($_GET['hotnpager']) ? $_GET['hotnpager'] : 0;
+    $pagers_items = self::$pagers_items;
+    $pager = '';
+
+    // If 1 page return nothing.
+    if ($pagers_items <= 1) {
+      return '';
+    }
+
+    for ($i=0; $i < $pagers_items; $i++) {
+      $page = $i + 1;
+
+      if ($current_pager == $i) {
+        $pager .= '<span data-pager="' . $i . '" class="current-pager">' . $page . '</span> ';
+      }
+      else {
+        $pager .= '<a href="#" data-pager="' . $i . '" class="pager">' . $page . '</a> ';
+      }
+    }
+
+    return $pager;
   }
 
   /**

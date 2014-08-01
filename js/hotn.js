@@ -10,7 +10,7 @@ $(document).ready(function() {
       success: function (data) {
         // Get the content.
         var $html = $(data);
-        $content = $html.find('#hotn-child-list');
+        $content = $html.find('#hotn-child-list').html();
 
         // Replace the content.
         $('#hotn-child-list').html($content);
@@ -50,5 +50,23 @@ $(document).ready(function() {
     hotn_ajax_request({})
   });
 
+  // Pager
+  $('#hotn-pager').find('.pager').bind('click', function() {
+    var pager_id = $(this).data('pager');
+
+    console.log(pager_id);
+    data = {};
+
+    // Set the pager id to variable.
+    data['hotnpager'] = pager_id;
+    // // Set all select value to null.
+    // $('select', $form).each(function(){
+    //     var $select = $(this);
+    //     var val = $select.val('');
+    // });
+
+    // Refresh the childeren form and pager.
+    hotn_ajax_request(data);
+  });
 
 });
