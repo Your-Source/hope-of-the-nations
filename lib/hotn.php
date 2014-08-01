@@ -214,7 +214,7 @@ class hotn {
    * Theme function for child items on overview page.
    */
   private function theme_overview_child(hotnSponsorChild $child) {
-    $detail_url = $_SERVER['REQUEST_URI'] . '?hotnChildID=' . $child->getChildId();
+    $detail_url = $_SERVER['SCRIPT_NAME'] . '?hotnChildID=' . $child->getChildId();
 
     $output = '<div class="item child-overview">';
 
