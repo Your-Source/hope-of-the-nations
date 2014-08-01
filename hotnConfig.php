@@ -26,7 +26,6 @@
  *  This function can be user defined.
  */
 class hotnConfig {
-  public static $debug = FALSE;
   public static $url = 'http://hotn.administratiekoppeling.nl';
   public static $apikey = 'b9a695eee0986c7774f80c885649c278';
   public static $childUrlData = array(
@@ -39,5 +38,4 @@ class hotnConfig {
   );
   public static $session_ttl = 0;
   public static $translator_func = NULL;
-
 }

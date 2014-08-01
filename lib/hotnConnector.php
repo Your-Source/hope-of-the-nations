@@ -29,17 +29,20 @@ class hotnConnector {
     //   }
     // }
 
-    // If debug is true or session key is empty.
-    if (hotnConfig::$debug || empty($_SESSION[$hotnsessionkey])) {
+    // If session width data is empty or time to live of the session is expired.
+    if (empty($_SESSION[$hotnsessionkey])
+      || (time() - $_SESSION[$hotnsessionkey . '_created'] > hotnConfig::$session_ttl)) {
+
       // Get the data from the request.
       try {
         $data = self::type_data_request($type, $data);
       }
       catch (Exception $e) {};
 
-      // Set the data to the session.
+      // Set the data to the session and set also a created time to session.
       try {
         $_SESSION[$hotnsessionkey] = $data;
+        $_SESSION[$hotnsessionkey . '_created'] = time();
       }
       catch (Exception $e) {};
 
