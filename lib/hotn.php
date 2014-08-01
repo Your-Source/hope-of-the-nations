@@ -10,21 +10,21 @@ include_once __dir__ . '/hotnSponsorChild.php';
 define('HOTN_MAX_ITEMS_PAGER', 2);
 
 class hotn {
-  private static $childs_count;
-  private static $childs_count_total;
+  private static $children_count_filtered;
+  private static $children_count_total;
   private static $pagers_items;
 
   public function get_overview() {
-    $childs = self::get_child_list($_GET, FALSE);
+    $children = self::get_child_list($_GET, FALSE);
     $count = self::get_child_count($_GET);
 
-    if (empty($childs)) {
-      $message = self::t('There are no children available.');
+    if (empty($children)) {
+      $message = self::hotn_t('There are no children available.');
 
       return self::theme_overview(array(), '', $message);
     }
     $child_output = array();
-    foreach ($childs as $child) {
+    foreach ($children as $child) {
 
       $child_output[] = self::theme_overview_child($child);
     }
@@ -35,7 +35,7 @@ class hotn {
   /**
    * Translate function for text.
    */
-  public function t($string) {
+  public function hotn_t($string) {
     // Get the translate function name of config.
     $translator_func = hotnConfig::$translator_func;
 
@@ -50,26 +50,27 @@ class hotn {
   /**
    * Function to get the child list and sort if parameter is set.
    */
-  private function get_child_list($parameter = array(), $all_items) {
-    $childs = hotnConnector::get_feed('child');
+  private function get_child_list($parameters = array(), $all_items) {
+    $children = hotnConnector::get_feed('child');
 
     $child_output = array();
-    foreach ($childs as $child) {
+    foreach ($children as $child) {
       $child_output[] = new hotnSponsorChild($child);
     }
 
-    // Set total count of childeren.
-    self::$childs_count_total = count($child_output);
+    // Set total count of children.
+    self::$children_count_total = count($child_output);
 
-    // Filter the value by parameters.
-    foreach ($parameter as $key => $input_value) {
-      // Unset the key if the value is empty of not contains hotn-.
+    // The parameters will be prefixed by 'hotn-' to
+    // prevent namespace issues.
+    foreach ($parameters as $key => $input_value) {
+      // Unset the key if the value is empty of doesn't contain hotn-.
       if (!empty($input_value) && strpos($key, 'hotn-') !== FALSE) {
         // Replace hotn- to nothing, set new parameter to array and delete old key.
         $new_key = str_replace('hotn-', '', $key);
 
-        // Set filter on operator to false.
-        $filter_on_operator = FALSE;
+        // Set filter on age to false.
+        $filter_on_age = FALSE;
 
         // Create switch with the new key for get the function name.
         switch ($new_key) {
@@ -82,15 +83,15 @@ class hotn {
             break;
 
           case 'agegroup':
-            $filter_on_operator = TRUE;
+            $filter_on_age = TRUE;
             break;
         }
 
-        // Foreach on all childs to filter if a child does not comply.
+        // Foreach on all children to filter if a child does not comply.
         foreach ($child_output as $child_key => $child) {
 
           // If filter on operator is true filter on a operator in form the switch.
-          if ($filter_on_operator) {
+          if ($filter_on_age) {
             $age = $child->getChildAge();
 
             switch ($input_value) {
@@ -124,11 +125,12 @@ class hotn {
       }
     }
 
-    // Set count of childeren after filter.
-    self::$childs_count = count($child_output);
+    // Set count of children after filter.
+    self::$children_count_filtered = count($child_output);
 
-    // If not empty sort sort the array.
-    if (!empty($parameter['hotnsort']) && $sort = $parameter['hotnsort']) {
+    // If not empty sort the array.
+    if (!empty($parameters['hotnsort'])) {
+      $sort = $parameters['hotnsort'];
       usort($child_output, function ($a, $b) use ($sort) {
         if ($a == $b) {
           return FALSE;
@@ -170,28 +172,31 @@ class hotn {
   }
 
   /**
-   * Count all childeren after filter and return this.
+   * Count all children after filter and return this.
    */
   private function get_child_count() {
-    return self::$childs_count;
+    return self::$children_count_filtered;
   }
 
   /**
-   * Count all childeren bevore filter and return this.
+   * Count all children before filter and return this.
    */
   private function get_child_count_total() {
-    return self::$childs_count_total;
+    return self::$children_count_total;
   }
 
   /**
    * Function to create array with filter criteria from children list.
+   * @param (string) $child_key
+   *  E.g. the country or gender method name.
+   * @return array
    */
   private function get_child_filter($child_key) {
-    // Get all childs.
-    $childs = self::get_child_list(array(), TRUE);
+    // Get all children.
+    $children = self::get_child_list(array(), TRUE);
 
     $output = array();
-    foreach ($childs as $child) {
+    foreach ($children as $child) {
       // Create function name of method by sort key and call this function.
       $function_name = 'getChild' . $child_key;
       $value = call_user_func(array($child, $function_name));
@@ -212,9 +217,7 @@ class hotn {
   private function theme_overview_child(hotnSponsorChild $child) {
     $detail_url = $_SERVER['REQUEST_URI'] . '?hotnChildID=' . $child->getChildId();
 
-    $output = '';
-
-    $output .= '<div class="item child-overview">';
+    $output = '<div class="item child-overview">';
 
     $output .= '<div class="image">';
     $output .= '<img src="' . $child->getChildSmallImage() . '" title="' . $child->getChildName() . '">';
@@ -238,44 +241,44 @@ class hotn {
   /**
    * Theme function for child items on overview page.
    */
-  private function theme_overview(array $childs, $count, $message = NULL) {
+  private function theme_overview(array $children, $count, $message = NULL) {
     // Set items for select input.
     $agegroup = array(
-      0 => self::t('below 3'),
-      1 => self::t('3 - 6'),
-      2 => self::t('7 - 9'),
-      3 => self::t('10 or above'),
+      0 => self::hotn_t('below 3'),
+      1 => self::hotn_t('3 - 6'),
+      2 => self::hotn_t('7 - 9'),
+      3 => self::hotn_t('10 or above'),
     );
     $sort = array(
-      'Name' => self::t('Name'),
-      'Birthdate' => self::t('Age'),
-      'Country' => self::t('Country'),
-      'Gender' => self::t('Gender'),
+      'Name' => self::hotn_t('Name'),
+      'Birthdate' => self::hotn_t('Age'),
+      'Country' => self::hotn_t('Country'),
+      'Gender' => self::hotn_t('Gender'),
     );
 
     $output = '<div id="hotn-overview">';
-    $output .= '<h1 class="hotn-title">' . self::t('Child sponsorship') . '</h1>';
+    $output .= '<h1 class="hotn-title">' . self::hotn_t('Child sponsorship') . '</h1>';
 
     $output .= '<div> ';
     $output .= '<form method="get" id="hotn-filter-form"> ';
     $output .= '<div class="field">';
-    $output .= '<label>' . self::t('Age:') . '</label>';
+    $output .= '<label>' . self::hotn_t('Age:') . '</label>';
     $output .= self::theme_select('hotn-agegroup', $agegroup);
     $output .= '</div>';
     $output .= '<div class="field">';
-    $output .= '<label>' . self::t('Country:') . '</label>';
+    $output .= '<label>' . self::hotn_t('Country:') . '</label>';
     $output .= self::theme_select('hotn-country', self::get_child_filter('Country'));
     $output .= '</div>';
     $output .= '<div class="field">';
-    $output .= '<label>' . self::t('Gender:') . '</label>';
+    $output .= '<label>' . self::hotn_t('Gender:') . '</label>';
     $output .= self::theme_select('hotn-gender', self::get_child_filter('Gender'));
     $output .= '</div>';
     $output .= '<div class="field field-sort">';
-    $output .= '<label>' . self::t('Sort:') . '</label>';
-    $output .= self::theme_select('hotnsort', $sort, self::t('Sort'));
+    $output .= '<label>' . self::hotn_t('Sort:') . '</label>';
+    $output .= self::theme_select('hotnsort', $sort, self::hotn_t('Sort'));
     $output .= '</div>';
     $output .= '<div class="links">';
-    $output .= '<a href="#" class="link hotn-filter-form-reset">' . self::t('Reset') . '</a>';
+    $output .= '<a href="#" class="link hotn-filter-form-reset">' . self::hotn_t('Reset') . '</a>';
     $output .= '</div>';
     $output .= '</form>';
     $output .= '</div>';
@@ -283,7 +286,7 @@ class hotn {
     $output .= '<div id="hotn-child-list">';
 
     if (!empty($count)) {
-      $string = self::format_plural($count, self::t('child found'), self::t('children found'));
+      $string = self::format_plural($count, self::hotn_t('child found'), self::hotn_t('children found'));
 
       $output .= '<div class="child-count">';
       $output .= $count . ' ' . $string;
@@ -297,7 +300,7 @@ class hotn {
     }
 
     $output .= '<div class="items">';
-    foreach ($childs as $child) {
+    foreach ($children as $child) {
       $output .= $child;
     }
     $output .= '</div>';
@@ -317,11 +320,9 @@ class hotn {
    * Theme function for select box.
    */
   private function theme_select($name, $items, $title = NULL) {
-    $title = !empty($title) ? $title : self::t('Select');
+    $title = !empty($title) ? $title : self::hotn_t('Select');
 
-    $output = '';
-
-    $output .= '<select name="' . $name . '"> ';
+    $output = '<select name="' . $name . '"> ';
     $output .= '<option value="">' . $title . '</option> ';
 
     foreach ($items as $key => $value) {
