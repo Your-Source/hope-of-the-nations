@@ -15,6 +15,18 @@ class hotn {
   private static $pagers_items;
 
   /**
+   * Function for showing children.
+   * @return string Returns string with all content.
+   */
+  public function show_children() {
+    if (!empty($_GET['hotnChildID'])) {
+      return 'Child detail';
+    }
+
+    return self::get_overview();
+  }
+
+  /**
    * Function to create children overview page.
    * @return string complete page with children overview.
    */
