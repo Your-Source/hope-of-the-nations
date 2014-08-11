@@ -1,11 +1,11 @@
 $(document).ready(function() {
 
   /**
-   * Ajax request to server for get childeren.
+   * AJAX request to get children/for getting children.
    * @param  array data All parameters for request to server.
    */
   function hotn_ajax_request(data) {
-    // Set ajax callback to refresh the data and set trobber to load.
+    // Set ajax callback to refresh the data and set throbber to load.
     $('#hotn-child-list').html('<div class="throbber">....</div>');
     $.ajax({
       type: 'GET',
@@ -53,7 +53,7 @@ $(document).ready(function() {
         var val = $select.val('');
     });
 
-    // Refresh the childeren form.
+    // Refresh the children form.
     hotn_ajax_request({})
   });
 
