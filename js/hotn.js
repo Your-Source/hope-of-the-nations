@@ -1,11 +1,11 @@
 $(document).ready(function() {
 
   /**
-   * Ajax request to server for get childeren.
+   * AJAX request to get children/for getting children.
    * @param  array data All parameters for request to server.
    */
   function hotn_ajax_request(data) {
-    // Set ajax callback to refresh the data and set trobber to load.
+    // Set ajax callback to refresh the data and set throbber to load.
     $('#hotn-child-list').html('<div class="throbber">....</div>');
     $.ajax({
       type: 'GET',
@@ -20,49 +20,49 @@ $(document).ready(function() {
         $('#hotn-child-list').html($content);
 
         // Load the pager functionality after ajax request.
-        ajax_pager();
+        hotn_ajax_pager($hotn_filter_form);
       }
     });
   };
 
-  $('#hotn-filter-form').find('select').bind('change', function() {
-    var $select = $(this);
-    var $form = $select.parents('form');
-    var val = $select.val();
-    var name = $select.attr('name');
+  var $hotn_filter_form = $('#hotn-filter-form');
+
+  // Find all select fields and bind on change.
+  $hotn_filter_form.find('select').bind('change', function() {
 
     data = {};
     // Get all value and name of select in form and set the value to array.
-    $('select', $form).each(function() {
-        var $select = $(this);
-        var val = $select.val();
-        var name = $select.attr('name');
-        data[name] = val;
+    $('select', $hotn_filter_form).each(function() {
+        var $filter_select = $(this);
+        var hotn_filter_val = $filter_select.val();
+        var hotn_filter_name = $filter_select.attr('name');
+        data[hotn_filter_name] = hotn_filter_val;
     });
 
     hotn_ajax_request(data);
 
   });
 
-  $('#hotn-filter-form').find('.hotn-filter-form-reset').bind('click', function() {
-    var $form = $(this).parents('form');
+  // Find reset button and bind on click.
+  $hotn_filter_form.find('.hotn-filter-form-reset').bind('click', function() {
 
     // Set all select value to null.
-    $('select', $form).each(function(){
-        var $select = $(this);
-        var val = $select.val('');
+    $('select', $hotn_filter_form).each(function(){
+        var $filter_select = $(this);
+        var hotn_filter_val = $filter_select.val('');
     });
 
-    // Refresh the childeren form.
+    // Refresh the children form.
     hotn_ajax_request({})
   });
 
   // Load the function pager by load.
-  ajax_pager();
+  hotn_ajax_pager($hotn_filter_form);
+
   /**
-   * Function for set the functionality of pager to the pager.
+   * Function for ajax pager by change on pager item change the page of children.
    */
-  function ajax_pager() {
+  function hotn_ajax_pager($hotn_filter_form) {
     $('#hotn-pager').find('.pager').bind('click', function() {
       var pager_id = $(this).data('pager');
 
@@ -72,18 +72,15 @@ $(document).ready(function() {
       data['hotnpager'] = pager_id;
 
       // Get all value from select in the form.
-      $('#hotn-filter-form').each(function() {
-        var $form = $(this);
+      var $hotn_filter_form = $(this);
 
-        $('select', $form).each(function() {
-            var $select = $(this);
-            var val = $select.val();
-            var name = $select.attr('name');
+      $('select', $hotn_filter_form).each(function() {
+          var $filter_select = $(this);
+          var hotn_filter_val = $filter_select.val();
+          var hotn_filter_name = $filter_select.attr('name');
 
-            // Set the value to array with as key field name.
-            data[name] = val;
-        });
-
+          // Set the value to array with as key field name.
+          data[hotn_filter_name] = hotn_filter_val;
       });
 
       // Call ajax request with all data.
