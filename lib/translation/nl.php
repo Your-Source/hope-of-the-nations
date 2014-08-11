@@ -32,4 +32,8 @@ $hotn_translation_nl = array(
 Fill in the form below to support "@name"' => 'Hartelijk bedankt dat je overweegt "@name" te gaan sponsoren. Je maandelijkse gift van &#8364; 30 of &#8364; 15 geeft @gender de kans op een leven zonder armoede. Via Hope of the Nations ontvangt "@name" onder andere een opleiding, aanvullende voeding, medische zorg en geestelijke vorming. Vul onderstaand formulier in om "@name" te ondersteunen.',
   'him' => 'hem',
   'her' => 'haar',
+  'Salutation' => 'Aanhef',
+  'Mr' => 'De heer',
+  'Ms.' => 'Mevrouw',
+  'We will use your email address to keep you informed of news and the situation of "@name". For us this is the cheapest way of communication.' => 'Wij gebruiken jouw e-mailadres om je op de hoogte te houden van nieuws en de situatie van "@name". Dit is voor ons de voordeligste vorm van communicatie.'
 );
