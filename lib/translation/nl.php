@@ -52,5 +52,6 @@ Fill in the form below to support "@name"' => 'Hartelijk bedankt dat je overweeg
   '1 year' => '1 jaar',
   '2 years' => '2 jaar',
   '5 years' => '5 jaar',
-
+  'Netherlands' => 'Nederland',
+  'Belgium' => 'Belgi&#235;',
 );

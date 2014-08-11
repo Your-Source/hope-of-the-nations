@@ -7,11 +7,20 @@ class hotnForm {
 
   public function form($childs) {
 
+    if (!empty($_POST['ChildID'])) {
+      var_dump($_POST);
+    }
 
     return self::hotn_theme_form($childs[0]);
   }
 
-  private function hotn_theme_form($child) {
+  /**
+   * [hotn_theme_form description]
+   * @param  hotnSponsorChild $child Instance of child.
+   * @param  (array)  $messages array with all messages to show by form
+   * @return (string) return form with all items.
+   */
+  private function hotn_theme_form(hotnSponsorChild $child, $messages = array()) {
     $title = hotn::hotn_t('Registration form');
 
     $form_discription = 'Thank you for considering to sponsor "@name". You monthly gift of  &#8364; 30 of &#8364; 15 gives @gender a change of a life without poverty. Via Hope of the Nations she/he receives education, supplementary nutrition, medical care and mental training.
@@ -29,6 +38,14 @@ Fill in the form below to support "@name"';
 
     $output = '<div id="hotn-child-form">';
     $output .= '<h1 class="hotn-title">' . $title . '</h1>';
+
+    $output .= '<div id="messages">';
+    if (!empty($messages)) {
+      foreach ($messages as $message) {
+        $output .= $messages . '<br />';
+      }
+    }
+    $output .= '</div>';
 
     $output .= '<form method="POST" id="hotn-child-sponsor-form"> ';
 
@@ -110,6 +127,7 @@ Fill in the form below to support "@name"';
     $output .= '<div class="field">';
     $output .= '<input type="checkbox" name="agreement" value="1"> ' . hotn::hotn_t($agreement_text);
     $output .= '</div>';
+    $output .= '<input type="hidden" name="ChildID" value="' .  hotn::hotn_t($child->getChildID()) . '">';
     $output .= '<div class="field submit">';
     $output .= '<input type="submit" name="submit" value="' . hotn::hotn_t('Submit') . '">';
     $output .= '</div>';
