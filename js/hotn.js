@@ -25,38 +25,36 @@ $(document).ready(function() {
     });
   };
 
-  $('#hotn-filter-form').each(function () {
-    var $form = $(this);
+  var $hotn_filter_form = $('#hotn-filter-form');
 
-    // Find all select fields and bind on change.
-    $form.find('select').bind('change', function() {
+  // Find all select fields and bind on change.
+  $hotn_filter_form.find('select').bind('change', function() {
 
-      data = {};
-      // Get all value and name of select in form and set the value to array.
-      $('select', $form).each(function() {
-          var $select = $(this);
-          var val = $select.val();
-          var name = $select.attr('name');
-          data[name] = val;
-      });
-
-      hotn_ajax_request(data);
-
+    data = {};
+    // Get all value and name of select in form and set the value to array.
+    $('select', $hotn_filter_form).each(function() {
+        var $select = $(this);
+        var val = $select.val();
+        var name = $select.attr('name');
+        data[name] = val;
     });
 
-    // Find reset button and bind on click.
-    $form.find('.hotn-filter-form-reset').bind('click', function() {
+    hotn_ajax_request(data);
 
-      // Set all select value to null.
-      $('select', $form).each(function(){
-          var $select = $(this);
-          var val = $select.val('');
-      });
+  });
 
-      // Refresh the children form.
-      hotn_ajax_request({})
+  // Find reset button and bind on click.
+  $hotn_filter_form.find('.hotn-filter-form-reset').bind('click', function() {
+
+    // Set all select value to null.
+    $('select', $hotn_filter_form).each(function(){
+        var $select = $(this);
+        var val = $select.val('');
     });
-  })
+
+    // Refresh the children form.
+    hotn_ajax_request({})
+  });
 
   // Load the function pager by load.
   ajax_pager();
@@ -74,9 +72,9 @@ $(document).ready(function() {
 
       // Get all value from select in the form.
       $('#hotn-filter-form').each(function() {
-        var $form = $(this);
+        var $hotn_filter_form = $(this);
 
-        $('select', $form).each(function() {
+        $('select', $hotn_filter_form).each(function() {
             var $select = $(this);
             var val = $select.val();
             var name = $select.attr('name');
