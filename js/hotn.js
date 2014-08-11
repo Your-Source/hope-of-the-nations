@@ -59,7 +59,7 @@ $(document).ready(function() {
   // Load the function pager by load.
   hotn_ajax_pager();
   /**
-   * Function for set the functionality of pager to the pager.
+   * Function for ajax pager by change on pager item change the page of children.
    */
   function hotn_ajax_pager() {
     $('#hotn-pager').find('.pager').bind('click', function() {
