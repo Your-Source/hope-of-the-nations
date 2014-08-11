@@ -28,4 +28,8 @@ $hotn_translation_nl = array(
   'Sort' => 'Sorteren',
   'More info' => 'Meer informatie',
   'Registration form' => 'Inschrijfformulier',
+  'Thank you for considering to sponsor "@name". You monthly gift of  &#8364; 30 of &#8364; 15 gives @gender a change of a life without poverty. Via Hope of the Nations she/he receives education, supplementary nutrition, medical care and mental training.
+Fill in the form below to support "@name"' => 'Hartelijk bedankt dat je overweegt "@name" te gaan sponsoren. Je maandelijkse gift van &#8364; 30 of &#8364; 15 geeft @gender de kans op een leven zonder armoede. Via Hope of the Nations ontvangt "@name" onder andere een opleiding, aanvullende voeding, medische zorg en geestelijke vorming. Vul onderstaand formulier in om "@name" te ondersteunen.',
+  'him' => 'hem',
+  'her' => 'haar',
 );
