@@ -58,6 +58,7 @@ $(document).ready(function() {
 
   // Load the function pager by load.
   hotn_ajax_pager($hotn_filter_form);
+
   /**
    * Function for ajax pager by change on pager item change the page of children.
    */
