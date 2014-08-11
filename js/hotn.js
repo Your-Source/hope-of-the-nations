@@ -25,37 +25,42 @@ $(document).ready(function() {
     });
   };
 
-  $('#hotn-filter-form').find('select').bind('change', function() {
-    var $select = $(this);
-    var $form = $select.parents('form');
-    var val = $select.val();
-    var name = $select.attr('name');
+  $('#hotn-filter-form').each(function () {
+    var $form = $(this);
 
-    data = {};
-    // Get all value and name of select in form and set the value to array.
-    $('select', $form).each(function() {
-        var $select = $(this);
-        var val = $select.val();
-        var name = $select.attr('name');
-        data[name] = val;
+    // Find all select fields and bind on change.
+    $form.find('select').bind('change', function() {
+      var $select = $(this);
+      var val = $select.val();
+      var name = $select.attr('name');
+
+      data = {};
+      // Get all value and name of select in form and set the value to array.
+      $('select', $form).each(function() {
+          var $select = $(this);
+          var val = $select.val();
+          var name = $select.attr('name');
+          data[name] = val;
+      });
+
+      hotn_ajax_request(data);
+
     });
 
-    hotn_ajax_request(data);
+    // Find reset button and bind on click.
+    $form.find('.hotn-filter-form-reset').bind('click', function() {
+      var $form = $(this).parents('form');
 
-  });
+      // Set all select value to null.
+      $('select', $form).each(function(){
+          var $select = $(this);
+          var val = $select.val('');
+      });
 
-  $('#hotn-filter-form').find('.hotn-filter-form-reset').bind('click', function() {
-    var $form = $(this).parents('form');
-
-    // Set all select value to null.
-    $('select', $form).each(function(){
-        var $select = $(this);
-        var val = $select.val('');
+      // Refresh the children form.
+      hotn_ajax_request({})
     });
-
-    // Refresh the children form.
-    hotn_ajax_request({})
-  });
+  })
 
   // Load the function pager by load.
   ajax_pager();
