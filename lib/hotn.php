@@ -20,7 +20,7 @@ class hotn {
    */
   public function show_children() {
     if (!empty($_GET['hotnChildID'])) {
-      return self::get_child($_GET['hotnChildID']);
+      return self::get_child($_GET['hotnChildID']) . hotnForm::form();
     }
 
     return self::get_overview();

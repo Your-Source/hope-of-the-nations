@@ -27,4 +27,5 @@ $hotn_translation_nl = array(
   'Last' => 'Laatste',
   'Sort' => 'Sorteren',
   'More info' => 'Meer informatie',
+  'Registration form' => 'Inschrijfformulier',
 );
