@@ -68,7 +68,7 @@ class hotn {
    * @param  string $string sting to translate by external translate function.
    * @return string translated string.
    */
-  public function hotn_t($string) {
+  public function hotn_t($string, $parameters = array()) {
     // Get the translate function name of config.
     $translator_func = hotnConfig::$translator_func;
 
@@ -76,7 +76,7 @@ class hotn {
     if (!empty($translator_func)) {
       // If function exists return the translated string.
       if (function_exists($translator_func)) {
-        return call_user_func($translator_func, array($string));
+        $string = call_user_func($translator_func, array($string));
       }
     }
     else {
@@ -87,10 +87,12 @@ class hotn {
 
         // If string is in variable return the translated string.
         if (array_key_exists($string, ${'hotn_translation_' . $custom_translate_lang})) {
-          return ${'hotn_translation_' . $custom_translate_lang}[$string];
+          $string = ${'hotn_translation_' . $custom_translate_lang}[$string];
         }
       }
     }
+
+    $string = strtr($string, $parameters);
 
     return $string;
   }
