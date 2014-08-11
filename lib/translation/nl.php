@@ -35,5 +35,22 @@ Fill in the form below to support "@name"' => 'Hartelijk bedankt dat je overweeg
   'Salutation' => 'Aanhef',
   'Mr' => 'De heer',
   'Ms.' => 'Mevrouw',
-  'We will use your email address to keep you informed of news and the situation of "@name". For us this is the cheapest way of communication.' => 'Wij gebruiken jouw e-mailadres om je op de hoogte te houden van nieuws en de situatie van "@name". Dit is voor ons de voordeligste vorm van communicatie.'
+  'We will use your email address to keep you informed of news and the situation of "@name". For us this is the cheapest way of communication.' => 'Wij gebruiken jouw e-mailadres om je op de hoogte te houden van nieuws en de situatie van "@name". Dit is voor ons de voordeligste vorm van communicatie.',
+  'Yes! I decide to sponsor "@name"!' => 'Ja! Ik besluit "@name" te sponsoren!',
+  'or until further notice with a minimum of 5 years.' => 'of tot wederopzegging met een minimum van 5 jaar.',
+  'First name' => 'Voornaam',
+  'Initials' => 'Voorletters',
+  'Date of birth' => 'Geboortedatum',
+  'Zip code' => 'Postcode',
+  'Premises' => 'Huisnummer',
+  'Phone number' => 'Telefoon',
+  'Mobilephone number' => 'Mobiel',
+  'Bankaccount' => 'Rekeningnummer',
+  'In the name of' => 'Op naam van',
+  'Sponsor amount' => 'Sponsorbedrag',
+  'Period' => 'Duur',
+  '1 year' => '1 jaar',
+  '2 years' => '2 jaar',
+  '5 years' => '5 jaar',
+
 );
