@@ -33,10 +33,10 @@ $(document).ready(function() {
     data = {};
     // Get all value and name of select in form and set the value to array.
     $('select', $hotn_filter_form).each(function() {
-        var $select = $(this);
-        var val = $select.val();
-        var name = $select.attr('name');
-        data[name] = val;
+        var $filter_select = $(this);
+        var hotn_filter_val = $filter_select.val();
+        var hotn_filter_name = $filter_select.attr('name');
+        data[hotn_filter_name] = hotn_filter_val;
     });
 
     hotn_ajax_request(data);
@@ -48,8 +48,8 @@ $(document).ready(function() {
 
     // Set all select value to null.
     $('select', $hotn_filter_form).each(function(){
-        var $select = $(this);
-        var val = $select.val('');
+        var $filter_select = $(this);
+        var hotn_filter_val = $filter_select.val('');
     });
 
     // Refresh the children form.
@@ -75,12 +75,12 @@ $(document).ready(function() {
         var $hotn_filter_form = $(this);
 
         $('select', $hotn_filter_form).each(function() {
-            var $select = $(this);
-            var val = $select.val();
-            var name = $select.attr('name');
+            var $filter_select = $(this);
+            var hotn_filter_val = $filter_select.val();
+            var hotn_filter_name = $filter_select.attr('name');
 
             // Set the value to array with as key field name.
-            data[name] = val;
+            data[hotn_filter_name] = hotn_filter_val;
         });
 
       });
