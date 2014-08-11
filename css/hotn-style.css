@@ -1,0 +1,57 @@
+#hotn-overview {
+  width: 680px;
+}
+
+#hotn-filter-form .field {
+  float: left;
+  margin-right: 20px;
+  min-width: 138px;
+  min-height: 42px;
+}
+#hotn-filter-form .field label {
+  width: 100%;
+  display: block;
+  margin-bottom: 6px;
+}
+#hotn-filter-form .field select {
+  width: 130px
+}
+
+#hotn-child-list {
+  clear: left;
+}
+#hotn-child-list .child-count {
+  padding: 10px 0;
+}
+#hotn-child-list .throbber {
+  background-image: url('../images/throbber.gif');
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  text-indent: 100px;
+  margin: 50px auto;
+}
+#hotn-child-list .items {
+  width: 100%;
+}
+#hotn-child-list .items .item {
+  width: 160px;
+  height: 245px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  float: left;
+}
+#hotn-child-list .items .item .image {
+  width: 100px;
+  height: 120px;
+  margin: 10px auto;
+  text-align: center;
+  margin-bottom: 2px;
+}
+#hotn-child-list .items .item .info {
+  text-align: center;
+}
+#hotn-child-list .item .name {
+  font-weight: bold;
+}

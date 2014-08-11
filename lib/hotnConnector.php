@@ -14,17 +14,36 @@ class hotnConnector {
   public static function get_feed($type = 'child', $data = array()) {
     $hotnsessionkey = 'hotn_' . $type;
 
-    // If debug is true or session key is empty.
-    if (hotnConfig::$debug || empty($_SESSION[$hotnsessionkey])) {
+    // This code is commented because if it in the future there are a lot more
+    // children it is possible to filter by the request.
+    // // Set API key to query and build query.
+    // foreach ($data as $key => $value) {
+    //   // Unset the key if the value is empty of not contains hotn-.
+    //   if (empty($value) || strpos($key, 'hotn-')) {
+    //     unset($data[$key]);
+    //   }
+    //   else {
+    //     // Replace hotn- to nothing, set new parameter to array and delete old key.
+    //     $new_key = str_replace('hotn-', '', $key);
+    //     $data[$new_key] = $data[$key];
+    //     unset($data[$key]);
+    //   }
+    // }
+
+    // If session width data is empty or time to live of the session is expired.
+    if (empty($_SESSION[$hotnsessionkey])
+      || (time() - $_SESSION[$hotnsessionkey . '_created'] > hotnConfig::$session_ttl)) {
+
       // Get the data from the request.
       try {
         $data = self::type_data_request($type, $data);
       }
       catch (Exception $e) {};
 
-      // Set the data to the session.
+      // Set the data to the session and set also a created time to session.
       try {
         $_SESSION[$hotnsessionkey] = $data;
+        $_SESSION[$hotnsessionkey . '_created'] = time();
       }
       catch (Exception $e) {};
 
@@ -47,7 +66,6 @@ class hotnConnector {
 
     $url = hotnConfig::$url . '/' . $url_data['uri'];
 
-    // Set API key to query and build query.
     $data['apikey'] = hotnConfig::$apikey;
     $query = http_build_query($data);
 
@@ -61,7 +79,7 @@ class hotnConnector {
         'method'  => $url_data['method'],
       ),
     );
-    $context  = stream_context_create($options);
+    $context = stream_context_create($options);
     // Get result with file get contents.
     try {
       $result = file_get_contents($url, FALSE, $context);
