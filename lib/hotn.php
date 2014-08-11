@@ -15,6 +15,18 @@ class hotn {
   private static $pagers_items;
 
   /**
+   * Function for showing children.
+   * @return string Returns string with all content.
+   */
+  public function show_children() {
+    if (!empty($_GET['hotnChildID'])) {
+      return self::get_child($_GET['hotnChildID']);
+    }
+
+    return self::get_overview();
+  }
+
+  /**
    * Function to create children overview page.
    * @return string complete page with children overview.
    */
@@ -37,6 +49,21 @@ class hotn {
   }
 
   /**
+   * Function to create child detail page.
+   * @param  int $childid The id of the child.
+   * @return string Returns the markup of child detail page.
+   */
+  public function get_child($childid) {
+    $childs = self::get_child_list(array('hotn-Id' => $childid));
+
+    if (empty($childs)) {
+      return self::hotn_t('This child is not available.');
+    }
+
+    return self::hotn_theme_detail_child($childs[0]);
+  }
+
+  /**
    * Translate function for text.
    * @param  string $string sting to translate by external translate function.
    * @return string translated string.
@@ -45,9 +72,24 @@ class hotn {
     // Get the translate function name of config.
     $translator_func = hotnConfig::$translator_func;
 
-    // If function exists return the translated string.
-    if (function_exists($translator_func)) {
-      return call_user_func($translator_func, array($string));
+    // If tranlate function is empty create own.
+    if (!empty($translator_func)) {
+      // If function exists return the translated string.
+      if (function_exists($translator_func)) {
+        return call_user_func($translator_func, array($string));
+      }
+    }
+    else {
+      $custom_translate_lang = hotnConfig::$custom_translate_lang;
+      // If not english set the translations.
+      if ($custom_translate_lang != 'en') {
+        include __dir__ . '/translation/' . $custom_translate_lang . '.php';
+
+        // If string is in variable return the translated string.
+        if (array_key_exists($string, ${'hotn_translation_' . $custom_translate_lang})) {
+          return ${'hotn_translation_' . $custom_translate_lang}[$string];
+        }
+      }
     }
 
     return $string;
@@ -94,6 +136,11 @@ class hotn {
           case 'agegroup':
             $filter_on_age = TRUE;
             break;
+          default:
+            // If new is not empty filter on all keys.
+            if (!empty($new_key)) {
+              $function_name = 'getChild' . $new_key;
+            }
         }
 
         // Foreach on all children to filter if a child does not comply.
@@ -242,7 +289,54 @@ class hotn {
     $output .= '<br />';
     $output .= '<span class="birthdate">' . $child->getChildBirthdate() . '</span>';
     $output .= '<br />';
-    $output .= '<span class="more-info"><a href="' . $detail_url . '">More info</a></span>';
+    $output .= '<span class="more-info"><a href="' . $detail_url . '">' . self::hotn_t('More info') . '</a></span>';
+    $output .= '</div>';
+
+    $output .= '</div>';
+
+    return $output;
+  }
+
+  /**
+   * Function to create the markup of child detail page.
+   * @param  hotnSponsorChild $child Instance of child.
+   * @return string Returns markup for child detail page.
+   */
+  private function hotn_theme_detail_child(hotnSponsorChild $child) {
+    $info_string = self::hotn_t('"@name" is born on "@birthdate" and lives in "@country"');
+    $info_placeholders = array(
+      '@name' => $child->getChildName(),
+      '@birthdate' => $child->getChildBirthdate(),
+      '@country' => $child->getChildCountry(),
+    );
+
+    $request_uri = $_SERVER['REQUEST_URI'];
+    $request_uri = substr($request_uri, 1);
+    $url = $_SERVER['HTTP_REFERER'] . $request_uri;
+    $url_html = urlencode($url);
+
+    $title = self::hotn_t('Sponsor a child');
+    $title_html = urlencode($title);
+
+    $output = '<div id="hotn-child-detail">';
+    $output .= '<h1 class="hotn-title">' . $title . '</h1>';
+
+    $output .= '<div class="image">';
+    $output .= '<img src="' . $child->getChildLargeImage() . '" title="' . $child->getChildName() . '">';
+    $output .= '</div>';
+
+    $output .= '<div class="information">';
+    $output .= strtr($info_string, $info_placeholders);
+    $output .= '</div>';
+
+    $output .= '<div class="share">';
+
+    $output .= '<span class="facebook"><a href="http://www.facebook.com/sharer.php?u=' . $url_html . '" target="_blank" class="facebook external" title="Facebook">Facebook</a></span> ';
+    $output .= '<span class="twitter"><a href="https://twitter.com/intent/tweet?text=' . $url_html . '" target="_blank" class="twitter external" title="Twitter">Twitter</a></span> ';
+    $output .= '<span class="linkedin"><a href="http://www.linkedin.com/shareArticle?mini=1&amp;url=' . $url_html . '" target="_blank" class="linkedin external" title="LinkedIn">LinkedIn</a></span> ';
+    $output .= '<span class="blogger"><a href="https://www.blogger.com/blog-this.g?u=' . $url_html . '&n=' . $title_html . '" target="_blank" class="blogger external" title="Blogger">Blogger</a></span> ';
+    $output .= '<span class="googleplus"><a href="https://plus.google.com/share?url=' . $url_html . '" target="_blank" class="google external" title="Google+">Google+</a></span> ';
+
     $output .= '</div>';
 
     $output .= '</div>';
@@ -278,19 +372,19 @@ class hotn {
     $output .= '<div> ';
     $output .= '<form method="get" id="hotn-filter-form"> ';
     $output .= '<div class="field">';
-    $output .= '<label>' . self::hotn_t('Age:') . '</label>';
+    $output .= '<label>' . self::hotn_t('Age') . ':' . '</label>';
     $output .= self::hotn_theme_select('hotn-agegroup', $agegroup);
     $output .= '</div>';
     $output .= '<div class="field">';
-    $output .= '<label>' . self::hotn_t('Country:') . '</label>';
+    $output .= '<label>' . self::hotn_t('Country') . ':' . '</label>';
     $output .= self::hotn_theme_select('hotn-country', self::get_child_filter('Country'));
     $output .= '</div>';
     $output .= '<div class="field">';
-    $output .= '<label>' . self::hotn_t('Gender:') . '</label>';
+    $output .= '<label>' . self::hotn_t('Gender') . ':' . '</label>';
     $output .= self::hotn_theme_select('hotn-gender', self::get_child_filter('Gender'));
     $output .= '</div>';
     $output .= '<div class="field field-sort">';
-    $output .= '<label>' . self::hotn_t('Sort:') . '</label>';
+    $output .= '<label>' . self::hotn_t('Sort') . ':' . '</label>';
     $output .= self::hotn_theme_select('hotnsort', $sort, self::hotn_t('Sort'));
     $output .= '</div>';
     $output .= '<div class="links">';

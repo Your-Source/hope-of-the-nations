@@ -24,6 +24,8 @@
  * @param (string) $translator_func
  *  Name of the function to translate content.
  *  This function can be user defined.
+ * @param (string) $custom_translate_lang
+ *  Language if not translate func is filled in.
  */
 class hotnConfig {
   public static $url = 'http://hotn.administratiekoppeling.nl';
@@ -36,6 +38,7 @@ class hotnConfig {
     'uri' => 'api/sponsors',
     'method' => 'POST',
   );
-  public static $session_ttl = 0;
+  public static $session_ttl = 1800;
   public static $translator_func = NULL;
+  public static $custom_translate_lang = 'nl';
 }
