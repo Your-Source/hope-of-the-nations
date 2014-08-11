@@ -9,9 +9,7 @@ interface hotnSponsorChildInterface {
    * Construct function for get all child properties.
    * @param (array) $child Array with all child properties.
    */
-  function __construct($child) {
-    $this->child = $child;
-  }
+  function __construct($child);
 
   /**
    * Returns int with child id.
