@@ -20,7 +20,7 @@ $(document).ready(function() {
         $('#hotn-child-list').html($content);
 
         // Load the pager functionality after ajax request.
-        hotn_ajax_pager();
+        hotn_ajax_pager($hotn_filter_form);
       }
     });
   };
@@ -57,11 +57,11 @@ $(document).ready(function() {
   });
 
   // Load the function pager by load.
-  hotn_ajax_pager();
+  hotn_ajax_pager($hotn_filter_form);
   /**
    * Function for ajax pager by change on pager item change the page of children.
    */
-  function hotn_ajax_pager() {
+  function hotn_ajax_pager($hotn_filter_form) {
     $('#hotn-pager').find('.pager').bind('click', function() {
       var pager_id = $(this).data('pager');
 
@@ -71,18 +71,15 @@ $(document).ready(function() {
       data['hotnpager'] = pager_id;
 
       // Get all value from select in the form.
-      $('#hotn-filter-form').each(function() {
-        var $hotn_filter_form = $(this);
+      var $hotn_filter_form = $(this);
 
-        $('select', $hotn_filter_form).each(function() {
-            var $filter_select = $(this);
-            var hotn_filter_val = $filter_select.val();
-            var hotn_filter_name = $filter_select.attr('name');
+      $('select', $hotn_filter_form).each(function() {
+          var $filter_select = $(this);
+          var hotn_filter_val = $filter_select.val();
+          var hotn_filter_name = $filter_select.attr('name');
 
-            // Set the value to array with as key field name.
-            data[hotn_filter_name] = hotn_filter_val;
-        });
-
+          // Set the value to array with as key field name.
+          data[hotn_filter_name] = hotn_filter_val;
       });
 
       // Call ajax request with all data.
