@@ -61,7 +61,7 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
   public function getChildBirthdate() {
     $time = strtotime($this->child['Birthdate']);
 
-    return date('d-m-Y',$time);;
+    return date('d-m-Y', $time);
   }
 
   /**
