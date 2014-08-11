@@ -305,12 +305,12 @@ class hotn {
    * @return string Returns markup for child detail page.
    */
   private function hotn_theme_detail_child(hotnSponsorChild $child) {
-    $info_string = self::hotn_t('"@name" is born on "@birthdate" and lives in "@country"');
     $info_placeholders = array(
       '@name' => $child->getChildName(),
       '@birthdate' => $child->getChildBirthdate(),
       '@country' => $child->getChildCountry(),
     );
+    $info_string = self::hotn_t('"@name" is born on "@birthdate" and lives in "@country"', $info_placeholders);
 
     $request_uri = $_SERVER['REQUEST_URI'];
     $request_uri = substr($request_uri, 1);
@@ -328,7 +328,7 @@ class hotn {
     $output .= '</div>';
 
     $output .= '<div class="information">';
-    $output .= strtr($info_string, $info_placeholders);
+    $output .= $info_string;
     $output .= '</div>';
 
     $output .= '<div class="share">';
