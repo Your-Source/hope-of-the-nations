@@ -20,7 +20,7 @@ $(document).ready(function() {
         $('#hotn-child-list').html($content);
 
         // Load the pager functionality after ajax request.
-        ajax_pager();
+        hotn_ajax_pager();
       }
     });
   };
@@ -57,11 +57,11 @@ $(document).ready(function() {
   });
 
   // Load the function pager by load.
-  ajax_pager();
+  hotn_ajax_pager();
   /**
    * Function for set the functionality of pager to the pager.
    */
-  function ajax_pager() {
+  function hotn_ajax_pager() {
     $('#hotn-pager').find('.pager').bind('click', function() {
       var pager_id = $(this).data('pager');
 
