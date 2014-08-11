@@ -30,9 +30,6 @@ $(document).ready(function() {
 
     // Find all select fields and bind on change.
     $form.find('select').bind('change', function() {
-      var $select = $(this);
-      var val = $select.val();
-      var name = $select.attr('name');
 
       data = {};
       // Get all value and name of select in form and set the value to array.
@@ -49,7 +46,6 @@ $(document).ready(function() {
 
     // Find reset button and bind on click.
     $form.find('.hotn-filter-form-reset').bind('click', function() {
-      var $form = $(this).parents('form');
 
       // Set all select value to null.
       $('select', $form).each(function(){
