@@ -228,7 +228,6 @@ Fill in the form below to support "@name"';
     $output .= '<input type="submit" name="submit" value="' . hotn::hotn_t('Submit') . '">';
     $output .= '</div>';
 
-
     $output .= '</form>';
 
     $output .= '</div>';
