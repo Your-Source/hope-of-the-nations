@@ -26,6 +26,8 @@
  *  This function can be user defined.
  * @param (string) $custom_translate_lang
  *  Language if not translate func is filled in.
+ *  @param (string) $base_url
+ *  Base url for the share url.
  */
 class hotnConfig {
   public static $url = 'http://hotn.administratiekoppeling.nl';
@@ -33,12 +35,15 @@ class hotnConfig {
   public static $childUrlData = array(
     'uri' => 'api/children',
     'method' => 'GET',
+    'content' => FALSE,
   );
   public static $sponsorUrlData = array(
     'uri' => 'api/sponsors',
     'method' => 'POST',
+    'content' => TRUE,
   );
-  public static $session_ttl = 1800;
+  public static $session_ttl = 0;
   public static $translator_func = NULL;
   public static $custom_translate_lang = 'nl';
+  public static $base_url = '';
 }

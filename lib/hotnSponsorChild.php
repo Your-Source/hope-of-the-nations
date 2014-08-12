@@ -90,7 +90,7 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
   }
 
   /**
-   * Returns string with url to small child image.
+   * Returns string with URL to small child image.
    * @return (string) $smallimage Returns base64 object of small Image from the child.
    */
   public function getChildSmallImage() {
@@ -102,7 +102,7 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
   }
 
   /**
-   * Returns string with url to large child image.
+   * Returns string with URL to large child image.
    * @return (string) $largeimage Returns base64 object of small Image from the child.
    */
   public function getChildLargeImage() {

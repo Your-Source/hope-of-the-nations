@@ -7,7 +7,7 @@ class hotnConnector {
 
   /**
    * Get the feed width the data.
-   * @param  string $type type of url
+   * @param  string $type type of URL
    * @param  array  $data extra query data
    * @return array array width the data of the request.
    */
@@ -47,12 +47,25 @@ class hotnConnector {
       }
       catch (Exception $e) {};
 
-      // Return array with the JSON data from url request..
+      // Return array with the JSON data from URL request..
       return json_decode($data, TRUE);
     }
 
     // Return array with the JSON data from session.
     return json_decode($_SESSION[$hotnsessionkey], TRUE);
+  }
+
+  /**
+   * Set the sponsor to the API.
+   * @param array $values All values posted from form.
+   * @return int If message contain the string was posted successfully.
+   */
+  public static function setSponsor($values) {
+    $json_value = json_encode($values, TRUE);
+
+    $request = self::type_data_request('sponsor', $json_value);
+
+    return strpos($request, 'was posted successfully');
   }
 
   /**
@@ -64,13 +77,8 @@ class hotnConnector {
   private static function type_data_request($type = 'child', $data = array()) {
     $url_data = hotnConfig::${$type . 'UrlData'};
 
+    // Build the url for call the API.
     $url = hotnConfig::$url . '/' . $url_data['uri'];
-
-    $data['apikey'] = hotnConfig::$apikey;
-    $query = http_build_query($data);
-
-    // Create url with query.
-    $url = $url . '?' . $query;
 
     // Set the http options.
     $options = array(
@@ -79,6 +87,23 @@ class hotnConnector {
         'method'  => $url_data['method'],
       ),
     );
+
+    // If content is FALSE set the data to the parameter.
+    // As Fallback set the data as HTTP content.
+    if (!$url_data['content']) {
+      $parameter = $data;
+    }
+    else {
+      $options['http']['content'] = $data;
+    }
+
+    // Set API key to URL parameter.
+    $parameter['apikey'] = hotnConfig::$apikey;
+    $query = http_build_query($parameter);
+
+    // Create URL with query.
+    $url = $url . '?' . $query;
+
     $context = stream_context_create($options);
     // Get result with file get contents.
     try {

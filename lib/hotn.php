@@ -20,7 +20,10 @@ class hotn {
    */
   public function show_children() {
     if (!empty($_GET['hotnChildID'])) {
-      return self::get_child($_GET['hotnChildID']);
+      $child = self::get_child($_GET['hotnChildID']);
+      $form = hotnForm::form(self::get_child_list(array('hotn-Id' => $_GET['hotnChildID'])));
+
+      return $child . $form;
     }
 
     return self::get_overview();
@@ -68,7 +71,7 @@ class hotn {
    * @param  string $string sting to translate by external translate function.
    * @return string translated string.
    */
-  public function hotn_t($string) {
+  public function hotn_t($string, $parameters = array()) {
     // Get the translate function name of config.
     $translator_func = hotnConfig::$translator_func;
 
@@ -76,7 +79,7 @@ class hotn {
     if (!empty($translator_func)) {
       // If function exists return the translated string.
       if (function_exists($translator_func)) {
-        return call_user_func($translator_func, array($string));
+        $string = call_user_func($translator_func, array($string));
       }
     }
     else {
@@ -87,10 +90,12 @@ class hotn {
 
         // If string is in variable return the translated string.
         if (array_key_exists($string, ${'hotn_translation_' . $custom_translate_lang})) {
-          return ${'hotn_translation_' . $custom_translate_lang}[$string];
+          $string = ${'hotn_translation_' . $custom_translate_lang}[$string];
         }
       }
     }
+
+    $string = strtr($string, $parameters);
 
     return $string;
   }
@@ -303,16 +308,18 @@ class hotn {
    * @return string Returns markup for child detail page.
    */
   private function hotn_theme_detail_child(hotnSponsorChild $child) {
-    $info_string = self::hotn_t('"@name" is born on "@birthdate" and lives in "@country"');
     $info_placeholders = array(
       '@name' => $child->getChildName(),
       '@birthdate' => $child->getChildBirthdate(),
       '@country' => $child->getChildCountry(),
     );
+    $info_string = self::hotn_t('"@name" is born on "@birthdate" and lives in "@country"', $info_placeholders);
+
+    $base_url = !empty(hotnConfig::$base_url) ? hotnConfig::$base_url : $_SERVER['SERVER_NAME'];
 
     $request_uri = $_SERVER['REQUEST_URI'];
     $request_uri = substr($request_uri, 1);
-    $url = $_SERVER['HTTP_REFERER'] . $request_uri;
+    $url = $base_url . '/' . $request_uri;
     $url_html = urlencode($url);
 
     $title = self::hotn_t('Sponsor a child');
@@ -326,7 +333,7 @@ class hotn {
     $output .= '</div>';
 
     $output .= '<div class="information">';
-    $output .= strtr($info_string, $info_placeholders);
+    $output .= $info_string;
     $output .= '</div>';
 
     $output .= '<div class="share">';
