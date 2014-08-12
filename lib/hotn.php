@@ -21,7 +21,7 @@ class hotn {
   public function show_children() {
     if (!empty($_GET['hotnChildID'])) {
       $child = self::get_child($_GET['hotnChildID']);
-      $form = hotnForm::form(self::get_child_list(array('hotn-Id' => $_GET['hotnChildID'])))
+      $form = hotnForm::form(self::get_child_list(array('hotn-Id' => $_GET['hotnChildID'])));
 
       return $child . $form;
     }
@@ -315,9 +315,11 @@ class hotn {
     );
     $info_string = self::hotn_t('"@name" is born on "@birthdate" and lives in "@country"', $info_placeholders);
 
+    $base_url = !empty(hotnConfig::$base_url) ? hotnConfig::$base_url : $_SERVER['SERVER_NAME'];
+
     $request_uri = $_SERVER['REQUEST_URI'];
     $request_uri = substr($request_uri, 1);
-    $url = $_SERVER['SERVER_NAME'] . $request_uri;
+    $url = $base_url . '/' . $request_uri;
     $url_html = urlencode($url);
 
     $title = self::hotn_t('Sponsor a child');
