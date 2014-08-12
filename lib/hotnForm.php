@@ -21,7 +21,7 @@ class hotnForm {
       }
 
       if (hotnConnector::setSponsor($value)) {
-        $message = hotn::hotn_t('Thanks. You have sponsord a child.');
+        $message = hotn::hotn_t('You are sponsoring a child now.');
         return self::hotn_theme_send_message($message);
       }
 
