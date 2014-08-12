@@ -10,7 +10,7 @@ class hotnForm {
    * @param  [type] $childs array with the current child.
    * @return (string) Form with all fields.
    */
-  public function form($childs) {
+  public static function form($childs) {
 
     if (!empty($_POST['ChildID'])) {
       $value = $_POST;
@@ -37,7 +37,7 @@ class hotnForm {
    * @param  array $values All values from the form.
    * @return array $messages All messages if field is empty.
    */
-  private function hotn_form_validate(&$values) {
+  private static function hotn_form_validate(&$values) {
     // All required fields of sponsor form.
     $required_fields = array(
       'Salutation' => hotn::hotn_t('Salutation'),
@@ -100,7 +100,7 @@ class hotnForm {
    * @param (array) $messages array with all messages to show by form
    * @return (string) return form with all items.
    */
-  private function hotn_theme_form(hotnSponsorChild $child, $values = array(), $messages = array()) {
+  private static function hotn_theme_form(hotnSponsorChild $child, $values = array(), $messages = array()) {
     // Set all values to variables.
     foreach ($values as $valkey => $value) {
       ${$valkey} = $value;
@@ -242,7 +242,7 @@ Fill in the form below to support "@name"';
    * @param  string $message Message for send message.
    * @return string Markup for send message.
    */
-  private function hotn_theme_send_message($message) {
+  private static function hotn_theme_send_message($message) {
     $output = '<div id="hotn-child-form">';
     $output .= '<div class="send-message">';
     $output .= $message;
@@ -259,7 +259,7 @@ Fill in the form below to support "@name"';
    * @param string $checked_val value of current checked value.
    * @return string $output Output of set with radio buttons.
    */
-  private function hotn_theme_radio($values = array(), $name = '', $checked_val = '') {
+  private static function hotn_theme_radio($values = array(), $name = '', $checked_val = '') {
     $output = '';
 
     foreach ($values as $key => $value) {
