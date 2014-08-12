@@ -280,7 +280,7 @@ class hotn {
    */
   private static function hotn_theme_overview_child(hotnSponsorChild $child) {
     $detail_url = $_SERVER['REQUEST_URI'] . '?hotnChildID=' . $child->getChildId();
-dpm($_SERVER);
+
     $output = '<div class="item child-overview">';
 
     $output .= '<div class="image">';
