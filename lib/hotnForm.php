@@ -114,7 +114,7 @@ Fill in the form below to support "@name"';
       '@name' => $child->getChildName(),
       '@gender' => hotn::hotn_t(($child->getChildGender() == 'Jongen') ? 'him' : 'her'),
     );
-    $email_discription = 'We will use your email address to keep you informed of news and the situation of "@name". For us this is the cheapest way of communication.';
+    $email_discription = 'We will use your email address to keep you informed of news and the situation of "@name". For us this is the least pricely way of communication.';
     $email_discription_placeholder = array(
       '@name' => $child->getChildName(),
     );
@@ -210,7 +210,7 @@ Fill in the form below to support "@name"';
     $output .= '<input type="text" name="BankAccount" value="' . (!empty($BankAccount) ? $BankAccount : '') . '">';
     $output .= '</div>';
     $output .= '<div class="field markup">';
-    $output .= hotn::hotn_t($sponsor_discription, $form_description_placeholder);
+    $output .= hotn::hotn_t($sponsor_discription, $form_descriptiong_placeholder);
     $output .= '</div>';
     $output .= '<div class="field">';
     $output .= '<label>' . hotn::hotn_t('Sponsor amount') . ':' . '</label> ';
