@@ -25,15 +25,13 @@ class hotnForm {
     return self::hotn_theme_form($childs[0]);
   }
 
-  private function hotn_form_validate($values) {
-    $messages = array();
-
-    // Set all values to plain text.
-    foreach ($values as $key => $value) {
-      $values[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-    }
-
-    // Check all fields on name has content.
+  /**
+   * Validate the form value and set message if something is wrong.
+   * @param  array $values All values from the form.
+   * @return array $messages All messages if field is empty.
+   */
+  private function hotn_form_validate(&$values) {
+    // All required fields of sponsor form.
     $required_fields = array(
       'Salutation' => hotn::hotn_t('Salutation'),
       'Lastname' => hotn::hotn_t('Name'),
@@ -44,11 +42,28 @@ class hotnForm {
       'Country' => hotn::hotn_t('Country'),
       'Postcode' => hotn::hotn_t('Zip code'),
       'Premises' => hotn::hotn_t('Premises'),
+      'PhoneNumber' => hotn::hotn_t('Phone number'),
+      'MobilePhone' => hotn::hotn_t('Mobilephone number'),
       'BankAccount' => hotn::hotn_t('Bankaccount'),
       'Amount' => hotn::hotn_t('Sponsor amount'),
       'Duration' => hotn::hotn_t('Duration'),
       'Agreed' => hotn::hotn_t('Agreement'),
+      'ChildID' => 'ChildID',
     );
+
+    $messages = array();
+
+    foreach ($values as $key => $value) {
+      // Set the value to plain text.
+      $values[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+
+      // If array key not exist in required fields unset the value.
+      if (!array_key_exists($key, $required_fields)) {
+        unset($values[$key]);
+      }
+    }
+
+    // Check all fields in the required fields array has content.
     foreach ($required_fields as $fieldkey => $fieldname) {
       if (empty($values[$fieldkey])) {
         $messages[] = hotn::hotn_t('The field @fieldname is required.', array('@fieldname' => $fieldname));
@@ -59,7 +74,7 @@ class hotnForm {
   }
 
   /**
-   * [hotn_theme_form description]
+   * Theme function for creating the sponsor form.
    * @param hotnSponsorChild $child Instance of child.
    * @param (array) $values values of field items.
    * @param (array) $messages array with all messages to show by form
@@ -85,9 +100,9 @@ Fill in the form below to support "@name"';
       '@name' => $child->getChildName(),
     );
     $sponsor_discription = 'Yes! I decide to sponsor "@name"!';
-    $agreement_text = 'Ik geef Hope of the Nations toestemming om een incasso-opdracht te sturen naar mijn bank. Ik geef mijn bank toestemming om dit bedrag maandelijks van mijn rekening af te schrijven overeenkomstig de opdracht van Hope of the nations. Ik behoud het recht om binnen 56 kalenderdagen (8 weken) na de afschrijving, zonder opgaaf van redenen, mijn bank terugbetaling te laten verzorgen. Ik ga ermee akkoord dat de incassering plaatsvindt op het eerstvolgende incassomoment (5e of 25e van de maand).';
+    $agreement_text = 'I allow Hope of the Nations to send a collection order to my bank. I allow my bank to debit this amount from my account monthly according to the order by Hope of the Nations. I reserve the right to let my bank arrange refunding within 56 calendar days (8 weeks) after debiting my account without any statement of reasons. I agree the amount is debited at the first following debiting day (the 5th or the 25th of the current month)';
 
-    // Values for radio set
+    // Values and keys for the diffrent radio sets.
     $salutation_values = array(
       'De heer' => hotn::hotn_t('Mr'),
       'Mevrouw' => hotn::hotn_t('Ms.'),
@@ -107,6 +122,7 @@ Fill in the form below to support "@name"';
       '5+' => hotn::hotn_t('or until further notice with a minimum of 5 years.'),
     );
 
+    // Begin the output for the form.
     $output = '<div id="hotn-child-form">';
     $output .= '<h1 class="hotn-title">' . $title . '</h1>';
 
@@ -117,7 +133,7 @@ Fill in the form below to support "@name"';
       }
     }
     $output .= '</div>';
-var_dump($values);
+
     $output .= '<form method="POST" id="hotn-child-sponsor-form"> ';
 
     $output .= '<div class="field markup">';
