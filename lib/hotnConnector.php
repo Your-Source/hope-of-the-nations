@@ -7,7 +7,7 @@ class hotnConnector {
 
   /**
    * Get the feed width the data.
-   * @param  string $type type of url
+   * @param  string $type type of URL
    * @param  array  $data extra query data
    * @return array array width the data of the request.
    */
@@ -47,7 +47,7 @@ class hotnConnector {
       }
       catch (Exception $e) {};
 
-      // Return array with the JSON data from url request..
+      // Return array with the JSON data from URL request..
       return json_decode($data, TRUE);
     }
 
@@ -56,7 +56,7 @@ class hotnConnector {
   }
 
   /**
-   * Set the sponsor to the api.
+   * Set the sponsor to the API.
    * @param array $values All values posted from form.
    * @return int If message contain the string was posted successfully.
    */
@@ -97,11 +97,11 @@ class hotnConnector {
       $options['http']['content'] = $data;
     }
 
-    // Set api key to url parameter.
+    // Set API key to URL parameter.
     $parameter['apikey'] = hotnConfig::$apikey;
     $query = http_build_query($parameter);
 
-    // Create url with query.
+    // Create URL with query.
     $url = $url . '?' . $query;
 
     $context = stream_context_create($options);
