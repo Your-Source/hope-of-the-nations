@@ -20,7 +20,10 @@ class hotn {
    */
   public function show_children() {
     if (!empty($_GET['hotnChildID'])) {
-      return self::get_child($_GET['hotnChildID']) . hotnForm::form(self::get_child_list(array('hotn-Id' => $_GET['hotnChildID'])));
+      $child = self::get_child($_GET['hotnChildID']);
+      $form = hotnForm::form(self::get_child_list(array('hotn-Id' => $_GET['hotnChildID'])))
+
+      return $child . $form;
     }
 
     return self::get_overview();
