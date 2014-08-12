@@ -79,7 +79,7 @@ class hotn {
     if (!empty($translator_func)) {
       // If function exists return the translated string.
       if (function_exists($translator_func)) {
-        $string = call_user_func($translator_func, array($string));
+        $string = call_user_func($translator_func, $string);
       }
     }
     else {
