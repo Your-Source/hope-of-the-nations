@@ -35,7 +35,7 @@ Fill in the form below to support "@name"' => 'Hartelijk bedankt dat je overweeg
   'Salutation' => 'Aanhef',
   'Mr' => 'De heer',
   'Ms.' => 'Mevrouw',
-  'We will use your email address to keep you informed of news and the situation of "@name". For us this is the cheapest way of communication.' => 'Wij gebruiken jouw e-mailadres om je op de hoogte te houden van nieuws en de situatie van "@name". Dit is voor ons de voordeligste vorm van communicatie.',
+  'We will use your email address to keep you informed of news and the situation of "@name". For us this is the least pricely way of communication.' => 'Wij gebruiken jouw e-mailadres om je op de hoogte te houden van nieuws en de situatie van "@name". Dit is voor ons de voordeligste vorm van communicatie.',
   'Yes! I decide to sponsor "@name"!' => 'Ja! Ik besluit "@name" te sponsoren!',
   'or until further notice with a minimum of 5 years.' => 'of tot wederopzegging met een minimum van 5 jaar.',
   'First name' => 'Voornaam',
@@ -57,6 +57,6 @@ Fill in the form below to support "@name"' => 'Hartelijk bedankt dat je overweeg
   'The field @fieldname is required.' => 'Het veld @fieldname is verplicht.',
   'Agreement' => 'Akkoord',
   'I allow Hope of the Nations to send a collection order to my bank. I allow my bank to debit this amount from my account monthly according to the order by Hope of the Nations. I reserve the right to let my bank arrange refunding within 56 calendar days (8 weeks) after debiting my account without any statement of reasons. I agree the amount is debited at the first following debiting day (the 5th or the 25th of the current month)' => 'Ik geef Hope of the Nations toestemming om een incasso-opdracht te sturen naar mijn bank. Ik geef mijn bank toestemming om dit bedrag maandelijks van mijn rekening af te schrijven overeenkomstig de opdracht van Hope of the nations. Ik behoud het recht om binnen 56 kalenderdagen (8 weken) na de afschrijving, zonder opgaaf van redenen, mijn bank terugbetaling te laten verzorgen. Ik ga ermee akkoord dat de incassering plaatsvindt op het eerstvolgende incassomoment (5e of 25e van de maand).',
-  'Thanks. You have sponsord a child.' => 'Bedankt. U heeft een kind gesponsord.',
-  'Oeps go something wrong. Try again or contact the site administrator.' => 'Oeps er gaat iets fout. Probeer of nieuw of neem contact op met de site beheerder.',
+  'You are sponsoring a child now.' => 'U bent nu een kind aan het sponsoren.',
+  'Oops, something went wrong. Try again or contact the site administrator.' => 'Oeps, er gaat iets fout. Probeer of nieuw of neem contact op met de site beheerder.',
 );
