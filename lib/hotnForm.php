@@ -13,13 +13,20 @@ class hotnForm {
   public function form($childs) {
 
     if (!empty($_POST['ChildID'])) {
-      $messages = self::hotn_form_validate($_POST);
+      $value = $_POST;
+      $messages = self::hotn_form_validate($value);
 
       if (!empty($messages)) {
-        return self::hotn_theme_form($childs[0], $_POST, $messages);
+        return self::hotn_theme_form($childs[0], $value, $messages);
       }
 
-      return 'Verzenden';
+      if (hotnConnector::setSponsor($value)) {
+        $message = hotn::hotn_t('Thanks. You have sponsord a child.');
+        return self::hotn_theme_send_message($message);
+      }
+
+      $message = hotn::hotn_t('Oeps go something wrong. Try again or contact the site administrator.');
+      return self::hotn_theme_send_message($message);
     }
 
     return self::hotn_theme_form($childs[0]);
@@ -67,6 +74,19 @@ class hotnForm {
     foreach ($required_fields as $fieldkey => $fieldname) {
       if (empty($values[$fieldkey])) {
         $messages[] = hotn::hotn_t('The field @fieldname is required.', array('@fieldname' => $fieldname));
+      }
+    }
+
+    // Field names where the value parse to integer.
+    $fields_int = array(
+      'Amount',
+      'Agreed',
+      'ChildID',
+    );
+    foreach ($fields_int as $field) {
+      // If field is not empty parse to integer.
+      if (!empty($values[$field])) {
+        $values[$field] = intval($values[$field]);
       }
     }
 
@@ -218,7 +238,22 @@ Fill in the form below to support "@name"';
   }
 
   /**
-   * [hotn_theme_radio description]
+   * Theme function for message after sending request.
+   * @param  string $message Message for send message.
+   * @return string Markup for send message.
+   */
+  private function hotn_theme_send_message($message) {
+    $output = '<div id="hotn-child-form">';
+    $output .= '<div class="send-message">';
+    $output .= $message;
+    $output .= '</div>';
+    $output .= '</div>';
+
+    return $output;
+  }
+
+  /**
+   * Theme function for creating radio buttons.
    * @param array $values All values of set with radio form items.
    * @param string $name Name of the set radio buttons.
    * @param string $checked_val value of current checked value.

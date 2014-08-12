@@ -56,6 +56,19 @@ class hotnConnector {
   }
 
   /**
+   * Set the sponsor to the api.
+   * @param array $values All values posted from form.
+   * @return int If message contain the string was posted successfully.
+   */
+  public static function setSponsor($values) {
+    $json_value = json_encode($values, TRUE);
+
+    $request = self::type_data_request('sponsor', $json_value);
+
+    return strpos($request, 'was posted successfully');
+  }
+
+  /**
    * Request function for building the URL and sending requests.
    * @param  string $type type of URL.
    * @param  array  $data extra query data.
@@ -64,13 +77,8 @@ class hotnConnector {
   private static function type_data_request($type = 'child', $data = array()) {
     $url_data = hotnConfig::${$type . 'UrlData'};
 
+    // Build the url for call the API.
     $url = hotnConfig::$url . '/' . $url_data['uri'];
-
-    $data['apikey'] = hotnConfig::$apikey;
-    $query = http_build_query($data);
-
-    // Create url with query.
-    $url = $url . '?' . $query;
 
     // Set the http options.
     $options = array(
@@ -79,6 +87,23 @@ class hotnConnector {
         'method'  => $url_data['method'],
       ),
     );
+
+    // If content is FALSE set the data to the parameter.
+    // Fallback set the data the HTTP content.
+    if (!$url_data['content']) {
+      $parameter = $data;
+    }
+    else {
+      $options['http']['content'] = $data;
+    }
+
+    // Set api key to url parameter.
+    $parameter['apikey'] = hotnConfig::$apikey;
+    $query = http_build_query($parameter);
+
+    // Create url with query.
+    $url = $url . '?' . $query;
+
     $context = stream_context_create($options);
     // Get result with file get contents.
     try {

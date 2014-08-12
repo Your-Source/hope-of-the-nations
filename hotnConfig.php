@@ -33,10 +33,12 @@ class hotnConfig {
   public static $childUrlData = array(
     'uri' => 'api/children',
     'method' => 'GET',
+    'content' => FALSE,
   );
   public static $sponsorUrlData = array(
     'uri' => 'api/sponsors',
     'method' => 'POST',
+    'content' => TRUE,
   );
   public static $session_ttl = 1800;
   public static $translator_func = NULL;
