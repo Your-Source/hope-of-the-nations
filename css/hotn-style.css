@@ -59,6 +59,9 @@
 #hotn-child-sponsor-form .field {
   margin-bottom: 5px;
 }
+#hotn-child-sponsor-form .markup {
+  margin-bottom: 20px;
+}
 #hotn-child-sponsor-form label {
   width: 150px;
   display: inline-block;

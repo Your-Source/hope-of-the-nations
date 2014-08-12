@@ -108,17 +108,17 @@ class hotnForm {
     $title = hotn::hotn_t('Registration form');
 
     // Description text for sponsor form.
-    $form_description = 'Thank you for considering to sponsor "@name". You monthly gift of  &#8364; 30 of &#8364; 15 gives @gender a change of a life without poverty. Via Hope of the Nations she/he receives education, supplementary nutrition, medical care and mental training.
-Fill in the form below to support "@name"';
+    $form_description = 'Thank you for considering to sponsor @name. You monthly gift of  &#8364; 30 of &#8364; 15 gives @gender a change of a life without poverty. Via Hope of the Nations she/he receives education, supplementary nutrition, medical care and mental training.
+Fill in the form below to support @name';
     $form_description_placeholder = array(
       '@name' => $child->getChildName(),
       '@gender' => hotn::hotn_t(($child->getChildGender() == 'Jongen') ? 'him' : 'her'),
     );
-    $email_description = 'We will use your email address to keep you informed of news and the situation of "@name". For us this is the least pricely way of communication.';
+    $email_description = 'We will use your email address to keep you informed of news and the situation of @name. For us this is the least pricely way of communication.';
     $email_description_placeholder = array(
       '@name' => $child->getChildName(),
     );
-    $sponsor_description = 'Yes! I decide to sponsor "@name"!';
+    $sponsor_description = 'Yes! I decide to sponsor @name!';
     $agreement_text = 'I allow Hope of the Nations to send a collection order to my bank. I allow my bank to debit this amount from my account monthly according to the order by Hope of the Nations. I reserve the right to let my bank arrange refunding within 56 calendar days (8 weeks) after debiting my account without any statement of reasons. I agree the amount is debited at the first following debiting day (the 5th or the 25th of the current month)';
 
     // Values and keys for the diffrent radio sets.

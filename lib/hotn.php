@@ -314,7 +314,7 @@ class hotn {
       '@birthdate' => $child->getChildBirthdate(),
       '@country' => $child->getChildCountry(),
     );
-    $info_string = self::hotn_t('"@name" is born on "@birthdate" and lives in "@country"', $info_placeholders);
+    $info_string = self::hotn_t('@name is born on @birthdate and lives in @country', $info_placeholders);
 
     $base_url = !empty(hotnConfig::$base_url) ? hotnConfig::$base_url : $_SERVER['SERVER_NAME'];
 

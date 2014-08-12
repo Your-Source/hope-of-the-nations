@@ -75,9 +75,6 @@
         // Set the pager id to variable.
         data['hotnpager'] = pager_id;
 
-        // Get all value from select in the form.
-        var $hotn_filter_form = $(this);
-
         $('select', $hotn_filter_form).each(function() {
             var $filter_select = $(this);
             var hotn_filter_val = $filter_select.val();
