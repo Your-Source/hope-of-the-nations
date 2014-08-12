@@ -15,7 +15,11 @@ class hotnForm {
     if (!empty($_POST['ChildID'])) {
       $messages = self::hotn_form_validate($_POST);
 
-      return self::hotn_theme_form($childs[0], $_POST, $messages);
+      if (!empty($messages)) {
+        return self::hotn_theme_form($childs[0], $_POST, $messages);
+      }
+
+      return 'Verzenden';
     }
 
     return self::hotn_theme_form($childs[0]);
@@ -31,7 +35,18 @@ class hotnForm {
 
     // Check all fields on name has content.
     $required_fields = array(
+      'Salutation' => hotn::hotn_t('Salutation'),
       'Lastname' => hotn::hotn_t('Name'),
+      'Firstname' => hotn::hotn_t('First name'),
+      'Initials' => hotn::hotn_t('Initials'),
+      'DateOfBirth' => hotn::hotn_t('Date of birt'),
+      'EmailAddress' => hotn::hotn_t('Email'),
+      'Country' => hotn::hotn_t('Country'),
+      'Postcode' => hotn::hotn_t('Zip code'),
+      'Premises' => hotn::hotn_t('Premises'),
+      'BankAccount' => hotn::hotn_t('Bankaccount'),
+      'Amount' => hotn::hotn_t('Sponsor amount'),
+      'Duration' => hotn::hotn_t('Duration'),
       'Agreed' => hotn::hotn_t('Agreement'),
     );
     foreach ($required_fields as $fieldkey => $fieldname) {
@@ -168,7 +183,7 @@ var_dump($values);
     $output .= '</div>';
     $output .= '<div class="field">';
     $output .= '<label>' . hotn::hotn_t('Duration') . ':' . '</label> ';
-    $output .= self::hotn_theme_radio($period_values, 'Duration', !empty($Period) ? $Period : '');
+    $output .= self::hotn_theme_radio($period_values, 'Duration', !empty($Duration) ? $Duration : '');
     $output .= '</div>';
     $output .= '<div class="field">';
     $output .= '<input type="checkbox" name="Agreed" value="1"> ' . hotn::hotn_t($agreement_text);
