@@ -279,7 +279,8 @@ class hotn {
    * @return string Display child item on overview.
    */
   private static function hotn_theme_overview_child(hotnSponsorChild $child) {
-    $detail_url = $_SERVER['REQUEST_URI'] . '?hotnChildID=' . $child->getChildId();
+    $uri = strtok($_SERVER["REQUEST_URI"], '?');
+    $detail_url = $uri . '?hotnChildID=' . $child->getChildId();
 
     $output = '<div class="item child-overview">';
 
