@@ -276,8 +276,8 @@ class hotn {
    * @return string Display child item on overview.
    */
   private static function hotn_theme_overview_child(hotnSponsorChild $child) {
-    $detail_url = $_SERVER['SCRIPT_NAME'] . '?hotnChildID=' . $child->getChildId();
-
+    $detail_url = $_SERVER['REQUEST_URI'] . '?hotnChildID=' . $child->getChildId();
+dpm($_SERVER);
     $output = '<div class="item child-overview">';
 
     $output .= '<div class="image">';
@@ -314,7 +314,7 @@ class hotn {
 
     $request_uri = $_SERVER['REQUEST_URI'];
     $request_uri = substr($request_uri, 1);
-    $url = $_SERVER['SERVER_NAME'] . $request_uri;
+    $url = $_SERVER['SERVER_NAME'] . '/' . $request_uri;
     $url_html = urlencode($url);
 
     $title = self::hotn_t('Sponsor a child');
