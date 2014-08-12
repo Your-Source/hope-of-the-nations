@@ -55,3 +55,15 @@
 #hotn-child-list .item .name {
   font-weight: bold;
 }
+
+#hotn-child-sponsor-form .field {
+  margin-bottom: 5px;
+}
+#hotn-child-sponsor-form label {
+  width: 125px;
+  display: inline-block;
+  float: left;
+}
+#hotn-child-sponsor-form .radio-items {
+  margin-left: 125px;
+}

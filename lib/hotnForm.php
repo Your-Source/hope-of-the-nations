@@ -260,13 +260,17 @@ Fill in the form below to support "@name"';
    * @return string $output Output of set with radio buttons.
    */
   private static function hotn_theme_radio($values = array(), $name = '', $checked_val = '') {
-    $output = '';
+    $output = '<div class="radio-items">';
 
     foreach ($values as $key => $value) {
       $checked = (!empty($checked_val) && $key == $checked_val ? 'checked' : '');
 
+      $output .= '<div class="radio-item">';
       $output .= '<input type="radio" name="' . $name . '" value="' . $key . '" ' . $checked . '> ' . $value . ' ';
+      $output .= '</div>';
     }
+
+    $output .= '</div>';
 
     return $output;
   }
