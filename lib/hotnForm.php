@@ -25,7 +25,7 @@ class hotnForm {
         return self::hotn_theme_send_message($message);
       }
 
-      $message = hotn::hotn_t('Oeps go something wrong. Try again or contact the site administrator.');
+      $message = hotn::hotn_t('Oops, something went wrong. Try again or contact the site administrator.');
       return self::hotn_theme_send_message($message);
     }
 
@@ -44,7 +44,7 @@ class hotnForm {
       'Lastname' => hotn::hotn_t('Name'),
       'Firstname' => hotn::hotn_t('First name'),
       'Initials' => hotn::hotn_t('Initials'),
-      'DateOfBirth' => hotn::hotn_t('Date of birt'),
+      'DateOfBirth' => hotn::hotn_t('Date of birth'),
       'EmailAddress' => hotn::hotn_t('Email'),
       'Country' => hotn::hotn_t('Country'),
       'Postcode' => hotn::hotn_t('Zip code'),
@@ -64,7 +64,6 @@ class hotnForm {
       // Set the value to plain text.
       $values[$key] = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 
-      // If array key not exist in required fields unset the value.
       if (!array_key_exists($key, $required_fields)) {
         unset($values[$key]);
       }
