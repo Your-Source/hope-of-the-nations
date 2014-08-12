@@ -89,7 +89,7 @@ class hotnConnector {
     );
 
     // If content is FALSE set the data to the parameter.
-    // Fallback set the data the HTTP content.
+    // As Fallback set the data as HTTP content.
     if (!$url_data['content']) {
       $parameter = $data;
     }

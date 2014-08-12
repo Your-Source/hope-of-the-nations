@@ -7,17 +7,17 @@ class hotnForm {
 
   /**
    * Shows hotn sponsor form.
-   * @param  [type] $childs array with the current child.
+   * @param (array) $children array with the current child.
    * @return (string) Form with all fields.
    */
-  public function form($childs) {
+  public function form($children) {
 
     if (!empty($_POST['ChildID'])) {
       $value = $_POST;
       $messages = self::hotn_form_validate($value);
 
       if (!empty($messages)) {
-        return self::hotn_theme_form($childs[0], $value, $messages);
+        return self::hotn_theme_form($children[0], $value, $messages);
       }
 
       if (hotnConnector::setSponsor($value)) {
@@ -29,7 +29,7 @@ class hotnForm {
       return self::hotn_theme_send_message($message);
     }
 
-    return self::hotn_theme_form($childs[0]);
+    return self::hotn_theme_form($children[0]);
   }
 
   /**
