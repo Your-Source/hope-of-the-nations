@@ -40,7 +40,7 @@ class hotnConfig {
     'method' => 'POST',
     'content' => TRUE,
   );
-  public static $session_ttl = 1800;
+  public static $session_ttl = 0;
   public static $translator_func = NULL;
   public static $custom_translate_lang = 'nl';
 }
