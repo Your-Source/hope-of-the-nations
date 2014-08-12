@@ -108,9 +108,9 @@ class hotnForm {
     $title = hotn::hotn_t('Registration form');
 
     // Discription text for sponsor form.
-    $form_discription = 'Thank you for considering to sponsor "@name". You monthly gift of  &#8364; 30 of &#8364; 15 gives @gender a change of a life without poverty. Via Hope of the Nations she/he receives education, supplementary nutrition, medical care and mental training.
+    $form_description = 'Thank you for considering to sponsor "@name". You monthly gift of  &#8364; 30 of &#8364; 15 gives @gender a change of a life without poverty. Via Hope of the Nations she/he receives education, supplementary nutrition, medical care and mental training.
 Fill in the form below to support "@name"';
-    $form_discription_placeholder = array(
+    $form_description_placeholder = array(
       '@name' => $child->getChildName(),
       '@gender' => hotn::hotn_t(($child->getChildGender() == 'Jongen') ? 'him' : 'her'),
     );
@@ -156,7 +156,7 @@ Fill in the form below to support "@name"';
     $output .= '<form method="POST" id="hotn-child-sponsor-form"> ';
 
     $output .= '<div class="field markup">';
-    $output .= hotn::hotn_t($form_discription, $form_discription_placeholder);
+    $output .= hotn::hotn_t($form_description, $form_description_placeholder);
     $output .= '</div>';
     $output .= '<div class="field">';
     $output .= '<label>' . hotn::hotn_t('Salutation') . ':' . '</label> ';
@@ -179,7 +179,7 @@ Fill in the form below to support "@name"';
     $output .= '<input type="date" name="DateOfBirth" value="' . (!empty($DateOfBirth) ? $DateOfBirth : '') . '">';
     $output .= '</div>';
     $output .= '<div class="field markup">';
-    $output .= hotn::hotn_t($email_discription, $email_discription_placeholder);
+    $output .= hotn::hotn_t($email_discription, $form_description_placeholder);
     $output .= '</div>';
     $output .= '<div class="field">';
     $output .= '<label>' . hotn::hotn_t('Email') . ':' . '</label> ';
@@ -210,7 +210,7 @@ Fill in the form below to support "@name"';
     $output .= '<input type="text" name="BankAccount" value="' . (!empty($BankAccount) ? $BankAccount : '') . '">';
     $output .= '</div>';
     $output .= '<div class="field markup">';
-    $output .= hotn::hotn_t($sponsor_discription, $email_discription_placeholder);
+    $output .= hotn::hotn_t($sponsor_discription, $form_description_placeholder);
     $output .= '</div>';
     $output .= '<div class="field">';
     $output .= '<label>' . hotn::hotn_t('Sponsor amount') . ':' . '</label> ';
