@@ -314,7 +314,7 @@ class hotn {
 
     $request_uri = $_SERVER['REQUEST_URI'];
     $request_uri = substr($request_uri, 1);
-    $url = $_SERVER['HTTP_REFERER'] . $request_uri;
+    $url = $_SERVER['SERVER_NAME'] . $request_uri;
     $url_html = urlencode($url);
 
     $title = self::hotn_t('Sponsor a child');
