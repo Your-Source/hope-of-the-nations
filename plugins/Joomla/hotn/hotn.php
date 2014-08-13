@@ -22,7 +22,7 @@ require_once $library_path . DS . 'lib' . DS . 'hotn.php';
 
 // Include javascript an css file to document header.
 $document = JFactory::getDocument();
-$document->addScript(DS . 'libraries' . DS . 'hotn' . '/js/hotn.js');
-$document->addStyleSheet(DS . 'libraries' . DS . 'hotn' . '/css/hotn-style.css');
+$document->addScript('libraries' . DS . 'hotn' . '/js/hotn.js');
+$document->addStyleSheet('libraries' . DS . 'hotn' . '/css/hotn-style.css');
 
 print hotn::load();
