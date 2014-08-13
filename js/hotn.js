@@ -5,7 +5,7 @@
   $(function() {
 
     /**
-     * AJAX request to get children/for getting children.
+     * AJAX request to get children.
      * @param  array data All parameters for request to server.
      */
     function hotn_ajax_request(data) {
