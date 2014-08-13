@@ -50,7 +50,7 @@
     // Find reset button and bind on click.
     $hotn_filter_form.find('.hotn-filter-form-reset').bind('click', function() {
 
-      // Set all select value to null.
+      // Set all select values to null.
       $('select', $hotn_filter_form).each(function(){
           var $filter_select = $(this);
           var hotn_filter_val = $filter_select.val('');
@@ -60,7 +60,7 @@
       hotn_ajax_request({})
     });
 
-    // Load the function pager by load.
+    // Call the function pager for functionality for paging.
     hotn_ajax_pager($hotn_filter_form);
 
     /**
