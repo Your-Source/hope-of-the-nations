@@ -59,7 +59,9 @@ function hotn_page_headers() {
  * @return boolean Return TRUE is current page is hopeofthenations.
  */
 function is_hotn_page() {
-  if($_GET['p'] = 'hopeofthenations') {
+  if($_GET['p'] === 'hopeofthenations'
+    || $_SERVER['REQUEST_URI'] === '/hopeofthenations/') {
+
     return TRUE;
   }
   return FALSE;
