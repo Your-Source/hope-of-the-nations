@@ -24,7 +24,7 @@ class hotn {
       $child_detail = self::get_child($_GET['hotnChildID']);
       $form = hotnForm::form(self::get_child_list(array('hotn-Id' => $_GET['hotnChildID'])));
 
-      $output = $child . $form;
+      $output = $child_detail . $form;
       return $output;
     }
 
