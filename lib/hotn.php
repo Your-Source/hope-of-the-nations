@@ -15,15 +15,17 @@ class hotn {
   private static $pagers_items;
 
   /**
-   * Function for showing children.
+   * Function for show a list with children and show the child id page.
    * @return string Returns string with all content.
    */
-  public static function show_children() {
+  public static function load() {
+    // If child id is set as parameter the current page is a child detail page.
     if (!empty($_GET['hotnChildID'])) {
-      $child = self::get_child($_GET['hotnChildID']);
+      $child_detail = self::get_child($_GET['hotnChildID']);
       $form = hotnForm::form(self::get_child_list(array('hotn-Id' => $_GET['hotnChildID'])));
 
-      return $child . $form;
+      $output = $child . $form;
+      return $output;
     }
 
     return self::get_overview();
@@ -57,13 +59,13 @@ class hotn {
    * @return string Returns the markup of child detail page.
    */
   public static function get_child($childid) {
-    $childs = self::get_child_list(array('hotn-Id' => $childid));
+    $children = self::get_child_list(array('hotn-Id' => $childid));
 
-    if (empty($childs)) {
+    if (empty($children)) {
       return self::hotn_t('This child is not available.');
     }
 
-    return self::hotn_theme_detail_child($childs[0]);
+    return self::hotn_theme_detail_child($children[0]);
   }
 
   /**
@@ -119,17 +121,18 @@ class hotn {
     self::$children_count_total = count($child_output);
 
     // The parameters will be prefixed by 'hotn-' to
-    // prevent namespace issues.
+    // prevent namespace issues with existing CMS.
     foreach ($parameters as $key => $input_value) {
-      // Unset the key if the value is empty of doesn't contain hotn-.
+      // Unset the key if the value is empty of
+      // the key doesn't contain hotn- at the begin.
       if (!empty($input_value) && strpos($key, 'hotn-') !== FALSE) {
-        // Replace hotn- to nothing, set new parameter to array and delete old key.
+        // Replace hotn- to nothing because the new key is a standard of the REST API.
         $new_key = str_replace('hotn-', '', $key);
 
-        // Set filter on age to false.
+        // Set filter on age as default to FALSE.
         $filter_on_age = FALSE;
 
-        // Create switch with the new key for get the function name.
+        // Switch for the function name by a filter key.
         switch ($new_key) {
           case 'gender':
             $function_name = 'getChildGender';
@@ -171,7 +174,7 @@ class hotn {
                 break;
             }
 
-            // Unset the child.
+            // Unset the child that does not satisfy to the operator.
             if (!$operator) {
               unset($child_output[$child_key]);
             }
@@ -187,10 +190,10 @@ class hotn {
       }
     }
 
-    // Set count of children after filter.
+    // Set count of children after filtering.
     self::$children_count_filtered = count($child_output);
 
-    // If not empty sort the array.
+    // If not empty sort the array by the chosen filter, default by sort of API.
     if (!empty($parameters['hotnsort'])) {
       $sort = $parameters['hotnsort'];
       usort($child_output, function ($a, $b) use ($sort) {
@@ -203,7 +206,7 @@ class hotn {
         $a_val = call_user_func(array($a, $function_name));
         $b_val = call_user_func(array($b, $function_name));
 
-        // If sort is birthday set string to timestamp.
+        // If sort is birthday set string to timestamp for correct sort.
         if ($sort == 'Birthdate') {
           $a_val = strtotime($a_val);
           $b_val = strtotime($b_val);
