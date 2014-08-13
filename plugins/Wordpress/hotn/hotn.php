@@ -60,7 +60,7 @@ function hotn_page_headers() {
  */
 function is_hotn_page() {
   if($_GET['p'] === 'hopeofthenations'
-    || $_SERVER['REQUEST_URI'] === '/hopeofthenations/') {
+    || strpos($_SERVER['REQUEST_URI'] ,'hopeofthenations') !== FALSE) {
 
     return TRUE;
   }
