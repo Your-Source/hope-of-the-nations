@@ -2,10 +2,10 @@
 /**
  * Main class file for Hope of the Nations.
  */
-include_once __dir__ . '/hotnConnector.php';
-include_once __dir__ . '/hotnForm.php';
-include_once __dir__ . '/hotnSponsorChildInterface.php';
-include_once __dir__ . '/hotnSponsorChild.php';
+include_once __DIR__ . '/hotnConnector.php';
+include_once __DIR__ . '/hotnForm.php';
+include_once __DIR__ . '/hotnSponsorChildInterface.php';
+include_once __DIR__ . '/hotnSponsorChild.php';
 
 define('HOTN_MAX_ITEMS_PAGER', 12);
 
@@ -84,9 +84,9 @@ class hotn {
     }
     else {
       $custom_translate_lang = hotnConfig::$custom_translate_lang;
-      // If not english set the translations.
+      // If not English set the translations.
       if ($custom_translate_lang != 'en') {
-        include __dir__ . '/translation/' . $custom_translate_lang . '.php';
+        include __DIR__ . '/translation/' . $custom_translate_lang . '.php';
 
         // If string is in variable return the translated string.
         if (array_key_exists($string, ${'hotn_translation_' . $custom_translate_lang})) {
@@ -108,8 +108,9 @@ class hotn {
    */
   private static function get_child_list($parameters = array(), $all_items = FALSE) {
     $children = hotnConnector::get_feed('child');
-
+    $operator = NULL;
     $child_output = array();
+
     foreach ($children as $child) {
       $child_output[] = new hotnSponsorChild($child);
     }
@@ -197,7 +198,7 @@ class hotn {
           return FALSE;
         }
 
-        // Create function name of method by sort key and call this function.
+        // Create function name of method by sorting key and calling this function.
         $function_name = 'getChild' . $sort;
         $a_val = call_user_func(array($a, $function_name));
         $b_val = call_user_func(array($b, $function_name));
@@ -216,7 +217,7 @@ class hotn {
     $pager = !empty($parameters['hotnpager']) ? $parameters['hotnpager'] : 0;
     $start = HOTN_MAX_ITEMS_PAGER * $pager;
     $end = HOTN_MAX_ITEMS_PAGER * $pager + (HOTN_MAX_ITEMS_PAGER - 1);
-    // Set this only if parameter is avaible.
+    // Set this only if parameter is available.
     if (!$all_items) {
       self::$pagers_items = ceil(count($child_output) / HOTN_MAX_ITEMS_PAGER);
     }
@@ -263,7 +264,7 @@ class hotn {
       $function_name = 'getChild' . $child_key;
       $value = call_user_func(array($child, $function_name));
 
-      // If value is not in array output add it to the array.
+      // If value is not in array output, add it to the array.
       if(!in_array($value, $output)){
         $output[$value] = $value;
       }
@@ -356,11 +357,11 @@ class hotn {
    * Theme function for child items on overview page.
    * @param  array  $children All child displays.
    * @param  int $count Count of all children.
-   * @param  string $message Message for children
-   * @return string Display all childeren, form and pager.
+   * @param  string $message Message for children.
+   * @return string Display all children, form and pager.
    */
   private static function hotn_theme_overview(array $children, $count, $message = NULL) {
-    // Set items for select input.
+    // Set items for selecting input.
     $agegroup = array(
       0 => self::hotn_t('below 3'),
       1 => self::hotn_t('3 - 6'),
@@ -436,9 +437,9 @@ class hotn {
 
   /**
    * Theme function for select box.
-   * @param  sting $name Name of the select tag.
+   * @param  string $name Name of the select tag.
    * @param  array $items All items for in the select.
-   * @param  sting $title Title for first option. Default is select.
+   * @param  string $title Title for first option. Default is select.
    * @return string Returns select field.
    */
   private static function hotn_theme_select($name, $items, $title = NULL) {
