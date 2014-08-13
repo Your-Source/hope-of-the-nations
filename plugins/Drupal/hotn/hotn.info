@@ -1,0 +1,8 @@
+name = Hope of the Nations
+description = Hope of the Nations show the childeren and sponsor a child.
+package = OTHER
+core = 7.x
+
+files[] = hotn.module
+
+dependencies[] = libraries
