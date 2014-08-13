@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.1.0" client="site">
+    <name>Hope of the Nations</name>
+    <author>Hope of the Nations</author>
+    <version>1.0.0</version>
+    <creationDate>August 2014</creationDate>
+    <authorUrl>www.hopeofthenations.nl</authorUrl>
+    <description>Hope of the Nations show the childeren and it is possible to sponsor a child.</description>
+    <files>
+        <filename>hotn.xml</filename>
+        <filename module="hotn">hotn.php</filename>
+        <filename>index.html</filename>
+    </files>
+</extension>
