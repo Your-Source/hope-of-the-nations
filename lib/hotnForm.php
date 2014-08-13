@@ -10,7 +10,7 @@ class hotnForm {
    * @param (array) $children array with the current child.
    * @return (string) Form with all fields.
    */
-  public function form($children) {
+  public static function form($children) {
 
     if (!empty($_POST['ChildID'])) {
       $value = $_POST;
@@ -37,7 +37,7 @@ class hotnForm {
    * @param  array $values All values from the form.
    * @return array $messages All messages if field is empty.
    */
-  private function hotn_form_validate(&$values) {
+  private static function hotn_form_validate(&$values) {
     // All required fields of sponsor form.
     $required_fields = array(
       'Salutation' => hotn::hotn_t('Salutation'),
@@ -99,7 +99,7 @@ class hotnForm {
    * @param (array) $messages array with all messages to show by form
    * @return (string) return form with all items.
    */
-  private function hotn_theme_form(hotnSponsorChild $child, $values = array(), $messages = array()) {
+  private static function hotn_theme_form(hotnSponsorChild $child, $values = array(), $messages = array()) {
     // Set all values to variables.
     foreach ($values as $valkey => $value) {
       ${$valkey} = $value;
@@ -107,18 +107,18 @@ class hotnForm {
 
     $title = hotn::hotn_t('Registration form');
 
-    // Discription text for sponsor form.
-    $form_description = 'Thank you for considering to sponsor "@name". You monthly gift of  &#8364; 30 of &#8364; 15 gives @gender a change of a life without poverty. Via Hope of the Nations she/he receives education, supplementary nutrition, medical care and mental training.
-Fill in the form below to support "@name"';
+    // Description text for sponsor form.
+    $form_description = 'Thank you for considering to sponsor @name. You monthly gift of  &#8364; 30 of &#8364; 15 gives @gender a change of a life without poverty. Via Hope of the Nations she/he receives education, supplementary nutrition, medical care and mental training.
+Fill in the form below to support @name';
     $form_description_placeholder = array(
       '@name' => $child->getChildName(),
       '@gender' => hotn::hotn_t(($child->getChildGender() == 'Jongen') ? 'him' : 'her'),
     );
-    $email_discription = 'We will use your email address to keep you informed of news and the situation of "@name". For us this is the least pricely way of communication.';
-    $email_discription_placeholder = array(
+    $email_description = 'We will use your email address to keep you informed of news and the situation of @name. For us this is the least pricely way of communication.';
+    $email_description_placeholder = array(
       '@name' => $child->getChildName(),
     );
-    $sponsor_discription = 'Yes! I decide to sponsor "@name"!';
+    $sponsor_description = 'Yes! I decide to sponsor @name!';
     $agreement_text = 'I allow Hope of the Nations to send a collection order to my bank. I allow my bank to debit this amount from my account monthly according to the order by Hope of the Nations. I reserve the right to let my bank arrange refunding within 56 calendar days (8 weeks) after debiting my account without any statement of reasons. I agree the amount is debited at the first following debiting day (the 5th or the 25th of the current month)';
 
     // Values and keys for the diffrent radio sets.
@@ -179,7 +179,7 @@ Fill in the form below to support "@name"';
     $output .= '<input type="date" name="DateOfBirth" value="' . (!empty($DateOfBirth) ? $DateOfBirth : '') . '">';
     $output .= '</div>';
     $output .= '<div class="field markup">';
-    $output .= hotn::hotn_t($email_discription, $form_description_placeholder);
+    $output .= hotn::hotn_t($email_description, $form_description_placeholder);
     $output .= '</div>';
     $output .= '<div class="field">';
     $output .= '<label>' . hotn::hotn_t('Email') . ':' . '</label> ';
@@ -210,7 +210,7 @@ Fill in the form below to support "@name"';
     $output .= '<input type="text" name="BankAccount" value="' . (!empty($BankAccount) ? $BankAccount : '') . '">';
     $output .= '</div>';
     $output .= '<div class="field markup">';
-    $output .= hotn::hotn_t($sponsor_discription, $form_descriptiong_placeholder);
+    $output .= hotn::hotn_t($sponsor_description, $form_description_placeholder);
     $output .= '</div>';
     $output .= '<div class="field">';
     $output .= '<label>' . hotn::hotn_t('Sponsor amount') . ':' . '</label> ';
@@ -240,7 +240,7 @@ Fill in the form below to support "@name"';
    * @param  string $message Message for send message.
    * @return string Markup for send message.
    */
-  private function hotn_theme_send_message($message) {
+  private static function hotn_theme_send_message($message) {
     $output = '<div id="hotn-child-form">';
     $output .= '<div class="send-message">';
     $output .= $message;
@@ -257,7 +257,7 @@ Fill in the form below to support "@name"';
    * @param string $checked_val value of current checked value.
    * @return string $output Output of set with radio buttons.
    */
-  private function hotn_theme_radio($values = array(), $name = '', $checked_val = '') {
+  private static function hotn_theme_radio($values = array(), $name = '', $checked_val = '') {
     $output = '<div class="radio-items">';
 
     foreach ($values as $key => $value) {
