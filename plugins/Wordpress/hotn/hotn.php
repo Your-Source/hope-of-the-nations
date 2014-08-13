@@ -2,7 +2,7 @@
 /*
 Plugin Name: Hope of the Nations
 Plugin URI: http://hopeofthenations.nl
-Description: Hope of the Nations show the childeren and sponsor a child.
+Description: Hope of the Nations show the childeren and it is possible to sponsor a child.
 Version: 1.0
 Author: Your Source
 Author URI: http://your-source.nl
