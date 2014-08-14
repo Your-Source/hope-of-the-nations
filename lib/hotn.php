@@ -2,6 +2,7 @@
 /**
  * Main class file for Hope of the Nations.
  */
+
 include_once __DIR__ . '/hotnConnector.php';
 include_once __DIR__ . '/hotnForm.php';
 include_once __DIR__ . '/hotnSponsorChildInterface.php';
@@ -290,15 +291,18 @@ class hotn {
     // Add all URL parameters from a CMS also to the detail URL for a correct
     // URL routing. If the key not hotn add to to the parameters array.
     foreach ($_GET as $key => $value) {
-      if (strpos($key, 'hotn') === FALSE) {
-        $parameters['key'] = $value;
+      if (strpos($key, 'hotn') === FALSE && !empty($value)) {
+        $parameters[$key] = $value;
       }
     }
 
     // Implode the parameters array to string with as glue & for a valid URL parameter.
     $url_param = '';
     if (!empty($parameters)) {
-      $url_param = '&' . implode('&', $parameters);
+
+      foreach($parameters as $key => $parameter) {
+        $url_param .= '&' . $key . '=' . $parameter;
+      }
     }
 
     $detail_url = $uri . '?hotnChildID=' . $child->getChildId() . $url_param;
