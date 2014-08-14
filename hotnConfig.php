@@ -18,9 +18,6 @@
  * @param (array) $sponsorUrlData
  *  Array containing the URI and the http request method to get
  *  the sponsors from the API.
- * @param (int) $session_ttl:
- *  Number of seconds (time to live) before the API response is refreshed
- *  and stored in the $_SESSION variable again.
  * @param (string) $translator_func
  *  Name of the function to translate content.
  *  This function can be user defined.
@@ -42,7 +39,6 @@ class hotnConfig {
     'method' => 'POST',
     'content' => TRUE,
   );
-  public static $session_ttl = 0;
   public static $translator_func = NULL;
   public static $custom_translate_lang = 'nl';
   public static $base_url = '';
