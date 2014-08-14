@@ -22,11 +22,11 @@ class hotnForm {
 
       if (hotnConnector::setSponsor($value)) {
         $message = hotn::hotn_t('You are sponsoring a child now.');
-        return self::hotn_theme_send_message($message);
+        return self::hotn_theme_display_message($message);
       }
 
       $message = hotn::hotn_t('Oops, something went wrong. Try again or contact the site administrator.');
-      return self::hotn_theme_send_message($message);
+      return self::hotn_theme_display_message($message);
     }
 
     return self::hotn_theme_form($children[0]);
@@ -69,7 +69,7 @@ class hotnForm {
       }
     }
 
-    // Check all fields in the required fields array has content.
+    // Check if all fields in the required fields array have content.
     foreach ($required_fields as $fieldkey => $fieldname) {
       if (empty($values[$fieldkey])) {
         $messages[] = hotn::hotn_t('The field @fieldname is required.', array('@fieldname' => $fieldname));
@@ -96,7 +96,7 @@ class hotnForm {
    * Theme function for creating the sponsor form.
    * @param hotnSponsorChild $child Instance of child.
    * @param (array) $values values of field items.
-   * @param (array) $messages array with all messages to show by form
+   * @param (array) $messages array with all messages to show by form.
    * @return (string) return form with all items.
    */
   private static function hotn_theme_form(hotnSponsorChild $child, $values = array(), $messages = array()) {
@@ -236,13 +236,13 @@ Fill in the form below to support @name';
   }
 
   /**
-   * Theme function for message after sending request.
-   * @param  string $message Message for send message.
-   * @return string Markup for send message.
+   * Render markup for message on screen.
+   * @param  string $message Message for display message.
+   * @return string Markup for display message.
    */
-  private static function hotn_theme_send_message($message) {
+  private static function hotn_theme_display_message($message) {
     $output = '<div id="hotn-child-form">';
-    $output .= '<div class="send-message">';
+    $output .= '<div class="display-message">';
     $output .= $message;
     $output .= '</div>';
     $output .= '</div>';
@@ -251,7 +251,7 @@ Fill in the form below to support @name';
   }
 
   /**
-   * Theme function for creating radio buttons.
+   * Render markup for radio form item.
    * @param array $values All values of set with radio form items.
    * @param string $name Name of the set radio buttons.
    * @param string $checked_val value of current checked value.

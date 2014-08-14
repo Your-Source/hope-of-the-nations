@@ -15,11 +15,11 @@ class hotn {
   private static $pagers_items;
 
   /**
-   * Function for show a list with children and show the child id page.
+   * Function for showing a list with children and showing the child ID page.
    * @return string Returns string with all content.
    */
   public static function load() {
-    // If child id is set as parameter the current page is a child detail page.
+    // If child ID is set as parameter the current page is a child detail page.
     if (!empty($_GET['hotnChildID'])) {
       $child_detail = self::get_child($_GET['hotnChildID']);
       $form = hotnForm::form(self::get_child_list(array('hotn-Id' => $_GET['hotnChildID'])));
@@ -55,7 +55,7 @@ class hotn {
 
   /**
    * Function to create child detail page.
-   * @param  int $childid The id of the child.
+   * @param  int $childid The ID of the child.
    * @return string Returns the markup of child detail page.
    */
   public static function get_child($childid) {
@@ -70,14 +70,14 @@ class hotn {
 
   /**
    * Translate function for text.
-   * @param  string $string sting to translate by external translate function.
+   * @param  string $string string to translate by external translate function.
    * @return string translated string.
    */
   public static function hotn_t($string, $parameters = array()) {
-    // Get the translate function name of config.
+    // Get the translate function name from the configuration file.
     $translator_func = hotnConfig::$translator_func;
 
-    // If tranlate function is empty create own.
+    // If no translation function is specified use this default function.
     if (!empty($translator_func)) {
       // If function exists return the translated string.
       if (function_exists($translator_func)) {
@@ -106,12 +106,13 @@ class hotn {
    * Function to get the child list and sort if parameter is set.
    * @param  array   $parameters All parameters to filter and sort the children
    * @param  boolean $all_items  Get all items and exclude the sort and filtering.
-   * @return array With all children in there own object.
+   * @return array With all children in their own object.
    */
   private static function get_child_list($parameters = array(), $all_items = FALSE) {
     $children = hotnConnector::get_feed('child');
     $operator = NULL;
     $child_output = array();
+    $function_name = '';
 
     foreach ($children as $child) {
       $child_output[] = new hotnSponsorChild($child);
@@ -121,10 +122,10 @@ class hotn {
     self::$children_count_total = count($child_output);
 
     // The parameters will be prefixed by 'hotn-' to
-    // prevent namespace issues with existing CMS.
+    // prevent name space issues with existing CMS.
     foreach ($parameters as $key => $input_value) {
       // Unset the key if the value is empty of
-      // the key doesn't contain hotn- at the begin.
+      // the key doesn't contain hotn- at the beginning.
       if (!empty($input_value) && strpos($key, 'hotn-') !== FALSE) {
         // Replace hotn- to nothing because the new key is a standard of the REST API.
         $new_key = str_replace('hotn-', '', $key);
@@ -152,10 +153,10 @@ class hotn {
             }
         }
 
-        // Foreach on all children to filter if a child does not comply.
+        // Iterate over children and evaluate operator.
         foreach ($child_output as $child_key => $child) {
 
-          // If filter on operator is true filter on a operator in form the switch.
+          // If filter on age is TRUE filter on the value added through the form.
           if ($filter_on_age) {
             $age = $child->getChildAge();
 
@@ -174,14 +175,14 @@ class hotn {
                 break;
             }
 
-            // Unset the child that does not satisfy to the operator.
+            // Unset the child that does not match any value.
             if (!$operator) {
               unset($child_output[$child_key]);
             }
           }
           else {
             $value_to_filter = call_user_func(array($child, $function_name));
-            // If the input value not is filter value unset the child.
+
             if ($input_value != $value_to_filter) {
               unset($child_output[$child_key]);
             }
@@ -193,7 +194,7 @@ class hotn {
     // Set count of children after filtering.
     self::$children_count_filtered = count($child_output);
 
-    // If not empty sort the array by the chosen filter, default by sort of API.
+    // If not empty sort the array by the chosen filter, default by API sorting order.
     if (!empty($parameters['hotnsort'])) {
       $sort = $parameters['hotnsort'];
       usort($child_output, function ($a, $b) use ($sort) {
@@ -278,7 +279,7 @@ class hotn {
   }
 
   /**
-   * Theme function for child items on overview page.
+   * Render markup for child on overview page.
    * @param  hotnSponsorChild $child Child object
    * @return string Display child item on overview.
    */
@@ -286,15 +287,15 @@ class hotn {
     $uri = strtok($_SERVER["REQUEST_URI"], '?');
 
     $parameters = array();
-    // Add all url parameters from a CMS also to the detail url for a correct
-    // url routing. If the key not hotn add to to the parameters array.
+    // Add all URL parameters from a CMS also to the detail URL for a correct
+    // URL routing. If the key not hotn add to to the parameters array.
     foreach ($_GET as $key => $value) {
       if (strpos($key, 'hotn') === FALSE) {
         $parameters['key'] = $value;
       }
     }
 
-    // Implode the parameters array to string with as glue & for a valid url parameter.
+    // Implode the parameters array to string with as glue & for a valid URL parameter.
     $url_para = '';
     if (!empty($parameters)) {
       $url_para = '&' . implode('&', $parameters);
@@ -324,7 +325,7 @@ class hotn {
   }
 
   /**
-   * Function to create the markup of child detail page.
+   * Render markup for child detail page.
    * @param  hotnSponsorChild $child Instance of child.
    * @return string Returns markup for child detail page.
    */
@@ -373,7 +374,7 @@ class hotn {
   }
 
   /**
-   * Theme function for child items on overview page.
+   * Render markup for children overview page.
    * @param  array  $children All child displays.
    * @param  int $count Count of all children.
    * @param  string $message Message for children.
@@ -455,7 +456,7 @@ class hotn {
   }
 
   /**
-   * Theme function for select box.
+   * Render markup for select form element.
    * @param  string $name Name of the select tag.
    * @param  array $items All items for in the select.
    * @param  string $title Title for first option. Default is select.
@@ -477,11 +478,11 @@ class hotn {
   }
 
   /**
-   * Theme function for creating the pager.
+   * Render markup for pager.
    * @return string Returns a pager.
    */
   private static function hotn_theme_pager() {
-    // Get the current pager id. If empty fallback 0.
+    // Get the current pager ID. If empty fallback 0.
     $current_pager = !empty($_GET['hotnpager']) ? $_GET['hotnpager'] : 0;
     $pager_count = self::$pagers_items;
     $prev_pager = $current_pager - 1;
@@ -521,7 +522,7 @@ class hotn {
   }
 
   /**
-   * Return string by 1 item or lower else higher.
+   * Return string for 1 item or multiple.
    * @param  int $count A count of all items.
    * @param  string $string1 String for 1 or lower items.
    * @param  string $string2 String for 2 or more items.
