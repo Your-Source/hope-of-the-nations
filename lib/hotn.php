@@ -284,7 +284,23 @@ class hotn {
    */
   private static function hotn_theme_overview_child(hotnSponsorChild $child) {
     $uri = strtok($_SERVER["REQUEST_URI"], '?');
-    $detail_url = $uri . '?hotnChildID=' . $child->getChildId();
+
+    $parameters = array();
+    // Add all url parameters from a CMS also to the detail url for a correct
+    // url routing. If the key not hotn add to to the parameters array.
+    foreach ($_GET as $key => $value) {
+      if (strpos($key, 'hotn') === FALSE) {
+        $parameters['key'] = $value;
+      }
+    }
+
+    // Implode the parameters array to string with as glue & for a valid url parameter.
+    $url_para = '';
+    if (!empty($parameters)) {
+      $url_para = '&' . implode('&', $parameters);
+    }
+
+    $detail_url = $uri . '?hotnChildID=' . $child->getChildId() . $url_para;
 
     $output = '<div class="item child-overview">';
 
