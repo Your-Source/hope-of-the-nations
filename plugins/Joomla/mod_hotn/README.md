@@ -1,5 +1,5 @@
 # Hope of the Nations
-For Joomla 3.x
+For Joomla 1.5.x
 
 Module to show a list of children, child detail and sponsor a Child.
 
