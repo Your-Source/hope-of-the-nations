@@ -1,0 +1,91 @@
+<?php
+/**
+ * @file Module file for Hope of the Nations
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function hotn_menu() {
+  $items['hopeofthenations'] = array(
+    'title' => 'Hope of the Nations',
+    'page callback' => 'hotn_children_list',
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Page callback for children list of Hope of the Nations.
+ */
+function hotn_children_list() {
+  // Get the library path.
+  $library_path = _hotn_library_directory();
+
+  // If library path is set include files.
+  if ($library_path) {
+    include_once $library_path . '/hotnConfig.php';
+    include_once $library_path . '/lib/hotn.php';
+
+    $output = array(
+      '#markup' => hotn::load(),
+      '#attached' => array(
+        'css' => array(
+          $library_path . '/css/hotn-style.css',
+        ),
+        'js' => array(
+          $library_path . '/js/hotn.js' => array(
+            'weight' => 1000,
+            'group' => JS_LIBRARY,
+          ),
+        ),
+      ),
+    );
+
+    return $output;
+  }
+
+  // If library is not loaded set error message and write watchdog message.
+  drupal_set_message(t('Could not load the hotn library'), 'error', FALSE);
+  watchdog('hotn', 'Could not load the hotn library');
+  return '';
+}
+
+
+/**
+ * Searches for a libraries directory
+ */
+function _hotn_library_directory() {
+
+  // Check if libraries module exists.
+  if (module_exists('libraries')) {
+    $dir = libraries_get_path('hotn');
+    return is_dir($dir) ? $dir : FALSE;
+  }
+  elseif (module_exists('jqp')) {
+    $dir = variable_get('jqp_directory', 'sites/all/libraries');
+    return is_dir($dir) ? $dir : FALSE;
+  }
+  elseif ($dir = variable_get('hotn_directory', FALSE)) {
+    return is_dir($dir) ? $dir : FALSE;
+  }
+
+  global $profile;
+  $config = conf_path();
+
+  $searchdir = array(
+    'libraries/hotn',
+    'sites/all/libraries/hotn',
+    'profiles/' . $profile . '/libraries/hotn',
+    $config . '/libraries/hotn',
+  );
+
+  foreach ($searchdir as $dir) {
+    if (is_dir($dir)) {
+      variable_set('hotn_directory', $dir);
+      return $dir;
+    }
+  }
+  return FALSE;
+}
