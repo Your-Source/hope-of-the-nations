@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.5.0">
+	<name>Hope of the Nations</name> 
+    <author>Hope of the Nations</author> 
+    <creationDate>August 2014</creationDate> 
+    <copyright>All rights reserved by Ambitionality Software LLC 2008.</copyright> 
+    <license>GPL 2.0</license> 
+    <authorEmail>fabian@your-source.nl</authorEmail> 
+    <authorUrl>www.hopeofthenations.nl</authorUrl> 
+    <version>1.0.0</version> 
+    <description>Hope of the Nations module. Shows children that can be sponsored in an overview and detail pages.</description>
+    <files>
+            <filename module="mod_hotn">mod_hotn.php</filename>
+            <filename>index.html</filename>
+    </files>
+    <params />
+</install>
+
