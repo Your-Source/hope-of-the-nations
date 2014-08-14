@@ -195,7 +195,7 @@ Fill in the form below to support @name';
     $output .= '</div>';
     $output .= '<div class="field">';
     $output .= '<label>' . hotn::hotn_t('Premises') . ':' . '</label> ';
-    $output .= '<input type="number" name="Premises" value="' . (!empty($Premises) ? $Premises : '') . '">';
+    $output .= '<input type="text" name="Premises" value="' . (!empty($Premises) ? $Premises : '') . '">';
     $output .= '</div>';
     $output .= '<div class="field">';
     $output .= '<label>' . hotn::hotn_t('Phone number') . ':' . '</label> ';
