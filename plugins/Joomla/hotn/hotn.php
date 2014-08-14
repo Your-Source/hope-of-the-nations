@@ -9,7 +9,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 $library_path = JPATH_BASE . DS . 'libraries' . DS . 'hotn';
 
-// If library is not exist set error message and return.
+// If library does not exist set error message and return.
 if (!file_exists($library_path . DS . 'hotnConfig.php')) {
   JError::raiseWarning(100, JText::_('The Hope of the Nations library is not present.'));
 

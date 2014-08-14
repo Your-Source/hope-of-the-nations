@@ -5,7 +5,7 @@
     <version>1.0.0</version>
     <creationDate>August 2014</creationDate>
     <authorUrl>www.hopeofthenations.nl</authorUrl>
-    <description>Hope of the Nations show the childeren and it is possible to sponsor a child.</description>
+    <description>Hope of the Nations module. Shows children that can be sponsored in an overview and detail pages.</description>
     <files>
         <filename>hotn.xml</filename>
         <filename module="hotn">hotn.php</filename>

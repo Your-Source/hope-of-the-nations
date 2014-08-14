@@ -1,5 +1,5 @@
 name = Hope of the Nations
-description = Hope of the Nations show the childeren and it is possible to sponsor a child.
+description = Hope of the Nations module. Shows children that can be sponsored in an overview and detail pages.
 package = OTHER
 core = 7.x
 

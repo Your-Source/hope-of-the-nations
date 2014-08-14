@@ -1,1 +1,1 @@
-This directory should be used to place the Hope of the Nations library folder. In another place he didn't load the library in.
+This directory should be used to place the Hope of the Nations library folder. The library will not be loaded elsewhere.

@@ -1,6 +1,6 @@
 # Hope of the Nations
 
-Module to show a list of childeren, child detail and sponsor a Child.
+Module to show a list of children, child detail and sponsor a Child.
 
 Path of Hope of the Nations list is /hopeofthenations or ?p=hopeofthenations.
 

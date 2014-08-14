@@ -2,7 +2,7 @@
 /*
 Plugin Name: Hope of the Nations
 Plugin URI: http://hopeofthenations.nl
-Description: Hope of the Nations show the childeren and it is possible to sponsor a child.
+Description: Hope of the Nations module. Shows children that can be sponsored in an overview and detail pages.
 Version: 1.0
 Author: Your Source
 Author URI: http://your-source.nl
@@ -13,12 +13,11 @@ add_action('the_posts', 'hotn_page');
 add_action('wp_head', 'hotn_page_headers');
 
 /**
- * Page callback for show the children of Hope of the Nations.
+ * Page callback for showing the children of Hope of the Nations.
  * @param  array $posts All current posts on this path.
  * @return array $posts Post for the page with children.
  */
 function hotn_page($posts) {
-  global $wp_query;
 
   if(is_hotn_page()) {
     $library_path = __DIR__ . '/library/hotn';
@@ -37,7 +36,7 @@ function hotn_page($posts) {
  * Add javascript and css files for Hope of the Nations.
  */
 function hotn_page_headers() {
-  if(is_hotn_page()) {
+  if (is_hotn_page()) {
     // Add javascript file for Hope of the Nations.
     wp_enqueue_script(
       'hotn_script',
@@ -59,7 +58,7 @@ function hotn_page_headers() {
  * @return boolean Return TRUE is current page is hopeofthenations.
  */
 function is_hotn_page() {
-  if($_GET['p'] === 'hopeofthenations'
+  if ($_GET['p'] === 'hopeofthenations'
     || strpos($_SERVER['REQUEST_URI'] ,'hopeofthenations') !== FALSE) {
 
     return TRUE;
