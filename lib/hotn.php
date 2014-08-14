@@ -296,12 +296,12 @@ class hotn {
     }
 
     // Implode the parameters array to string with as glue & for a valid URL parameter.
-    $url_para = '';
+    $url_param = '';
     if (!empty($parameters)) {
-      $url_para = '&' . implode('&', $parameters);
+      $url_param = '&' . implode('&', $parameters);
     }
 
-    $detail_url = $uri . '?hotnChildID=' . $child->getChildId() . $url_para;
+    $detail_url = $uri . '?hotnChildID=' . $child->getChildId() . $url_param;
 
     $output = '<div class="item child-overview">';
 
