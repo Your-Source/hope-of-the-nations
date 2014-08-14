@@ -2,7 +2,6 @@
 /**
  * Main class file for Hope of the Nations.
  */
-
 include_once __DIR__ . '/hotnConnector.php';
 include_once __DIR__ . '/hotnForm.php';
 include_once __DIR__ . '/hotnSponsorChildInterface.php';
