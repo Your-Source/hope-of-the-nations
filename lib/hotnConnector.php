@@ -13,6 +13,7 @@ class hotnConnector {
    */
   public static function get_feed($type = 'child', $data = array()) {
     $hotnsessionkey = 'hotn_' . $type;
+    $sess_ttl = !empty(hotnConfig::$session_ttl) ? hotnConfig::$session_ttl : 0;
 
     // This code is commented because if it in the future there are a lot more
     // children it is possible to filter by the request.
@@ -32,7 +33,7 @@ class hotnConnector {
 
     // If session width data is empty or time to live of the session is expired.
     if (empty($_SESSION[$hotnsessionkey])
-      || (time() - $_SESSION[$hotnsessionkey . '_created'] > hotnConfig::$session_ttl)) {
+      || (time() - $_SESSION[$hotnsessionkey . '_created'] > $sess_ttl)) {
 
       // Get the data from the request.
       try {
