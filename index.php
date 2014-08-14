@@ -17,7 +17,7 @@ include_once __dir__ . '/lib/hotn.php';
   </head>
   <body>
     <?php
-      echo hotn::show_children();
+      echo hotn::load();
     ?>
 
   </body>

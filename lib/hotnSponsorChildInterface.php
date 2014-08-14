@@ -12,7 +12,7 @@ interface hotnSponsorChildInterface {
   function __construct($child);
 
   /**
-   * Returns int with child id.
+   * Returns int with child ID.
    * @return (int) $child_id Returns int of childid.
    */
   public function getChildId();
@@ -58,15 +58,16 @@ interface hotnSponsorChildInterface {
    * @return (string) $gender Returns gender of the child.
    */
   public function getChildGender();
+
   /**
-   * Returns string with URL to small child image.
-   * @return (string) $smallimage Returns base64 object of small Image from the child.
+   * Returns string with base64 content to small child image.
+   * @return (string) $smallimage Returns base64 string of small Image from the child.
    */
   public function getChildSmallImage();
 
   /**
-   * Returns string with URL to large child image.
-   * @return (string) $largeimage Returns base64 object of small Image from the child.
+   * Returns string with base64 content to large child image.
+   * @return (string) $largeimage Returns base64 string of large Image from the child.
    */
   public function getChildLargeImage();
 }

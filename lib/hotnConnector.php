@@ -6,15 +6,16 @@
 class hotnConnector {
 
   /**
-   * Get the feed width the data.
-   * @param  string $type type of URL
-   * @param  array  $data extra query data
-   * @return array array width the data of the request.
+   * Get the feed with the data.
+   * @param  string $type type of URL.
+   * @param  array  $data extra query data.
+   * @return array array with the data of the request.
    */
   public static function get_feed($type = 'child', $data = array()) {
     $hotnsessionkey = 'hotn_' . $type;
+    $sess_ttl = !empty(hotnConfig::$session_ttl) ? hotnConfig::$session_ttl : 0;
 
-    // This code is commented because if it in the future there are a lot more
+    // This code is commented because if in the future there are a lot more
     // children it is possible to filter by the request.
     // // Set API key to query and build query.
     // foreach ($data as $key => $value) {
@@ -32,20 +33,24 @@ class hotnConnector {
 
     // If session width data is empty or time to live of the session is expired.
     if (empty($_SESSION[$hotnsessionkey])
-      || (time() - $_SESSION[$hotnsessionkey . '_created'] > hotnConfig::$session_ttl)) {
+      || (time() - $_SESSION[$hotnsessionkey . '_created'] > $sess_ttl)) {
 
       // Get the data from the request.
       try {
         $data = self::type_data_request($type, $data);
       }
-      catch (Exception $e) {};
+      catch (Exception $e) {
+        throw new Exception('Could not fetch data from web service.');
+      };
 
       // Set the data to the session and set also a created time to session.
       try {
         $_SESSION[$hotnsessionkey] = $data;
         $_SESSION[$hotnsessionkey . '_created'] = time();
       }
-      catch (Exception $e) {};
+      catch (Exception $e) {
+        throw new Exception('Error setting data to the session variable.');
+      };
 
       // Return array with the JSON data from URL request..
       return json_decode($data, TRUE);
@@ -109,7 +114,9 @@ class hotnConnector {
     try {
       $result = file_get_contents($url, FALSE, $context);
     }
-    catch (Exception $e) {};
+    catch (Exception $e) {
+      throw new Exception('Could not connect to web service.');
+    };
 
     return $result;
   }
