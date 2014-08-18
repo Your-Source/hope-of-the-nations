@@ -89,13 +89,13 @@ class hotnForm {
       }
     }
 
-    // Change the value of date field to other format.
+    // Reformat the value of the date field.
     if (!empty($values['DateOfBirth'])) {
       $timestamp = strtotime($values['DateOfBirth']);
 
       $date = date('Y-m-d', $timestamp);
 
-      // Replace the date to other format.
+      // Replace the date with the new format.
       $values['DateOfBirth'] = $date;
     }
 
