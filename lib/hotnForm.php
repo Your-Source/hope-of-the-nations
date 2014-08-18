@@ -89,6 +89,16 @@ class hotnForm {
       }
     }
 
+    // Reformat the value of the date field.
+    if (!empty($values['DateOfBirth'])) {
+      $timestamp = strtotime($values['DateOfBirth']);
+
+      $date = date('Y-m-d', $timestamp);
+
+      // Replace the date with the new format.
+      $values['DateOfBirth'] = $date;
+    }
+
     return $messages;
   }
 
