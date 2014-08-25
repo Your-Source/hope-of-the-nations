@@ -73,7 +73,7 @@ interface hotnSponsorChildInterface {
 
   /**
    * Returns string with project information.
-   * @return (string) $ProjectInformation Returns project information about child.
+   * @return (string) $ProjectInformation Returns project information about a child.
    */
   public function ProjectInformation();
 }
