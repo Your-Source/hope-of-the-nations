@@ -113,4 +113,12 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
     return 'images/child-fallback.png';
   }
 
+  /**
+   * Returns string with project information.
+   * @return (string) $ProjectInformation Returns project information about child.
+   */
+  public function ProjectInformation() {
+    return $this->child['ProjectInformation'];
+  }
+
 }
