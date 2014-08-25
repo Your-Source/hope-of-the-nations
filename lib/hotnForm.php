@@ -89,6 +89,16 @@ class hotnForm {
       }
     }
 
+    // Reformat the value of the date field.
+    if (!empty($values['DateOfBirth'])) {
+      $timestamp = strtotime($values['DateOfBirth']);
+
+      $date = date('Y-m-d', $timestamp);
+
+      // Replace the date with the new format.
+      $values['DateOfBirth'] = $date;
+    }
+
     return $messages;
   }
 
@@ -206,7 +216,7 @@ Fill in the form below to support @name';
     $output .= '<input type="tel" name="MobilePhone" value="' . (!empty($MobilePhone) ? $MobilePhone : '') . '">';
     $output .= '</div>';
     $output .= '<div class="field">';
-    $output .= '<label>' . hotn::hotn_t('Bankaccount') . ':' . '</label> ';
+    $output .= '<label>' . hotn::hotn_t('IBAN') . ':' . '</label> ';
     $output .= '<input type="text" name="BankAccount" value="' . (!empty($BankAccount) ? $BankAccount : '') . '">';
     $output .= '</div>';
     $output .= '<div class="field markup">';
