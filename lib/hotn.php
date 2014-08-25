@@ -378,6 +378,10 @@ class hotn {
     $output .= $child->getChildStory();
     $output .= '</div>';
 
+    $output .= '<div class="child-detail-story">';
+    $output .= '<h3>' . self::hotn_t('Project information') . '</h3>';
+    $output .= '</div>';
+
     $output .= '</div>';
 
     return $output;
