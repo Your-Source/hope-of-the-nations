@@ -70,4 +70,10 @@ interface hotnSponsorChildInterface {
    * @return (string) $largeimage Returns base64 string of large Image from the child.
    */
   public function getChildLargeImage();
+
+  /**
+   * Returns string with project information.
+   * @return (string) $ProjectInformation Returns project information about a child.
+   */
+  public function ProjectInformation();
 }

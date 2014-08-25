@@ -340,6 +340,8 @@ class hotn {
     );
     $info_string = self::hotn_t('@name is born on @birthdate and lives in @country', $info_placeholders);
 
+    $story_title = self::hotn_t('My name is @name', $info_placeholders);
+
     $base_url = !empty(hotnConfig::$base_url) ? hotnConfig::$base_url : $_SERVER['SERVER_NAME'];
 
     $request_uri = $_SERVER['REQUEST_URI'];
@@ -369,6 +371,16 @@ class hotn {
     $output .= '<span class="blogger"><a href="https://www.blogger.com/blog-this.g?u=' . $url_html . '&n=' . $title_html . '" target="_blank" class="blogger external" title="Blogger">Blogger</a></span> ';
     $output .= '<span class="googleplus"><a href="https://plus.google.com/share?url=' . $url_html . '" target="_blank" class="google external" title="Google+">Google+</a></span> ';
 
+    $output .= '</div>';
+
+    $output .= '<div class="child-detail-story">';
+    $output .= '<h3>' . $story_title . '</h3>';
+    $output .= $child->getChildStory();
+    $output .= '</div>';
+
+    $output .= '<div class="child-detail-story">';
+    $output .= '<h3>' . self::hotn_t('Project information') . '</h3>';
+    $output .= $child->ProjectInformation();
     $output .= '</div>';
 
     $output .= '</div>';

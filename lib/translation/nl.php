@@ -60,4 +60,6 @@ Fill in the form below to support @name' => 'Hartelijk bedankt dat je overweegt 
   'You are sponsoring a child now.' => 'U sponsort nu een kind.',
   'Oops, something went wrong. Try again or contact the site administrator.' => 'Oeps, er is iets fout gegaan. Probeer opnieuw of neem contact op met de sitebeheerder.',
   'Submit' => 'Verzenden',
+  'My name is @name' => 'Mijn naam is @name',
+  'Project information' => 'Projectinformatie',
 );

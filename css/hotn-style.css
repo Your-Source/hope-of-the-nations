@@ -56,6 +56,10 @@
   font-weight: bold;
 }
 
+#hotn-child-form {
+  float: left;
+  width: 400px;
+}
 #hotn-child-sponsor-form .field {
   margin-bottom: 5px;
 }
@@ -69,4 +73,13 @@
 }
 #hotn-child-sponsor-form .radio-items {
   margin-left: 150px;
+}
+
+#hotn-child-detail {
+  width: 320px;
+  float: left;
+  margin-right: 50px;
+}
+#hotn-child-detail div {
+  margin-bottom: 10px;
 }
