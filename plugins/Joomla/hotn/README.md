@@ -21,7 +21,7 @@ Upload the module as zip on the page extension 'Extension Manager: Install'. Cli
 
 After the installation you can make a new page at the content manager or use a existing page. This page should be added to the menu.
 
-Now the module can be added to this menu item to show this on a specific page. Go to 'Extensions > Module manager' and add the module Hope of the Nations. You can add this module by clicking on the 'new' button and choosing 'Hope of te Nations' in the module list. You can now add a title and under the Menu Assignment tab you can select if this module should be showt on all pages or specific page.
+Now the module can be added to this menu item to show this on a specific page. Go to 'Extensions > Module manager' and add the module Hope of the Nations. You can add this module by clicking on the 'new' button and choosing 'Hope of te Nations' in the module list. You can now add a title and under the Menu Assignment tab. You can select if this module should be showed on all pages or specific page.
 
 For display on a specific page select 'Only on the pages selected'. Now you can select the page from the menu where this module should be displayed.
 
