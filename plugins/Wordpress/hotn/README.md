@@ -1,6 +1,6 @@
 # Hope of the Nations
 
-Module to show a list of children, child detail and sponsor a Child.
+Module that provides overview and detail pages of children in the Hope of the Nations sponsoring programme.
 
 Path of Hope of the Nations list is /hopeofthenations or ?p=hopeofthenations.
 
@@ -9,6 +9,15 @@ Path of Hope of the Nations list is /hopeofthenations or ?p=hopeofthenations.
 	* hotn
 
 ## Library
-This module requires the library hotn. Place of this library is in the library folder in this plugin.
+This module requires the HOTN library. Place this library in the library folder of this plugin.
 
-{plugin_dir}/library/hotn
+wp-content/plugins/hotn/library/hotn
+
+## Installation
+To install this module you need to place the module in the path 'wp-content/plugins'.
+
+Place the library in the folder wp-content/plugins/hotn/library/hotn.
+
+After you placed the module and the library in the right directories you can install the module at /wp-admin/plugins.php. To install this module you select the checkbox at the module 'Hope of the Nations' and apply the configuration.
+
+After this you can view the children overview page at this path: /hopeofthenations or ?p=hopeofthenations.
