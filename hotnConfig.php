@@ -21,6 +21,8 @@
  * @param (string) $translator_func
  *  Name of the function to translate content.
  *  This function can be user defined.
+ * @param (string) $childPictureUri
+ *  Uri to the API for child pictures.
  * @param (string) $custom_translate_lang
  *  Language if not translate func is filled in.
  *  @param (string) $base_url
@@ -39,6 +41,7 @@ class hotnConfig {
     'method' => 'POST',
     'content' => TRUE,
   );
+  public static $childPictureUri = 'api/Picture';
   public static $translator_func = NULL;
   public static $custom_translate_lang = 'nl';
   public static $base_url = '';

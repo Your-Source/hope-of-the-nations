@@ -309,7 +309,7 @@ class hotn {
     $output = '<div class="item child-overview">';
 
     $output .= '<div class="image">';
-    $output .= '<img src="' . $child->getChildSmallImage() . '" title="' . $child->getChildName() . '">';
+    $output .= '<img src="' . $child->getChildImage() . '" title="' . $child->getChildName() . '">';
     $output .= '</div>';
 
     $output .= '<div class="info">';
@@ -356,7 +356,7 @@ class hotn {
     $output .= '<h1 class="hotn-title">' . $title . '</h1>';
 
     $output .= '<div class="image">';
-    $output .= '<img src="' . $child->getChildLargeImage() . '" title="' . $child->getChildName() . '">';
+    $output .= '<img src="' . $child->getChildImage() . '" title="' . $child->getChildName() . '">';
     $output .= '</div>';
 
     $output .= '<div class="information">';
