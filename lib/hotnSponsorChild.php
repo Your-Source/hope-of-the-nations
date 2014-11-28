@@ -121,4 +121,11 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
     return $this->child['ProjectInformation'];
   }
 
+  /**
+   * Returns boolean with status ID.
+   * @return (boolean) $StatusId Returns status ID of a child.
+   */
+  public function getStatusId() {
+    return $this->child['StatusId'];
+  }
 }

@@ -76,4 +76,10 @@ interface hotnSponsorChildInterface {
    * @return (string) $ProjectInformation Returns project information about a child.
    */
   public function ProjectInformation();
+
+  /**
+   * Returns boolean with status ID.
+   * @return (boolean) $StatusId Returns status ID of a child.
+   */
+  public function getStatusId();
 }
