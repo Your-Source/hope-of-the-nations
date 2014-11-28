@@ -90,27 +90,12 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
   }
 
   /**
-   * Returns string with base64 content to small child image.
-   * @return (string) $smallimage Returns base64 string of small Image from the child.
+   * Returns url to an image from a child.
+   * @return (string) Returns url of an image from a child.
    */
-  public function getChildSmallImage() {
-    if (!empty($this->child['SmallImage'])) {
-      return 'data:image/png;base64,' . $this->child['SmallImage'];
-    }
-
-    return 'images/child-fallback.png';
-  }
-
-  /**
-   * Returns string with base64 content to large child image.
-   * @return (string) $largeimage Returns base64 string of large Image from the child.
-   */
-  public function getChildLargeImage() {
-    if (!empty($this->child['LargeImage'])) {
-      return 'data:image/png;base64,' . $this->child['LargeImage'];
-    }
-
-    return 'images/child-fallback.png';
+  public function getChildImage() {
+    // Build the url for call the API.
+    return hotnConfig::$url . '/' . hotnConfig::$childPictureUri . '/' . $this->child['ChildID'];
   }
 
   /**
