@@ -90,11 +90,11 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
   }
 
   /**
-   * Returns url to an image from a child.
-   * @return (string) Returns url of an image from a child.
+   * Returns URL to an image from a child.
+   * @return (string) Returns URL of an image from a child.
    */
   public function getChildImage() {
-    // Build the url for call the API.
+    // Build the URL for call the API.
     return hotnConfig::$url . '/' . hotnConfig::$childPictureUri . '/' . $this->child['ChildID'];
   }
 

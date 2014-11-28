@@ -22,7 +22,7 @@
  *  Name of the function to translate content.
  *  This function can be user defined.
  * @param (string) $childPictureUri
- *  Uri to the api for child pictures.
+ *  Uri to the API for child pictures.
  * @param (string) $custom_translate_lang
  *  Language if not translate func is filled in.
  *  @param (string) $base_url

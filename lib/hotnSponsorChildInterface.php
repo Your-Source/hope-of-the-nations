@@ -60,8 +60,8 @@ interface hotnSponsorChildInterface {
   public function getChildGender();
 
   /**
-   * Returns url to an image from a child.
-   * @return (string) Returns url of an image from a child.
+   * Returns URL to an image from a child.
+   * @return (string) Returns URL of an image from a child.
    */
   public function getChildImage();
 
