@@ -364,7 +364,6 @@ class hotn {
     $output .= '<div class="links">';
     $output .= '<a href="#" class="link hotn-filter-form-reset">' . self::hotn_t('Reset') . '</a>';
     $output .= '</div>';
-    $output .= '<input type="submit" value="verzenden">';
     $output .= '</form>';
     $output .= '</div>';
 

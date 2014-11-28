@@ -19,7 +19,7 @@ class hotnConnector {
     foreach ($data as $key => $value) {
       // Unset the key if the value is empty of not contains hotn-.
       // If the key is agegroup exclude this from unset.
-      if ((empty($value) || strpos($key, 'hotn-'))
+      if ($key != 'hotn-agegroup' && (!empty($value) || strpos($key, 'hotn-'))
         || ($key == 'hotn-agegroup' && $value == NULL)) {
 
         unset($data[$key]);
