@@ -15,21 +15,22 @@ class hotnConnector {
     $hotnsessionkey = 'hotn_' . $type;
     $sess_ttl = !empty(hotnConfig::$session_ttl) ? hotnConfig::$session_ttl : 0;
 
-    // This code is commented because if in the future there are a lot more
-    // children it is possible to filter by the request.
-    // // Set API key to query and build query.
-    // foreach ($data as $key => $value) {
-    //   // Unset the key if the value is empty of not contains hotn-.
-    //   if (empty($value) || strpos($key, 'hotn-')) {
-    //     unset($data[$key]);
-    //   }
-    //   else {
-    //     // Replace hotn- to nothing, set new parameter to array and delete old key.
-    //     $new_key = str_replace('hotn-', '', $key);
-    //     $data[$new_key] = $data[$key];
-    //     unset($data[$key]);
-    //   }
-    // }
+    // Set API key to query and build query.
+    foreach ($data as $key => $value) {
+      // Unset the key if the value is empty of not contains hotn-.
+      // If the key is agegroup exclude this from unset.
+      if ((empty($value) || strpos($key, 'hotn-'))
+        || ($key == 'hotn-agegroup' && $value == NULL)) {
+
+        unset($data[$key]);
+      }
+      else {
+        // Replace hotn- to nothing, set new parameter to array and delete old key.
+        $new_key = str_replace('hotn-', '', $key);
+        $data[$new_key] = $data[$key];
+        unset($data[$key]);
+      }
+    }
 
     // If session width data is empty or time to live of the session is expired.
     if (empty($_SESSION[$hotnsessionkey])
