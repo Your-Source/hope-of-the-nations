@@ -61,13 +61,7 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
   public function getChildBirthdate() {
     $time = strtotime($this->child['Birthdate']);
 
-    // If birthdate is not a integer return null.
-    if ($time == 0) {
-      return NULL;
-    }
-
-    return date('d-m-Y', $time);
-  }
+    return ($time == 0) ? NULL : date('d-m-Y', $time);
 
   /**
    * Returns int with child age.
