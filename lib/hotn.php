@@ -309,12 +309,12 @@ class hotn {
 
     // Create label with status id.
     $status_sponsored = array(
-      3 => self::hotn_t('Fully sponsored'),
-      4 => self::hotn_t('Sponsored by third parties'),
+      3,
+      4,
     );
     $status = '';
-    if (array_key_exists($child->getStatusId(), $status_sponsored)) {
-      $status = '<div class="status">' . $status_sponsored[$child->getStatusId()] . '</div>';
+    if (in_array($child->getStatusId(), $status_sponsored)) {
+      $status = '<div class="status">' . self::hotn_t('Sponsored') . '</div>';
 
       // Overwrite detail_url. because this child can no longer be sponsored.
       $detail_url = '#';
