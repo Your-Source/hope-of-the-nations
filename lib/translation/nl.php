@@ -63,4 +63,5 @@ Fill in the form below to support @name' => 'Hartelijk bedankt dat je overweegt 
   'My name is @name' => 'Mijn naam is @name',
   'Project information' => 'Projectinformatie',
   'until further notice' => 'is tot wederopzegging',
+  'Sponsorship @childname' => 'Sponsoring @childname'
 );

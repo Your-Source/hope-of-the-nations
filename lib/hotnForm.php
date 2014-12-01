@@ -129,7 +129,7 @@ class hotnForm {
     $mail = strtr($mail_template, $args);
 
     $to = $values['EmailAddress'];
-    $subject = 'Sponsoring ' . $child->getChildName();
+    $subject = hotn::hotn_t('Sponsorship @childname', array('@childname' => $child->getChildName()));
     return mail($to, $subject, $mail, NULL, '-fnoreply@hopeofthenations.nl');
   }
 
