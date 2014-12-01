@@ -112,7 +112,7 @@ class hotnForm {
    */
   public static function hotnFormSendMail($values, $children) {
     $child = $children[0];
-    $mail_template = file_get_contents(__DIR__ . '/resources/mail.txt');
+    $mail_template = file_get_contents(__DIR__ . '/resources/mail_nl.txt');
 
     // Set values to arguments.
     $args = array();
