@@ -26,7 +26,7 @@ class hotn {
     // If child ID is set as parameter the current page is a child detail page.
     if (!empty($_GET['hotnChildID'])) {
       $child_detail = self::get_child($_GET['hotnChildID']);
-      $form = hotnForm::form(self::get_child_list(array('hotn-Id' => $_GET['hotnChildID'])));
+      $form = hotnForm::form(self::get_child_list(array('hotn-childid' => $_GET['hotnChildID'])));
 
       $output = $child_detail . $form;
       return $output;
@@ -63,7 +63,7 @@ class hotn {
    * @return string Returns the markup of child detail page.
    */
   public static function get_child($childid) {
-    $children = self::get_child_list(array('hotn-Id' => $childid));
+    $children = self::get_child_list(array('hotn-childid' => $childid));
 
     if (empty($children)) {
       return self::hotn_t('This child is not available.');
@@ -113,7 +113,7 @@ class hotn {
    * @return array With all children in their own object.
    */
   private static function get_child_list($parameters = array(), $all_items = FALSE) {
-    $children = hotnConnector::get_feed('child');
+    $children = hotnConnector::get_feed('child', $parameters);
     $operator = NULL;
     $child_output = array();
     $function_name = '';
@@ -124,76 +124,6 @@ class hotn {
 
     // Set total count of children.
     self::$children_count_total = count($child_output);
-
-    // The parameters will be prefixed by 'hotn-' to
-    // prevent name space issues with existing CMS.
-    foreach ($parameters as $key => $input_value) {
-      // Unset the key if the value is empty of
-      // the key doesn't contain hotn- at the beginning.
-      if (!empty($input_value) && strpos($key, 'hotn-') !== FALSE) {
-        // Replace hotn- to nothing because the new key is a standard of the REST API.
-        $new_key = str_replace('hotn-', '', $key);
-
-        // Set filter on age as default to FALSE.
-        $filter_on_age = FALSE;
-
-        // Switch for the function name by a filter key.
-        switch ($new_key) {
-          case 'gender':
-            $function_name = 'getChildGender';
-            break;
-
-          case 'country':
-            $function_name = 'getChildCountry';
-            break;
-
-          case 'agegroup':
-            $filter_on_age = TRUE;
-            break;
-          default:
-            // If new is not empty filter on all keys.
-            if (!empty($new_key)) {
-              $function_name = 'getChild' . $new_key;
-            }
-        }
-
-        // Iterate over children and evaluate operator.
-        foreach ($child_output as $child_key => $child) {
-
-          // If filter on age is TRUE filter on the value added through the form.
-          if ($filter_on_age) {
-            $age = $child->getChildAge();
-
-            switch ($input_value) {
-              case '0':
-                $operator = ($age < 3);
-                break;
-              case '1':
-                $operator = in_array($age, range(3, 6));
-                break;
-              case '2':
-                $operator = in_array($age, range(7, 9));
-                break;
-              case '3':
-                $operator = ($age >= 10);
-                break;
-            }
-
-            // Unset the child that does not match any value.
-            if (!$operator) {
-              unset($child_output[$child_key]);
-            }
-          }
-          else {
-            $value_to_filter = call_user_func(array($child, $function_name));
-
-            if ($input_value != $value_to_filter) {
-              unset($child_output[$child_key]);
-            }
-          }
-        }
-      }
-    }
 
     // Set count of children after filtering.
     self::$children_count_filtered = count($child_output);
