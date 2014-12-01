@@ -20,8 +20,9 @@ class hotnForm {
         return self::hotn_theme_form($children[0], $value, $messages);
       }
 
-      if (hotnConnector::setSponsor($value)) {
-        self::hotnFormSendMail($value, $children);
+      if (hotnConnector::setSponsor($value)
+        && self::hotnFormSendMail($value, $children)) {
+
         $message = hotn::hotn_t('You are sponsoring a child now.');
         return self::hotn_theme_display_message($message);
       }
@@ -107,7 +108,7 @@ class hotnForm {
    * Send a mail to the sponsor with message about payment.
    * @param array $values Form values from sponsor form.
    * @param array $children All children objects.
-   * @return boolean return If mail is send to sponsor.
+   * @return boolean return If mail is sent to sponsor.
    */
   public static function hotnFormSendMail($values, $children) {
     $child = $children[0];
