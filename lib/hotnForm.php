@@ -21,6 +21,7 @@ class hotnForm {
       }
 
       if (hotnConnector::setSponsor($value)) {
+        self::hotnFormSendMail($value, $children);
         $message = hotn::hotn_t('You are sponsoring a child now.');
         return self::hotn_theme_display_message($message);
       }
@@ -100,6 +101,30 @@ class hotnForm {
     }
 
     return $messages;
+  }
+
+  public static function hotnFormSendMail($values, $children) {
+    $child = $children[0];
+    $mail_template = file_get_contents(__DIR__ . '/resources/mail.txt');
+
+    // Set values to arguments.
+    $args = array();
+    foreach ($values as $key => $value) {
+      $args['!' . $key] = $value;
+    }
+    $args['!namechild'] = $child->getChildName();
+    $args['!currenttime'] = date('d-m-Y H:i');
+
+    if (!empty($args['!Duration']) && $args['!Duration'] == '5+') {
+      $args['!Duration'] = hotn::hotn_t('is tot weder opzegging');
+    }
+
+    // Replace arguments in mail.
+    $mail = strtr($mail_template, $args);
+
+    $to = $values['EmailAddress'];
+    $subject = 'Sponsoring ' . $child->getChildName();
+    return mail($to, $subject, $mail, NULL, '-fnoreply@hopeofthenations.nl');
   }
 
   /**
