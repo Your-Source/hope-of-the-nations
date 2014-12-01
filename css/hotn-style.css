@@ -74,6 +74,9 @@
 #hotn-child-list .item .name {
   font-weight: bold;
 }
+#hotn-child-list .items .item .more-info a.inactive {
+  color: #D9D9D9;
+}
 
 #hotn-child-form {
   float: left;

@@ -304,6 +304,9 @@ class hotn {
       }
     }
 
+    $detail_url = $uri . '?hotnChildID=' . $child->getChildId() . $url_param;
+    $class = 'active';
+
     // Create label with status id.
     $status_sponsored = array(
       3 => self::hotn_t('Fully sponsored'),
@@ -312,9 +315,11 @@ class hotn {
     $status = '';
     if (array_key_exists($child->getStatusId(), $status_sponsored)) {
       $status = '<div class="status">' . $status_sponsored[$child->getStatusId()] . '</div>';
-    }
 
-    $detail_url = $uri . '?hotnChildID=' . $child->getChildId() . $url_param;
+      // Overwrite detail_url. because this child can no longer be sponsored.
+      $detail_url = '#';
+      $class = 'inactive';
+    }
 
     $output = '<div class="item child-overview">';
 
@@ -330,7 +335,7 @@ class hotn {
     $output .= '<br />';
     $output .= '<span class="birthdate">' . $child->getChildBirthdate() . '</span>';
     $output .= '<br />';
-    $output .= '<span class="more-info"><a href="' . $detail_url . '">' . self::hotn_t('More info') . '</a></span>';
+    $output .= '<span class="more-info"><a href="' . $detail_url . '" class="' . $class . '">' . self::hotn_t('More info') . '</a></span>';
     $output .= '</div>';
 
     $output .= '</div>';
