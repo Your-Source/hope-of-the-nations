@@ -22,7 +22,7 @@ class hotn {
     // If child ID is set as parameter the current page is a child detail page.
     if (!empty($_GET['hotnChildID'])) {
       $child_detail = self::get_child($_GET['hotnChildID']);
-      $form = hotnForm::form(self::get_child_list(array('hotn-Id' => $_GET['hotnChildID'])));
+      $form = hotnForm::form(self::get_child_list(array('hotn-childid' => $_GET['hotnChildID'])));
 
       $output = $child_detail . $form;
       return $output;
@@ -59,7 +59,7 @@ class hotn {
    * @return string Returns the markup of child detail page.
    */
   public static function get_child($childid) {
-    $children = self::get_child_list(array('hotn-Id' => $childid));
+    $children = self::get_child_list(array('hotn-childid' => $childid));
 
     if (empty($children)) {
       return self::hotn_t('This child is not available.');
