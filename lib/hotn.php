@@ -304,12 +304,23 @@ class hotn {
       }
     }
 
+    // Create label with status id.
+    $status_sponsored = array(
+      3 => self::hotn_t('Fully sponsored'),
+      4 => self::hotn_t('Sponsored by third parties'),
+    );
+    $status = '';
+    if (array_key_exists($child->getStatusId(), $status_sponsored)) {
+      $status = '<div class="status">' . $status_sponsored[$child->getStatusId()] . '</div>';
+    }
+
     $detail_url = $uri . '?hotnChildID=' . $child->getChildId() . $url_param;
 
     $output = '<div class="item child-overview">';
 
     $output .= '<div class="image">';
     $output .= '<img src="' . $child->getChildImage() . '" title="' . $child->getChildName() . '">';
+    $output .= $status;
     $output .= '</div>';
 
     $output .= '<div class="info">';

@@ -62,4 +62,6 @@ Fill in the form below to support @name' => 'Hartelijk bedankt dat je overweegt 
   'Submit' => 'Verzenden',
   'My name is @name' => 'Mijn naam is @name',
   'Project information' => 'Projectinformatie',
+  'Fully sponsored' => 'Volledig gesponsord',
+  'Sponsored by third parties' => 'Gesponsord door derden',
 );
