@@ -116,6 +116,6 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
    * @return (boolean) $StatusId Returns status ID of a child.
    */
   public function getStatusId() {
-    return $this->child['StatusId'];
+    return $this->child['StatusID'];
   }
 }

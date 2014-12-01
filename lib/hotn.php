@@ -8,6 +8,10 @@ include_once __DIR__ . '/hotnSponsorChildInterface.php';
 include_once __DIR__ . '/hotnSponsorChild.php';
 
 define('HOTN_MAX_ITEMS_PAGER', 12);
+define('HOTN_ITEM_STATUS_NOT_SPONSORED', 1);
+define('HOTN_ITEM_STATUS_HALF_SPONSORED', 2);
+define('HOTN_ITEM_STATUS_FULL_SPONSORED', 3);
+define('HOTN_ITEM_STATUS_THIRD_PARTY_SPONSORED', 4);
 
 class hotn {
   private static $children_count_filtered;
@@ -235,11 +239,27 @@ class hotn {
     }
 
     $detail_url = $uri . '?hotnChildID=' . $child->getChildId() . $url_param;
+    $class = 'active';
+
+    // Create label with status id.
+    $status_sponsored = array(
+      HOTN_ITEM_STATUS_FULL_SPONSORED,
+      HOTN_ITEM_STATUS_THIRD_PARTY_SPONSORED,
+    );
+    $status = '';
+    if (in_array($child->getStatusId(), $status_sponsored)) {
+      $status = '<div class="status">' . self::hotn_t('Sponsored') . '</div>';
+
+      // Overwrite detail_url. because this child can no longer be sponsored.
+      $detail_url = '#';
+      $class = 'inactive';
+    }
 
     $output = '<div class="item child-overview">';
 
     $output .= '<div class="image">';
     $output .= '<img src="' . $child->getChildImage() . '" title="' . $child->getChildName() . '">';
+    $output .= $status;
     $output .= '</div>';
 
     $output .= '<div class="info">';
@@ -249,7 +269,7 @@ class hotn {
     $output .= '<br />';
     $output .= '<span class="birthdate">' . $child->getChildBirthdate() . '</span>';
     $output .= '<br />';
-    $output .= '<span class="more-info"><a href="' . $detail_url . '">' . self::hotn_t('More info') . '</a></span>';
+    $output .= '<span class="more-info"><a href="' . $detail_url . '" class="' . $class . '">' . self::hotn_t('More info') . '</a></span>';
     $output .= '</div>';
 
     $output .= '</div>';

@@ -43,17 +43,39 @@
   float: left;
 }
 #hotn-child-list .items .item .image {
-  width: 100px;
-  height: 120px;
+  position: relative;
+  width: 120px;
+  height: 135px;
   margin: 10px auto;
   text-align: center;
   margin-bottom: 2px;
 }
+#hotn-child-list .items .item .image img {
+  width: 120px;
+  height: 135px;
+  border: 2px #D9D9D9 solid;
+}
+#hotn-child-list .items .item .status {
+  background: url('../images/lint.png') no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  bottom: 2px;
+  text-align: center;
+  width: 86px;
+  height: 25px;
+  color: #fff;
+  padding: 2px 15px;
+  margin: 0 4px;
+}
 #hotn-child-list .items .item .info {
   text-align: center;
+  margin: 10px 0;
 }
 #hotn-child-list .item .name {
   font-weight: bold;
+}
+#hotn-child-list .items .item .more-info a.inactive {
+  color: #D9D9D9;
 }
 
 #hotn-child-form {
