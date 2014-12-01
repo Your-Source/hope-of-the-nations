@@ -103,6 +103,12 @@ class hotnForm {
     return $messages;
   }
 
+  /**
+   * Send a mail to the sponsor with message about payment.
+   * @param array $values Form values from sponsor form.
+   * @param array $children All children objects.
+   * @return boolean return If mail is send to sponsor.
+   */
   public static function hotnFormSendMail($values, $children) {
     $child = $children[0];
     $mail_template = file_get_contents(__DIR__ . '/resources/mail.txt');
