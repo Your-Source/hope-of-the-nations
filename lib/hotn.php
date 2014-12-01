@@ -8,6 +8,8 @@ include_once __DIR__ . '/hotnSponsorChildInterface.php';
 include_once __DIR__ . '/hotnSponsorChild.php';
 
 define('HOTN_MAX_ITEMS_PAGER', 12);
+define('HOTN_ITEM_SPONSORED_STATUS', array(3, 4));
+
 
 class hotn {
   private static $children_count_filtered;
@@ -308,12 +310,8 @@ class hotn {
     $class = 'active';
 
     // Create label with status id.
-    $status_sponsored = array(
-      3,
-      4,
-    );
     $status = '';
-    if (in_array($child->getStatusId(), $status_sponsored)) {
+    if (in_array($child->getStatusId(), HOTN_ITEM_SPONSORED_STATUS)) {
       $status = '<div class="status">' . self::hotn_t('Sponsored') . '</div>';
 
       // Overwrite detail_url. because this child can no longer be sponsored.
