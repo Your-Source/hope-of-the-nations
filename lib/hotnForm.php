@@ -122,7 +122,7 @@ class hotnForm {
     $args['!currenttime'] = date('d-m-Y H:i');
 
     if (!empty($args['!Duration']) && $args['!Duration'] == '5+') {
-      $args['!Duration'] = hotn::hotn_t('is tot weder opzegging');
+      $args['!Duration'] = hotn::hotn_t('until further notice');
     }
 
     // Replace arguments in mail.
