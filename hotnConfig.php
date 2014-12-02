@@ -25,8 +25,10 @@
  *  Uri to the API for child pictures.
  * @param (string) $custom_translate_lang
  *  Language if not translate func is filled in.
- *  @param (string) $base_url
+ * @param (string) $base_url
  *  Base url for the share url.
+ * @param (string) $admin_email
+ *  Administrator email to send the sponsor mail.
  */
 class hotnConfig {
   public static $url = 'http://hotn.administratiekoppeling.nl';
@@ -45,4 +47,5 @@ class hotnConfig {
   public static $translator_func = NULL;
   public static $custom_translate_lang = 'nl';
   public static $base_url = '';
+  public static $admin_email = '';
 }
