@@ -83,6 +83,9 @@
   color: #D9D9D9;
   cursor: default;
 }
+#hotn-pager {
+  clear: left;
+}
 
 #hotn-child-form {
   float: left;
