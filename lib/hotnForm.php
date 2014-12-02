@@ -132,15 +132,22 @@ class hotnForm {
     $to = $values['EmailAddress'];
     $subject = hotn::hotn_t('Sponsorship @childname', array('@childname' => $child->getChildName()));
 
-    $mail_send = array();
 
-    // If admin email is not empty send also the mail to the administrator of the site.
+    $to_addresses = array($to);
     if (!empty(hotnConfig::$admin_email)) {
-      $mail_send[] = mail(hotnConfig::$admin_email, $subject, $mail, NULL, '-fnoreply@hopeofthenations.nl');
+      $to_addresses[] = hotnConfig::$admin_email;
     }
-    $mail_send[] = mail($to, $subject, $mail, NULL, '-fnoreply@hopeofthenations.nl');
 
-    return (in_array(FALSE, $mail_send) ? FALSE : TRUE);
+    // Send mail. If mail sending is not possible throw error.
+    $no_errors = TRUE;
+    foreach ($to_addresses as $to_address) {
+      if (!mail($to_address, $subject, $mail, NULL, '-fnoreply@hopeofthenations.nl')) {
+        $no_errors = FALSE;
+        throw new Exception('It is not possible to send a mail');
+      }
+    }
+
+    return $no_errors;
   }
 
   /**
