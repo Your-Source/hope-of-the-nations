@@ -138,12 +138,10 @@ class hotnForm {
       $to_addresses[] = hotnConfig::$admin_email;
     }
 
-    // Send mail. If mail sending is not possible throw error.
     $no_errors = TRUE;
     foreach ($to_addresses as $to_address) {
       if (!mail($to_address, $subject, $mail, NULL, '-fnoreply@hopeofthenations.nl')) {
         $no_errors = FALSE;
-        throw new Exception('It is not possible to send a mail');
       }
     }
 
