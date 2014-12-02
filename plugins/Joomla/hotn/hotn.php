@@ -20,6 +20,10 @@ if (!file_exists($library_path . DS . 'hotnConfig.php')) {
 require_once $library_path . DS . 'hotnConfig.php';
 require_once $library_path . DS . 'lib' . DS . 'hotn.php';
 
+// Set administrator email to library.
+$config = JFactory::getConfig();
+hotnConfig::$admin_email = $config->getValue('config.mailfrom');
+
 // Include javascript an css file to document header.
 $document = JFactory::getDocument();
 $document->addScript('libraries' . DS . 'hotn' . '/js/hotn.js');
