@@ -132,11 +132,15 @@ class hotnForm {
     $to = $values['EmailAddress'];
     $subject = hotn::hotn_t('Sponsorship @childname', array('@childname' => $child->getChildName()));
 
+    $mail_send = array();
+
     // If admin email is not empty send also the mail to the administrator of the site.
     if (!empty(hotnConfig::$admin_email)) {
-      mail(hotnConfig::$admin_email, $subject, $mail, NULL, '-fnoreply@hopeofthenations.nl');
+      $mail_send[] = mail(hotnConfig::$admin_email, $subject, $mail, NULL, '-fnoreply@hopeofthenations.nl');
     }
-    return mail($to, $subject, $mail, NULL, '-fnoreply@hopeofthenations.nl');
+    $mail_send[] = mail($to, $subject, $mail, NULL, '-fnoreply@hopeofthenations.nl');
+
+    return (in_array(FALSE, $mail_send) ? FALSE : TRUE);
   }
 
   /**
