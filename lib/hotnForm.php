@@ -131,7 +131,21 @@ class hotnForm {
 
     $to = $values['EmailAddress'];
     $subject = hotn::hotn_t('Sponsorship @childname', array('@childname' => $child->getChildName()));
-    return mail($to, $subject, $mail, NULL, '-fnoreply@hopeofthenations.nl');
+
+
+    $to_addresses = array($to);
+    if (!empty(hotnConfig::$admin_email)) {
+      $to_addresses[] = hotnConfig::$admin_email;
+    }
+
+    $no_errors = TRUE;
+    foreach ($to_addresses as $to_address) {
+      if (!mail($to_address, $subject, $mail, NULL, '-fnoreply@hopeofthenations.nl')) {
+        $no_errors = FALSE;
+      }
+    }
+
+    return $no_errors;
   }
 
   /**
