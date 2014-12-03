@@ -27,7 +27,8 @@ hotnConfig::$admin_email = $config->getValue('config.mailfrom');
 
 // Include javascript an css file to document header.
 $document = JFactory::getDocument();
-$document->addScript('libraries' . DS . 'hotn' . '/js/hotn.js');
-$document->addStyleSheet('libraries' . DS . 'hotn' . '/css/hotn-style.css');
+$document->addScript('libraries' . DS . 'hotn' . DS . 'js' . DS . 'jquery-1.11.1.min.js');
+$document->addScript('libraries' . DS . 'hotn' . DS . 'js' . DS . 'hotn.js');
+$document->addStyleSheet('libraries' . DS . 'hotn' . DS . 'css' . DS . 'hotn-style.css');
 
 print hotn::load();
