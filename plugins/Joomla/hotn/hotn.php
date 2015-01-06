@@ -22,7 +22,7 @@ require_once $library_path . DS . 'lib' . DS . 'hotn.php';
 
 // Set administrator email to library.
 $config = JFactory::getConfig();
-hotnConfig::$admin_email = $config->getValue('config.mailfrom');
+hotnConfig::$admin_email = $config->get('mailfrom');
 
 // Include javascript an css file to document header.
 $document = JFactory::getDocument();
