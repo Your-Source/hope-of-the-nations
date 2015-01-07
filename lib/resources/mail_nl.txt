@@ -1,16 +1,16 @@
-Geachte !Salutation !Lastname / Beste !Firstname, 
+Geachte !Salutation !Lastname / Beste !Firstname,
 
 U heeft onderstaande machtiging afgegeven aan Stichting Hope of the Nations.
-Wilt u voor de volledigheid deze machtiging afdrukken en getekend in een port vrije envelop zenden naar: 
-Stichting Hope of the Nations 
-Hogeweg 16D 
+Wilt u voor de volledigheid deze machtiging afdrukken en getekend in een port vrije envelop zenden naar:
+Stichting Hope of the Nations
+Hogeweg 16D
 8278 BC Kamperveen.
 
-Op basis van deze digitaal afgegeven machtiging starten wij de incassering van het sponsorgeld voor uw sponsor kind. 
+Op basis van deze digitaal afgegeven machtiging starten wij de incassering van het sponsorgeld voor uw sponsor kind.
 Het toezenden van een getekende kopie is uitsluitend bestemd voor onze administratie.
-Nogmaals hartelijk bedankt voor uw gift. 
+Nogmaals hartelijk bedankt voor uw gift.
 
-Marienk Lodewijk 
+Marienk Lodewijk
 Voorzitter
 
 Maandelijkse machtiging SEPA
@@ -18,7 +18,7 @@ Maandelijkse machtiging SEPA
 Naam: Stichting Hope of the Nations
 Adres: Hogeweg 16D
 Postcode en plaats :8278 BC Kamperveen
-Land: Nederland 
+Land: Nederland
 Incassant ID: NL ZZZ 501060580000
 Kenmerk machtiging: IncHotN
 Uw sponsor !ChildID
@@ -32,20 +32,21 @@ U heeft gekozen voor een sponsoring van !Amount per maand
 
 Sponsor duur !Duration of zoveel langer of korter als wenselijk is.
 
-Als u het niet eens bent met deze afschrijving kunt u deze laten terugboeken. 
-Neem hiervoor binnen 8 weken na afschrijving contact op met uw bank. 
+Als u het niet eens bent met deze afschrijving kunt u deze laten terugboeken.
+Neem hiervoor binnen 8 weken na afschrijving contact op met uw bank.
 Vraag uw bank naar de voorwaarden.
 
 Voorletters: !Initials
 Voornaam: !Firstname
 Achternaam: !Lastname
-Adres: _____________ !Premises 
-Postcode: !Postcode 
-Woonplaats: _____________ 
+Adres: _____________ !Premises
+Postcode: !Postcode
+Woonplaats: _____________
 Land: !Country
 Uw geboortedatum: !DateOfBirth
 Telefoon: !PhoneNumber
 Mobiele telefoon: !MobilePhone
+Email: !EmailAddress
 Naam van uw sponsorkind: !namechild
 
 Uw banknummer IBAN: !BankAccount _____________
