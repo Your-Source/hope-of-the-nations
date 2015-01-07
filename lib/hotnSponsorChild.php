@@ -61,7 +61,7 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
   public function getChildBirthdate() {
     $time = strtotime($this->child['Birthdate']);
 
-    return date('d-m-Y', $time);
+    return ($time == 0) ? NULL : date('d-m-Y', $time);
   }
 
   /**
@@ -70,6 +70,11 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
    */
   public function getChildAge() {
     $birthdate = $this->child['Birthdate'];
+
+    // If birthdate is not a integer return null.
+    if (strtotime($birthdate) == 0) {
+      return NULL;
+    }
 
     // Create date from birthdate.
     $date = new DateTime($birthdate);
@@ -90,27 +95,27 @@ class hotnSponsorChild implements hotnSponsorChildInterface {
   }
 
   /**
-   * Returns string with base64 content to small child image.
-   * @return (string) $smallimage Returns base64 string of small Image from the child.
+   * Returns URL to an image from a child.
+   * @return (string) Returns URL of an image from a child.
    */
-  public function getChildSmallImage() {
-    if (!empty($this->child['SmallImage'])) {
-      return 'data:image/png;base64,' . $this->child['SmallImage'];
-    }
-
-    return 'images/child-fallback.png';
+  public function getChildImage() {
+    // Build the URL for call the API.
+    return hotnConfig::$url . '/' . hotnConfig::$childPictureUri . '/' . $this->child['ChildID'];
   }
 
   /**
-   * Returns string with base64 content to large child image.
-   * @return (string) $largeimage Returns base64 string of large Image from the child.
+   * Returns string with project information.
+   * @return (string) $ProjectInformation Returns project information about a child.
    */
-  public function getChildLargeImage() {
-    if (!empty($this->child['LargeImage'])) {
-      return 'data:image/png;base64,' . $this->child['LargeImage'];
-    }
-
-    return 'images/child-fallback.png';
+  public function ProjectInformation() {
+    return $this->child['ProjectInformation'];
   }
 
+  /**
+   * Returns boolean with status ID.
+   * @return (boolean) $StatusId Returns status ID of a child.
+   */
+  public function getStatusId() {
+    return $this->child['StatusID'];
+  }
 }

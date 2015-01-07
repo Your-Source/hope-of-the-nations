@@ -8,6 +8,10 @@ include_once __DIR__ . '/hotnSponsorChildInterface.php';
 include_once __DIR__ . '/hotnSponsorChild.php';
 
 define('HOTN_MAX_ITEMS_PAGER', 12);
+define('HOTN_ITEM_STATUS_NOT_SPONSORED', 1);
+define('HOTN_ITEM_STATUS_HALF_SPONSORED', 2);
+define('HOTN_ITEM_STATUS_FULL_SPONSORED', 3);
+define('HOTN_ITEM_STATUS_THIRD_PARTY_SPONSORED', 4);
 
 class hotn {
   private static $children_count_filtered;
@@ -22,7 +26,7 @@ class hotn {
     // If child ID is set as parameter the current page is a child detail page.
     if (!empty($_GET['hotnChildID'])) {
       $child_detail = self::get_child($_GET['hotnChildID']);
-      $form = hotnForm::form(self::get_child_list(array('hotn-Id' => $_GET['hotnChildID'])));
+      $form = hotnForm::form(self::get_child_list(array('hotn-childid' => $_GET['hotnChildID'])));
 
       $output = $child_detail . $form;
       return $output;
@@ -59,7 +63,7 @@ class hotn {
    * @return string Returns the markup of child detail page.
    */
   public static function get_child($childid) {
-    $children = self::get_child_list(array('hotn-Id' => $childid));
+    $children = self::get_child_list(array('hotn-childid' => $childid));
 
     if (empty($children)) {
       return self::hotn_t('This child is not available.');
@@ -109,7 +113,7 @@ class hotn {
    * @return array With all children in their own object.
    */
   private static function get_child_list($parameters = array(), $all_items = FALSE) {
-    $children = hotnConnector::get_feed('child');
+    $children = hotnConnector::get_feed('child', $parameters);
     $operator = NULL;
     $child_output = array();
     $function_name = '';
@@ -120,76 +124,6 @@ class hotn {
 
     // Set total count of children.
     self::$children_count_total = count($child_output);
-
-    // The parameters will be prefixed by 'hotn-' to
-    // prevent name space issues with existing CMS.
-    foreach ($parameters as $key => $input_value) {
-      // Unset the key if the value is empty of
-      // the key doesn't contain hotn- at the beginning.
-      if (!empty($input_value) && strpos($key, 'hotn-') !== FALSE) {
-        // Replace hotn- to nothing because the new key is a standard of the REST API.
-        $new_key = str_replace('hotn-', '', $key);
-
-        // Set filter on age as default to FALSE.
-        $filter_on_age = FALSE;
-
-        // Switch for the function name by a filter key.
-        switch ($new_key) {
-          case 'gender':
-            $function_name = 'getChildGender';
-            break;
-
-          case 'country':
-            $function_name = 'getChildCountry';
-            break;
-
-          case 'agegroup':
-            $filter_on_age = TRUE;
-            break;
-          default:
-            // If new is not empty filter on all keys.
-            if (!empty($new_key)) {
-              $function_name = 'getChild' . $new_key;
-            }
-        }
-
-        // Iterate over children and evaluate operator.
-        foreach ($child_output as $child_key => $child) {
-
-          // If filter on age is TRUE filter on the value added through the form.
-          if ($filter_on_age) {
-            $age = $child->getChildAge();
-
-            switch ($input_value) {
-              case '0':
-                $operator = ($age < 3);
-                break;
-              case '1':
-                $operator = in_array($age, range(3, 6));
-                break;
-              case '2':
-                $operator = in_array($age, range(7, 9));
-                break;
-              case '3':
-                $operator = ($age >= 10);
-                break;
-            }
-
-            // Unset the child that does not match any value.
-            if (!$operator) {
-              unset($child_output[$child_key]);
-            }
-          }
-          else {
-            $value_to_filter = call_user_func(array($child, $function_name));
-
-            if ($input_value != $value_to_filter) {
-              unset($child_output[$child_key]);
-            }
-          }
-        }
-      }
-    }
 
     // Set count of children after filtering.
     self::$children_count_filtered = count($child_output);
@@ -305,11 +239,27 @@ class hotn {
     }
 
     $detail_url = $uri . '?hotnChildID=' . $child->getChildId() . $url_param;
+    $class = 'active';
+
+    // Create label with status id.
+    $status_sponsored = array(
+      HOTN_ITEM_STATUS_FULL_SPONSORED,
+      HOTN_ITEM_STATUS_THIRD_PARTY_SPONSORED,
+    );
+    $status = '';
+    if (in_array($child->getStatusId(), $status_sponsored)) {
+      $status = '<div class="status">' . self::hotn_t('Sponsored') . '</div>';
+
+      // Overwrite detail_url. because this child can no longer be sponsored.
+      $detail_url = '#';
+      $class = 'inactive';
+    }
 
     $output = '<div class="item child-overview">';
 
     $output .= '<div class="image">';
-    $output .= '<img src="' . $child->getChildSmallImage() . '" title="' . $child->getChildName() . '">';
+    $output .= '<img src="' . $child->getChildImage() . '" title="' . $child->getChildName() . '">';
+    $output .= $status;
     $output .= '</div>';
 
     $output .= '<div class="info">';
@@ -319,7 +269,7 @@ class hotn {
     $output .= '<br />';
     $output .= '<span class="birthdate">' . $child->getChildBirthdate() . '</span>';
     $output .= '<br />';
-    $output .= '<span class="more-info"><a href="' . $detail_url . '">' . self::hotn_t('More info') . '</a></span>';
+    $output .= '<span class="more-info"><a href="' . $detail_url . '" class="' . $class . '">' . self::hotn_t('More info') . '</a></span>';
     $output .= '</div>';
 
     $output .= '</div>';
@@ -340,6 +290,8 @@ class hotn {
     );
     $info_string = self::hotn_t('@name is born on @birthdate and lives in @country', $info_placeholders);
 
+    $story_title = self::hotn_t('My name is @name', $info_placeholders);
+
     $base_url = !empty(hotnConfig::$base_url) ? hotnConfig::$base_url : $_SERVER['SERVER_NAME'];
 
     $request_uri = $_SERVER['REQUEST_URI'];
@@ -354,7 +306,7 @@ class hotn {
     $output .= '<h1 class="hotn-title">' . $title . '</h1>';
 
     $output .= '<div class="image">';
-    $output .= '<img src="' . $child->getChildLargeImage() . '" title="' . $child->getChildName() . '">';
+    $output .= '<img src="' . $child->getChildImage() . '" title="' . $child->getChildName() . '">';
     $output .= '</div>';
 
     $output .= '<div class="information">';
@@ -369,6 +321,16 @@ class hotn {
     $output .= '<span class="blogger"><a href="https://www.blogger.com/blog-this.g?u=' . $url_html . '&n=' . $title_html . '" target="_blank" class="blogger external" title="Blogger">Blogger</a></span> ';
     $output .= '<span class="googleplus"><a href="https://plus.google.com/share?url=' . $url_html . '" target="_blank" class="google external" title="Google+">Google+</a></span> ';
 
+    $output .= '</div>';
+
+    $output .= '<div class="child-detail-story">';
+    $output .= '<h3>' . $story_title . '</h3>';
+    $output .= $child->getChildStory();
+    $output .= '</div>';
+
+    $output .= '<div class="child-detail-story">';
+    $output .= '<h3>' . self::hotn_t('Project information') . '</h3>';
+    $output .= $child->ProjectInformation();
     $output .= '</div>';
 
     $output .= '</div>';

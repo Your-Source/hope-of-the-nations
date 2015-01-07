@@ -28,6 +28,9 @@ function hotn_children_list() {
     include_once $library_path . '/hotnConfig.php';
     include_once $library_path . '/lib/hotn.php';
 
+    // Set site mail to library.
+    hotnConfig::$admin_email = variable_get('site_mail', '');
+
     $output = array(
       '#markup' => hotn::load(),
       '#attached' => array(

@@ -20,7 +20,9 @@ class hotnForm {
         return self::hotn_theme_form($children[0], $value, $messages);
       }
 
-      if (hotnConnector::setSponsor($value)) {
+      if (hotnConnector::setSponsor($value)
+        && self::hotnFormSendMail($value, $children)) {
+
         $message = hotn::hotn_t('You are sponsoring a child now.');
         return self::hotn_theme_display_message($message);
       }
@@ -100,6 +102,50 @@ class hotnForm {
     }
 
     return $messages;
+  }
+
+  /**
+   * Send a mail to the sponsor with message about payment.
+   * @param array $values Form values from sponsor form.
+   * @param array $children All children objects.
+   * @return boolean return If mail is sent to sponsor.
+   */
+  public static function hotnFormSendMail($values, $children) {
+    $child = $children[0];
+    $mail_template = file_get_contents(__DIR__ . '/resources/mail_nl.txt');
+
+    // Set values to arguments.
+    $args = array();
+    foreach ($values as $key => $value) {
+      $args['!' . $key] = $value;
+    }
+    $args['!namechild'] = $child->getChildName();
+    $args['!currenttime'] = date('d-m-Y H:i');
+
+    if (!empty($args['!Duration']) && $args['!Duration'] == '5+') {
+      $args['!Duration'] = hotn::hotn_t('until further notice');
+    }
+
+    // Replace arguments in mail.
+    $mail = strtr($mail_template, $args);
+
+    $to = $values['EmailAddress'];
+    $subject = hotn::hotn_t('Sponsorship @childname', array('@childname' => $child->getChildName()));
+
+
+    $to_addresses = array($to);
+    if (!empty(hotnConfig::$admin_email)) {
+      $to_addresses[] = hotnConfig::$admin_email;
+    }
+
+    $no_errors = TRUE;
+    foreach ($to_addresses as $to_address) {
+      if (!mail($to_address, $subject, $mail, NULL, '-fnoreply@hopeofthenations.nl')) {
+        $no_errors = FALSE;
+      }
+    }
+
+    return $no_errors;
   }
 
   /**
@@ -216,7 +262,7 @@ Fill in the form below to support @name';
     $output .= '<input type="tel" name="MobilePhone" value="' . (!empty($MobilePhone) ? $MobilePhone : '') . '">';
     $output .= '</div>';
     $output .= '<div class="field">';
-    $output .= '<label>' . hotn::hotn_t('IBAN') . ':' . '</label> ';
+    $output .= '<label>' . hotn::hotn_t('IBAN-number') . ':' . '</label> ';
     $output .= '<input type="text" name="BankAccount" value="' . (!empty($BankAccount) ? $BankAccount : '') . '">';
     $output .= '</div>';
     $output .= '<div class="field markup">';

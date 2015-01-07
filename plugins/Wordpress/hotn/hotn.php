@@ -24,6 +24,9 @@ function hotn_page($posts) {
     include_once $library_path . '/hotnConfig.php';
     include_once $library_path . '/lib/hotn.php';
 
+    // Set administrator email to library.
+    hotnConfig::$admin_email = get_option('admin_email', '');
+
     $posts[0]->post_title = 'Hope of the Nations';
     $posts[0]->post_content = hotn::load();
 

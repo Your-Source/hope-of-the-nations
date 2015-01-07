@@ -60,14 +60,20 @@ interface hotnSponsorChildInterface {
   public function getChildGender();
 
   /**
-   * Returns string with base64 content to small child image.
-   * @return (string) $smallimage Returns base64 string of small Image from the child.
+   * Returns URL to an image from a child.
+   * @return (string) Returns URL of an image from a child.
    */
-  public function getChildSmallImage();
+  public function getChildImage();
 
   /**
-   * Returns string with base64 content to large child image.
-   * @return (string) $largeimage Returns base64 string of large Image from the child.
+   * Returns string with project information.
+   * @return (string) $ProjectInformation Returns project information about a child.
    */
-  public function getChildLargeImage();
+  public function ProjectInformation();
+
+  /**
+   * Returns boolean with status ID.
+   * @return (boolean) $StatusId Returns status ID of a child.
+   */
+  public function getStatusId();
 }
